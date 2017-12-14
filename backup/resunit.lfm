@@ -1,0 +1,835 @@
+object ResForm: TResForm
+  Left = 292
+  Height = 904
+  Top = 52
+  Width = 623
+  Caption = 'BeamScheme Results'
+  ClientHeight = 879
+  ClientWidth = 623
+  Menu = MainMenu1
+  OnCreate = FormCreate
+  LCLVersion = '1.6.4.0'
+  object ToolBar1: TToolBar
+    Left = 0
+    Height = 26
+    Top = 0
+    Width = 623
+    Caption = 'ToolBar1'
+    Images = rfImageList
+    TabOrder = 0
+    object tbPDF: TToolButton
+      Left = 1
+      Hint = 'Save PDF'
+      Top = 2
+      Caption = 'Save PDF'
+      ImageIndex = 0
+      OnClick = tbPDFClick
+      ParentShowHint = False
+      ShowHint = True
+    end
+    object ToolButton1: TToolButton
+      Left = 24
+      Height = 22
+      Top = 2
+      Width = 10
+      Caption = 'ToolButton1'
+      Style = tbsSeparator
+    end
+    object tbPrint: TToolButton
+      Left = 34
+      Top = 2
+      Caption = 'E&xit'
+      ImageIndex = 1
+      OnClick = tbPrintClick
+      ParentShowHint = False
+      ShowHint = True
+    end
+    object ToolButton2: TToolButton
+      Left = 57
+      Height = 22
+      Top = 2
+      Width = 10
+      Caption = 'ToolButton2'
+      Style = tbsSeparator
+    end
+    object tbExit: TToolButton
+      Left = 67
+      Top = 2
+      Caption = 'Exit'
+      ImageIndex = 2
+      OnClick = miExitClick
+      ParentShowHint = False
+      ShowHint = True
+    end
+  end
+  object ScrollBox1: TScrollBox
+    Left = 0
+    Height = 853
+    Top = 26
+    Width = 623
+    HorzScrollBar.Page = 598
+    VertScrollBar.Page = 828
+    Align = alClient
+    ClientHeight = 828
+    ClientWidth = 598
+    TabOrder = 1
+    object PRPage: TPRPage
+      Left = 0
+      Height = 842
+      Top = 0
+      Width = 608
+      MarginTop = 32
+      MarginLeft = 32
+      MarginRight = 32
+      MarginBottom = 32
+      object PRLayoutPanel1: TPRLayoutPanel
+        Left = 38
+        Height = 772
+        Top = 36
+        Width = 530
+        object PRRect1: TPRRect
+          Left = 0
+          Height = 40
+          Top = 0
+          Width = 530
+          LineWidth = 0
+          LineStyle = psSolid
+          FillColor = clCream
+          Radius = 0
+        end
+        object PRLabel1: TPRLabel
+          Left = 187
+          Height = 25
+          Top = 10
+          Width = 156
+          FontName = fnArial
+          FontSize = 18
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'BeamScheme v0.2'
+        end
+        object PRLabel3: TPRLabel
+          Left = 360
+          Height = 30
+          Top = 360
+          Width = 72
+          FontName = fnArial
+          FontSize = 16
+          FontBold = True
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'Y Profile'
+        end
+        object priXProf: TPRImage
+          Left = 0
+          Height = 260
+          Top = 50
+          Width = 260
+          SharedImage = True
+        end
+        object priYProf: TPRImage
+          Left = 270
+          Height = 260
+          Top = 50
+          Width = 260
+          SharedImage = True
+        end
+        object PRLabel4: TPRLabel
+          Left = 0
+          Height = 30
+          Top = 360
+          Width = 144
+          FontName = fnArial
+          FontSize = 16
+          FontBold = True
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'Beam Parameters'
+        end
+        object PRLabel5: TPRLabel
+          Left = 25
+          Height = 16
+          Top = 410
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'Edge (Left, Right)'
+        end
+        object PRLabel6: TPRLabel
+          Left = 25
+          Height = 16
+          Top = 430
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'Centre'
+        end
+        object PRLabel7: TPRLabel
+          Left = 25
+          Height = 16
+          Top = 450
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'Size'
+        end
+        object PRLabel8: TPRLabel
+          Left = 0
+          Height = 16
+          Top = 390
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'Field'
+        end
+        object PRLabel9: TPRLabel
+          Left = 0
+          Height = 16
+          Top = 470
+          Width = 150
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'Penumbra(Left,Right)'
+        end
+        object PRLabel10: TPRLabel
+          Left = 25
+          Height = 16
+          Top = 490
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = '90-10%'
+        end
+        object PRLabel11: TPRLabel
+          Left = 25
+          Height = 16
+          Top = 510
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = '80-20%'
+        end
+        object PRLabel12: TPRLabel
+          Left = 25
+          Height = 16
+          Top = 530
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = '90-50%'
+        end
+        object PRLabel13: TPRLabel
+          Left = 0
+          Height = 16
+          Top = 550
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'Symmetry'
+        end
+        object PRLabel14: TPRLabel
+          Left = 25
+          Height = 16
+          Top = 570
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'Area'
+        end
+        object PRLabel15: TPRLabel
+          Left = 25
+          Height = 16
+          Top = 590
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'Ratio (Left/Right)'
+        end
+        object PRLabel16: TPRLabel
+          Left = 25
+          Height = 16
+          Top = 610
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'Percent'
+        end
+        object PRLabel17: TPRLabel
+          Left = 0
+          Height = 16
+          Top = 630
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'Flatness'
+        end
+        object PRLabel18: TPRLabel
+          Left = 25
+          Height = 16
+          Top = 650
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'Percent'
+        end
+        object PRLabel19: TPRLabel
+          Left = 25
+          Height = 30
+          Top = 670
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'Ratio'
+        end
+        object PRLabel20: TPRLabel
+          Left = 25
+          Height = 30
+          Top = 690
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'MAX/CAX'
+        end
+        object prlXEdge: TPRLabel
+          Left = 175
+          Height = 20
+          Top = 410
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlXEdge'
+        end
+        object prlXCentre: TPRLabel
+          Left = 175
+          Height = 20
+          Top = 430
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlXCentre'
+        end
+        object prlXSize: TPRLabel
+          Left = 175
+          Height = 20
+          Top = 450
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlXSize'
+        end
+        object prlXPen90: TPRLabel
+          Left = 175
+          Height = 20
+          Top = 490
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlXPen90'
+        end
+        object prlXPen80: TPRLabel
+          Left = 175
+          Height = 20
+          Top = 510
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlXPen80'
+        end
+        object prlXPen50: TPRLabel
+          Left = 175
+          Height = 20
+          Top = 530
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlXPen50'
+        end
+        object prlXArea: TPRLabel
+          Left = 175
+          Height = 20
+          Top = 570
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlXArea'
+        end
+        object prlXSymR: TPRLabel
+          Left = 175
+          Height = 20
+          Top = 590
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlXSymR'
+        end
+        object prlXSymP: TPRLabel
+          Left = 175
+          Height = 20
+          Top = 610
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlXSymP'
+        end
+        object prlXFlatP: TPRLabel
+          Left = 175
+          Height = 20
+          Top = 650
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlXFlatP'
+        end
+        object prlXFlatR: TPRLabel
+          Left = 175
+          Height = 20
+          Top = 670
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlXFlatR'
+        end
+        object prlXMAX: TPRLabel
+          Left = 175
+          Height = 20
+          Top = 688
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlXMAX'
+        end
+        object prlYEdge: TPRLabel
+          Left = 360
+          Height = 20
+          Top = 410
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlYEdge'
+        end
+        object prlYCentre: TPRLabel
+          Left = 360
+          Height = 20
+          Top = 430
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlYCentre'
+        end
+        object prlYSize: TPRLabel
+          Left = 360
+          Height = 20
+          Top = 450
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlYSize'
+        end
+        object prlYPen90: TPRLabel
+          Left = 360
+          Height = 20
+          Top = 490
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlYPen90'
+        end
+        object prlYPen80: TPRLabel
+          Left = 360
+          Height = 20
+          Top = 510
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlYPen80'
+        end
+        object prlYPen50: TPRLabel
+          Left = 360
+          Height = 20
+          Top = 530
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlYPen50'
+        end
+        object prlYArea: TPRLabel
+          Left = 360
+          Height = 20
+          Top = 570
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlYArea'
+        end
+        object prlYSymR: TPRLabel
+          Left = 360
+          Height = 20
+          Top = 590
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlYSymR'
+        end
+        object prlYSymP: TPRLabel
+          Left = 360
+          Height = 20
+          Top = 610
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlYSymP'
+        end
+        object prlYFlatP: TPRLabel
+          Left = 360
+          Height = 20
+          Top = 650
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlYFlatP'
+        end
+        object prlYFlatR: TPRLabel
+          Left = 360
+          Height = 20
+          Top = 670
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlYFlatR'
+        end
+        object prlYMAX: TPRLabel
+          Left = 360
+          Height = 20
+          Top = 690
+          Width = 100
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlYMAX'
+        end
+        object PRLabel2: TPRLabel
+          Left = 180
+          Height = 30
+          Top = 360
+          Width = 69
+          FontName = fnArial
+          FontSize = 16
+          FontBold = True
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'X Profile'
+        end
+        object prlSource: TPRLabel
+          Left = 0
+          Height = 20
+          Top = 756
+          Width = 384
+          FontName = fnArial
+          FontSize = 10
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlSource'
+        end
+        object prlDate: TPRLabel
+          Left = 400
+          Height = 20
+          Top = 756
+          Width = 127
+          FontName = fnArial
+          FontSize = 10
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'prlDate'
+          Alignment = taRightJustify
+        end
+        object prlXOffset: TPRLabel
+          Left = 0
+          Height = 20
+          Top = 315
+          Width = 80
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'Offset:'
+        end
+        object prlXWidth: TPRLabel
+          Left = 90
+          Height = 20
+          Top = 315
+          Width = 80
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'Width:'
+          Alignment = taCenter
+        end
+        object prlXAngle: TPRLabel
+          Left = 180
+          Height = 20
+          Top = 315
+          Width = 80
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'Angle:'
+          Alignment = taRightJustify
+        end
+        object prlYOffset: TPRLabel
+          Left = 270
+          Height = 20
+          Top = 315
+          Width = 80
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'Offset:'
+        end
+        object prlYWidth: TPRLabel
+          Left = 360
+          Height = 20
+          Top = 315
+          Width = 80
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'Width:'
+          Alignment = taCenter
+        end
+        object prlYAngle: TPRLabel
+          Left = 450
+          Height = 20
+          Top = 315
+          Width = 80
+          FontName = fnArial
+          FontSize = 12
+          CharSpace = 0
+          WordSpace = 0
+          Caption = 'Angle'
+          Alignment = taRightJustify
+        end
+      end
+    end
+  end
+  object MainMenu1: TMainMenu
+    left = 560
+    top = 56
+    object miPDF: TMenuItem
+      Caption = '&Save PDF'
+    end
+    object miPrint: TMenuItem
+      Caption = '&Print'
+    end
+    object miExit: TMenuItem
+      Caption = '&Exit'
+      OnClick = miExitClick
+    end
+  end
+  object rfImageList: TImageList
+    ShareImages = True
+    left = 560
+    top = 112
+    Bitmap = {
+      4C69030000001000000010000000FFFFFF00FFFFFF00F0F0F0FFC0C0C0FFC0C0
+      C0FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0C0FFC0C0
+      C0FFC0C0C0FFFFFFFF00FFFFFF00FFFFFF00FFFFFF00C0C0C0FF7C7C7BFFA6A5
+      A5FFA6A5A5FFA6A5A5FFA6A5A5FFA6A5A5FFA6A5A5FFA6A5A5FFA6A5A5FF7C7C
+      7BFF140F85FF84839DFFFFFFFF00241CEDFF241CEDFF241CEDFF241CEDFF241C
+      EDFF241CEDFF241CEDFF241CEDFF241CEDFF241CEDFF241CEDFF524CE8FFA6A5
+      A5FF1B15B1FF1F18CFFF84839DFF241CEDFF241CEDFF241CEDFF241CEDFF241C
+      EDFF241CEDFF241CEDFF241CEDFF241CEDFF241CEDFF241CEDFF524CE8FFA6A5
+      A5FF0D0A58FF120E76FF09073BFF241CEDFF241CEDFF241CEDFF241CEDFF241C
+      EDFF241CEDFF241CEDFF241CEDFF241CEDFF241CEDFF241CEDFF524CE8FFDEDD
+      DCFFDEDDDCFFDEDDDCFF6F6E6EFF5B55F2FF5B55F2FF4B44E1FF443EDBFF524C
+      E8FF524CE8FF524CE8FF524CE8FF2F28EBFF4640E9FF524CE8FF7570E5FFDEDD
+      DCFFDEDDDCFFDEDDDCFF6F6E6EFFFFFFFF00FFFFFF00C0C0C0FFA6A5A5FFDEDD
+      DCFFDEDDDCFFDEDDDCFFDEDDDCFF817CE4FFAFACE0FFDEDDDCFFDEDDDCFFDEDD
+      DCFFDEDDDCFFDEDDDCFF6F6E6EFFFFFFFF00FFFFFF00C0C0C0FFA6A5A5FFDEDD
+      DCFFDEDDDCFFDEDDDCFFDEDDDCFF6964E6FFAFACE0FFDEDDDCFFDEDDDCFFDEDD
+      DCFFDEDDDCFFDEDDDCFF6F6E6EFFFFFFFF00FFFFFF00C0C0C0FFA6A5A5FFDEDD
+      DCFFDEDDDCFFDEDDDCFFDEDDDCFF6964E6FFAFACE0FFDEDDDCFFDEDDDCFFDEDD
+      DCFFDEDDDCFFDEDDDCFF6F6E6EFFFFFFFF00FFFFFF00C0C0C0FFA6A5A5FFDEDD
+      DCFFDEDDDCFFDEDDDCFFDEDDDCFF6964E6FF9894E2FFDEDDDCFFDEDDDCFFDEDD
+      DCFFDEDDDCFFDEDDDCFF6F6E6EFFFFFFFF00FFFFFF00C0C0C0FFA6A5A5FFDEDD
+      DCFFDEDDDCFFDEDDDCFFD2D0DDFF524CE8FF524CE8FFD2D0DDFFDEDDDCFFDEDD
+      DCFFDEDDDCFFDEDDDCFF6F6E6EFFFFFFFF00FFFFFF00C0C0C0FFA6A5A5FFDEDD
+      DCFFDEDDDCFFDEDDDCFF817CE4FF9894E2FFBBB8DFFF524CE8FFC6C4DEFFDEDD
+      DCFFDEDDDCFFDEDDDCFF6F6E6EFFFFFFFF00FFFFFF00C0C0C0FFA6A5A5FFDEDD
+      DCFFDEDDDCFFD2D0DDFF5E58E7FFBBB8DFFF817CE4FF6964E6FF4640E9FF241C
+      EDFF4640E9FF6964E6FF6F6E6EFFFFFFFF00FFFFFF00C0C0C0FFA6A5A5FFDEDD
+      DCFFD2D0DDFF6964E6FF817CE4FFAFACE0FFDEDDDCFFDEDDDCFFDEDDDCFFC6C4
+      DEFF8C88E3FF524CE8FF63626FFFFFFFFF00FFFFFF00C0C0C0FFA6A5A5FF9894
+      E2FF524CE8FF7570E5FFDEDDDCFFDEDDDCFFDEDDDCFFDEDDDCFFDEDDDCFFDEDD
+      DCFFDEDDDCFFDEDDDCFF6F6E6EFFFFFFFF00FFFFFF00C0C0C0FF8F8DA7FF4640
+      E9FF524CE8FFDEDDDCFFDEDDDCFFDEDDDCFFDEDDDCFFDEDDDCFFDEDDDCFFDEDD
+      DCFFDEDDDCFFDEDDDCFF6F6E6EFF000000000000000000000000E8CEB9FFD7AA
+      7CFFC88C50FFC88C4FFFCA9155FFCB9055FFC5894DFFDDAF8DFF000000000000
+      0000000000000000000000000000000000000000000000000000C5884DFFF7F2
+      ECFFF8F4EEFFF8F3EDFFF8F3EDFFF8F2ECFFF2E6D7FFE2B27DFFDB9569FF0000
+      0000000000000000000000000000000000000000000000000000C88D52FFF9F5
+      F1FFFCE3CDFFFBE3CDFFF9E0C8FFF8DCC2FFFDFBF8FFFCE6CDFFE2B684FFD5A8
+      84FF000000000000000000000000000000000000000000000000C88D51FFF9F5
+      F1FFFCE3CFFFFCE4CFFFFAE1CAFFF9DDC4FFF4E9DFFFF7F2ECFFF5EFE9FFC380
+      48FF000000000000000000000000000000000000000000000000C68C4FFFF9F4
+      F0FFFCE6D3FFFDE7D3FFFBE3CDFFFAE0C8FFF5D6BBFFF3D4B5FFF8F4F0FFC485
+      4AFF00000000000000000000000000000000CECECEFF878787FFC5894CFFF9F4
+      EFFFFEE7D7FFFDE7D5FFFCE6D2FFFBE1CCFFF8DCC2FFF6DABDFFFAF4EFFFC483
+      48FF616161FFBCBCBCFF00000000DDDDDDFF9A9A9AFFCCCCCCFFC78B4EFFF9F4
+      EDFFFEE8D8FFFEE8D7FFFDE5D3FFFCE4D1FFFAE0C7FFF9DDC3FFFAF4EDFFC785
+      4AFFC3C3C3FF747474FFCDCDCDFF979797FFD2D2D2FFE8E8E8FF7D7D7DFF7D7D
+      7DFF7D7D7DFF7D7D7DFF7D7D7DFF7D7D7DFF7D7D7DFF7D7D7DFF7D7D7DFF7D7D
+      7DFFE8E8E8FFC4C4C4FF6D6D6DFF848484FFFCFCFCFFFCFCFCFFCBCBCBFFF2F2
+      F2FFF2F2F2FFF2F2F2FFF2F2F2FFF2F2F2FFF2F2F2FFF2F2F2FFF2F2F2FFC6C6
+      C6FFFCFCFCFFFCFCFCFF717171FF7E7E7EFFF9F9F9FFF9F9F9FFABABABFFDFDF
+      DFFFCBCBCBFFCBCBCBFFCBCBCBFFCBCBCBFFCBCBCBFFCBCBCBFFDFDFDFFFA3A3
+      A3FFF9F9F9FFF9F9F9FF616161FF7A7A7AFFD7D7D7FFD7D7D7FF979797FFD8D8
+      D8FFBFBFBFFFBFBFBFFFBFBFBFFFBFBFBFFFBFBFBFFFBFBFBFFFD7D7D7FF8E8E
+      8EFFD7D7D7FFD7D7D7FF3F3F3FFF757575FFBBBBBBFFBBBBBBFF8D8D8DFFD4D4
+      D4FFB9B9B9FFB9B9B9FFB9B9B9FFB9B9B9FFB9B9B9FFB9B9B9FFD3D3D3FF8383
+      83FFBBBBBBFFBBBBBBFF2A2A2AFF707070FFB5B5B5FFB5B5B5FF959595FF8181
+      81FF818181FF797979FF6E6E6EFF616161FF525252FF434343FF424242FF6E6E
+      6EFFB5B5B5FFB5B5B5FF252525FF6B6B6BFFA7A7A7FFB5B5B5FF818181FFAFAC
+      AAFFC5C0BDFFC5C0BDFFC5C0BDFFC5C0BDFFC5C0BDFFC5C0BDFFADAAA8FF2C2C
+      2CFFB5B5B5FF9B9B9BFF232323FFA1A1A1FF7A7A7AFF585858FFC79561FFF9F7
+      F6FFF9F1ECFFF9F1EBFFF8F0E9FFF7EDE6FFF4EAE1FFF2E8DEFFFAF8F6FFC794
+      61FF242424FF4B4B4BFF969696FF000000000000000000000000C89662FFCA98
+      65FFCA9765FFCA9765FFCA9765FFCA9764FFC99764FFC99764FFCA9865FFC895
+      62FF000000000000000000000000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF006D9CD4896A9AD2FB6697CFEEFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00709ED6DB6D9C
+      D4FF85B1DAFF5A91B9FF6093CBEAFFFFFF00FFFFFF00808080FF7E7E7EFF7C7C
+      7CFF7A7A7AFF777777FF757575FF727272FF719ED4FF6F9ED6FF87B2DCFFABD3
+      E8FFA9D0E6FF5890B8FF598EC6EAFFFFFF00FFFFFF007D7D7DFF999999FF9999
+      99FF9A9A9AFF9A9A9AFF9B9B9BFF9B9B9BFF6F9DD3FFAAD1E7FFABD1E7FF98C7
+      E1FF91C2DEFF568FB7FF5289C1EAFFFFFF00FFFFFF007A7A7AFF999999FF5291
+      59FF999A99FF9B9B9BFF9C9C9CFF9C9C9CFF6C9AD0FFA7CEE5FF8FC1DFFF89BD
+      DCFF8BBDDCFF538DB6FF4B84BCEAFFFFFF00FFFFFF00777777FF9A9A9AFF3D8A
+      45FF498A4FFF9C9C9CFF9D9D9DFF9D9D9DFF6696CCFFA2CBE3FF89BDDCFF83B9
+      DAFF84B9DAFF518BB5FF437EB6EA44944DFF42914BFF3F8D48FF3D8945FF5DA4
+      65FF5AA061FF45834BFF9E9E9EFF9E9E9EFF6092C9FF9EC7E2FF83B8DAFF7DB4
+      D7FF7EB3D7FF4F89B4FF3B79B1EA41904AFF94D29FFF91D09AFF8DCD96FF89CB
+      92FF84C88DFF519858FF417C46FF9F9F9FFF5A8EC4FF98C3E0FF7CB3D7FF74AF
+      D6FF5EC4EDFF4B88B3FF3473ABEA3E8B46FF8FCE99FF7DC687FF78C381FF73C0
+      7CFF74C07CFF79C281FF49904FFF547F57FF5489BFFF94BFDDFF75ADD4FF63B8
+      E1FF4BD4FFFF428BB8FF2C6EA6EA3B8742FF89CB92FF84C88DFF80C688FF7BC3
+      83FF77C17FFF478F4DFF3B743FFFA1A1A1FF4C84BAFF8DBBDBFF6EA8D1FF66A6
+      D1FF5FB4DFFF4785B1FF2569A1EA37823EFF347E3BFF317937FF2E7534FF4991
+      50FF468F4CFF39733DFFA1A1A1FFA2A2A2FF457EB4FF88B7D9FF67A3CFFF619E
+      CCFF639FCCFF4583B1FF1F649CEAFFFFFF00FFFFFF00606060FFA0A0A0FF3D76
+      41FF367139FFA2A2A2FFA2A2A2FFA3A3A3FF3D79B0FF82B3D7FF629FCCFF5A9A
+      C9FF5E9BCAFF4381AFFF196098EAFFFFFF00FFFFFF005C5C5CFFA1A1A1FF3C73
+      40FFA0A1A1FFA3A3A3FFA3A3A3FFA4A4A4FF3674AAFF7DAFD4FF5B9AC9FF5495
+      C7FF5896C8FF4180AEFF135C94EAFFFFFF00FFFFFF00585858FFA2A2A2FFA2A2
+      A2FFA3A3A3FFA4A4A4FFA4A4A4FFA5A5A5FF2F6FA5FF78ABD2FF78ABD3FF73A7
+      D1FF69A0CDFF407FAEFF0F5991EA999999FF717171FF545454FF515151FF4F4F
+      4FFF4C4C4CFF4A4A4AFF474747FF454545FF25679DFF3274A8FF3D7CAFFF4784
+      B5FF4E8ABAFF3E7EADFF0C578FEAFFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
+      FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF001D639B1619609839145D9562105A
+      92880D5890A4135C92FC0C578FED
+    }
+  end
+  object PReport: TPReport
+    FileName = 'default.pdf'
+    CreationDate = 42662.6344673264
+    ModDate = 0
+    UseOutlines = False
+    ViewerPreference = []
+    left = 560
+    top = 168
+  end
+  object rfSaveDialog: TSaveDialog
+    Title = 'Save PDF as'
+    DefaultExt = '.pdf'
+    Filter = 'PDF files|*.pdf|All files|*'
+    left = 560
+    top = 232
+  end
+  object PrintDialog: TPrintDialog
+    left = 560
+    top = 288
+  end
+end

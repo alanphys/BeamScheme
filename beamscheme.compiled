@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Compiler Value="/usr/bin/fpc" Date="1502098425"/>
+  <Params Value=" -MObjFPC -Sh -Cg -O1 -OoREGVAR -gw2 -godwarfsets -gl -l -vewnhibq -Fu/home/alanphys/.lazarus/lib/TAChartPrint/lib/x86_64-linux/qt5 -Fu/usr/lib64/lazarus/components/tachart/lib/x86_64-linux/qt5 -Fu/usr/lib64/lazarus/components/printers/lib/x86_64-linux/qt5 -Fu/usr/lib64/lazarus/components/ideintf/units/x86_64-linux/qt5 -Fu/usr/lib64/lazarus/components/powerpdf_0.9.15_20170215/lib/x86_64-linux -Fu/usr/lib64/lazarus/components/lazcontrols/lib/x86_64-linux/qt5 -Fu/usr/lib64/lazarus/components/cairocanvas/lib/x86_64-linux/qt5 -Fu/usr/lib64/lazarus/lcl/units/x86_64-linux/qt5 -Fu/home/alanphys/.lazarus/lib/DTrackBar/lib/x86_64-linux -Fu/usr/lib64/lazarus/lcl/units/x86_64-linux -Fu/usr/lib64/lazarus/components/lazutils/lib/x86_64-linux -Fu/usr/lib64/lazarus/packager/units/x86_64-linux -Fu/home/alanphys/Programs/BeamScheme/ -dLCL -dLCLqt5 beamscheme.lpr"/>
+</CONFIG>

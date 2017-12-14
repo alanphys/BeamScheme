@@ -1,0 +1,9 @@
+
+.. index:: Algorithms
+
+Algorithms
+==========
+
+There is an amazing amount of difference in the calculation of supposedly standard parameters between the different vendors. Not only do the definitions of parameters differ but factors such as whether values are interpolated or not or whether field centering is applied have a signifcant affect on the calculation of the parameters. It is important that the user understand how BeamScheme calculates the various parameters as this will be the first stop in an investigation into any discrepancy between values calculated by BeamScheme and values calculated by vendor supplied software. 
+
+BeamScheme makes absolutely no assumptions about the data in contrast to some commercial products which require parameters such as the field size to be set. It does not perform any beam centering, and no SSD correction is made.
