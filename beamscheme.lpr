@@ -9,14 +9,15 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms
   { you can add units after this }, bsunit, TAChartLazarusPkg, tachartprint,
-  Printer4Lazarus, dicom, define_types, dtrackbar, pack_powerpdf, resunit;
+  Printer4Lazarus, dicom, define_types, dtrackbar, pack_powerpdf, resunit,
+  aboutunit;
 
 {$R *.res}
 
 begin
    Application.Title:='BeamScheme';
   Application.Initialize;
-		Application.CreateForm(TBSForm, BSForm);
+  Application.CreateForm(TBSForm, BSForm);
   Application.Run;
 end.
 

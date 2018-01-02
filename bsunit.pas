@@ -3,6 +3,13 @@ unit bsunit;
  Version 0.2 released 1/8/2011
  22/8/2011 Fix field centre error,
            Fix Y resolution error for MapCheck 2
+ 28/09/2011 removed MultiDoc
+           added invert
+           added normalise
+           added windowing
+           fixed profile display
+           fixed symmetry calculation
+           cleaned up printout
  15/2/2012 Fix CAX normalisation error,
  2/4/2013  Add read for XiO Dose plane file
  20/6/2014 Removed redundant DICOM read code causing memory bug
@@ -12,15 +19,19 @@ unit bsunit;
            Fixed panel maximise to form area
  21/5/2015 Combine open dialog and DICOM dialog
  20/7/2015 Add messaging system
+ Version 0.3 released 20/7/2015
  26/8/2016 Add normalise to max
+ 28/6/2016 Support PTW 729 mcc
  29/9/2016 Fix PTW 729 memory error
  21/10/2016 Add PowerPDF for output
  24/10/2016 Fix Profile event misfire
  15/8/2017 Fix image integer conversion
- 13/10/2017 Support PTW 729 mcc
+ 13/10/2017 Support IBA Matrix and StartTrack opg
  16/10/2017 Fix Diff divide by zero error
             Fix profile offset limit error
- 7/12/2017 Fix even number of detectors offset}
+ 7/12/2017 Fix even number of detectors offset
+ 15/12/2017 Support Brainlab iPlan Dose plane format
+            Add text file format identification}
 
 {$mode objfpc}{$H+}
 
@@ -93,6 +104,8 @@ type
     ChartToolsetYDataPointHintTool: TDataPointHintTool;
      cXProfile: TChart;
      cXprof: TLabel;
+     miAbout: TMenuItem;
+     miHelp: TMenuItem;
      miExportY: TMenuItem;
      miExportX: TMenuItem;
      miExport: TMenuItem;
@@ -173,6 +186,7 @@ type
      procedure FormCreate(Sender: TObject);
      function DICOMOpen(sFileName:string):boolean;
      procedure FormResize(Sender: TObject);
+     procedure miAboutClick(Sender: TObject);
      function TextOpen(sFileName:string):boolean;
      function MapCheckOpen(sFileName:string):boolean;
      function IBAOpen(sFileName:string):boolean;
@@ -180,6 +194,7 @@ type
      procedure sbCentreClick(Sender: TObject);
      procedure sbMaxNormClick(Sender: TObject);
      function XioOpen(sFileName:string):boolean;
+     function BrainLabOpen(sFileName:string):boolean;
      function BMPOpen(sFileName:string):boolean;
      function HISOpen(sFileName:string):boolean;
      procedure miExitClick(Sender: TObject);
@@ -228,7 +243,7 @@ procedure CalcParams(PArr:TPArr; var BeamParams:TBeamParams);
 
 implementation
 
-uses DICOM, define_types, types, StrUtils, resunit;
+uses DICOM, define_types, types, StrUtils, resunit, aboutunit;
 
 const AllChars = [#0..#255] - DigitChars - ['.'];
 
@@ -293,7 +308,6 @@ with Beam do if (Rows>0) and (Cols>0) then
            IntFImage.Colors[J-2,I] := GreyVal;
            end;
      BSForm.iBeam.Picture.Bitmap.LoadFromIntfImage(IntFImage);
-     BSForm.iBeam.AntialiasingMode:=amOff;
    end;
 end;
 
@@ -952,7 +966,11 @@ DataOK := false;
 with OpenDialog do
    begin
    DefaultExt := '.dcm';
+   {$IFDEF win32}
    Filter := 'DICOM Image|*.dcm|MapCheck Text Files|*.txt|PTW|*.mcc|IBA|*.opg|Windows bitmap|*.bmp|Tiff bitmap|*.tif|JPEG image|*.jpg|HIS image|*.his|All Files|*.*';
+   {$ELSE}
+   Filter := 'DICOM Image|*.dcm|MapCheck Text Files|*.txt|PTW|*.mcc|IBA|*.opg|Windows bitmap|*.bmp|Tiff bitmap|*.tif|JPEG image|*.jpg|HIS image|*.his|All Files|*';
+   {$ENDIF}
    Title := 'Open file';
    InitialDir := sExePath;
    end;
@@ -961,8 +979,6 @@ if OpenDialog.Execute then
    Dummy := Upcase(ExtractFileExt(OpenDialog.Filename));
    if Dummy = '.DCM' then
       DataOK := DICOMOpen(OpenDialog.Filename);
-   if (not DataOK) and (Dummy = '.TXT') then
-      DataOK := TextOpen(OpenDialog.Filename);
    if (not DataOK) and (Dummy = '.OPG') then
       DataOK := IBAOpen(OpenDialog.Filename);
    if (not DataOK) and (Dummy = '.MCC') then
@@ -975,8 +991,8 @@ if OpenDialog.Execute then
       DataOK := BMPOpen(OpenDialog.Filename);
    if (not DataOK) and (Dummy = '.JPG') then
       DataOK := BMPOpen(OpenDialog.Filename);
-   if not DataOK then {assume file is XiO}
-      DataOK := XioOpen(Opendialog.FileName);
+   if not DataOK then {assume file is text}
+      DataOK := TextOpen(Opendialog.FileName);
 
    {set limits}
    if DataOK then
@@ -1023,7 +1039,7 @@ if OpenDialog.Execute then
       begin
       BSError('Unrecognised file');
       end;
-			end;
+   end;
 end;
 
 
@@ -1040,6 +1056,10 @@ readln(Infile,Dummy);
 CloseFile(Infile);
 if LeftStr(Dummy,10) = '** WARNING' then
    Result := MapCheckOpen(sFileName);
+if LeftStr(Dummy,8) = '0001108e' then
+   Result := XiOOpen(sFileName);
+if LeftStr(Dummy,8) = 'BrainLAB' then
+   Result := BrainLabOpen(sFileName);
 end;
 
 function TBSForm.MapCheckOpen(sFileName:string):boolean;
@@ -1240,7 +1260,7 @@ if Dummy = 'BEGIN_SCAN_DATA' then {file is PTW}
    Counting := false;
    while (not eof(infile)) and (Dummy <> 'END_SCAN_DATA') do
       begin
-				  if (leftstr(Dummy,11) = 'BEGIN_SCAN ') then inc(I);
+      if (leftstr(Dummy,11) = 'BEGIN_SCAN ') then inc(I);
       if (Dummy = 'BEGIN_DATA') then Counting := true;
       if (Dummy = 'END_DATA') then Counting := false;
       if Counting then inc(J);
@@ -1253,8 +1273,8 @@ if Dummy = 'BEGIN_SCAN_DATA' then {file is PTW}
    Reset(Infile);
    if(not eof(Infile)) and (Beam.Rows <> 0) and (Beam.Cols <> 0) then
       begin
-	     Beam.Max := 0;
-	     Beam.Min := 1.7E308;
+      Beam.Max := 0;
+      Beam.Min := 1.7E308;
       SetLength(Beam.Data,Beam.Rows);
       I := 0;
       Counting := false;
@@ -1262,7 +1282,7 @@ if Dummy = 'BEGIN_SCAN_DATA' then {file is PTW}
       Dummy := TrimLeftSet(Dummy,StdWordDelims);
       while (not eof(infile)) and (Dummy <> 'END_SCAN_DATA') do
          begin
-									if (DelChars(Dummy,#9) = 'END_DATA') then Counting := false;
+         if (DelChars(Dummy,#9) = 'END_DATA') then Counting := false;
          if Counting then
             begin
             inc(J);
@@ -1273,16 +1293,16 @@ if Dummy = 'BEGIN_SCAN_DATA' then {file is PTW}
             if Value > Beam.Max then Beam.Max := Value;
             if Value < Beam.Min then Beam.Min := Value;
             end;
-									if (DelChars(Dummy,#9) = 'BEGIN_DATA') then
+         if (DelChars(Dummy,#9) = 'BEGIN_DATA') then
             begin
             Counting := true;
             J := 0;
-												end;
-   				  if (LeftStr(Dummy,11) = 'BEGIN_SCAN ') then
+            end;
+         if (LeftStr(Dummy,11) = 'BEGIN_SCAN ') then
             begin
             inc(I);
-	           SetLength(Beam.Data[Beam.Rows - I],Beam.Cols + 1);
-												end;
+            SetLength(Beam.Data[Beam.Rows - I],Beam.Cols + 1);
+            end;
          if LeftStr(Dummy,20) = 'SCAN_OFFAXIS_INPLANE' then
             begin
             Copy2SymbDel(Dummy,'=');
@@ -1290,8 +1310,8 @@ if Dummy = 'BEGIN_SCAN_DATA' then {file is PTW}
             end;
          readln(Infile,Dummy);
          Dummy := TrimLeftSet(Dummy,StdWordDelims);
-   						end;
-						end;
+         end;
+      end;
 
       {set dimensions}
       with Beam do
@@ -1302,11 +1322,11 @@ if Dummy = 'BEGIN_SCAN_DATA' then {file is PTW}
          YRes := Width/(Cols - 3)
          end;
       Result := true;
-			end
+   end
   else
    begin
    BSError('File error, no data found!');
-			end;
+   end;
 CloseFile(Infile);
 end;
 
@@ -1630,8 +1650,8 @@ for I:=1 to 16 do
       begin
       Dummy := TrimLeft(ExtractDelimited(2,Dummy,[',']));
       if LeftStr(Dummy,2) = 'Gy' then cGy := 100;
-						end;
-			end;
+      end;
+   end;
 
 Beam.Max := 0;
 Beam.Min := 1.7E308;
@@ -1649,6 +1669,127 @@ if (not eof(Infile)) and (Beam.Rows <> 0) and (Beam.Cols <> 0) then
          if Value > Beam.Max then Beam.Max := Value;
          if Value < Beam.Min then Beam.Min := Value;
          end;
+      end;
+   Result := true;
+   end
+  else
+   begin
+   BSError('File error, no data found!');
+   end;
+CloseFile(Infile);
+end;
+
+
+function TBSForm.BrainLabOpen(sFileName:string):boolean;
+var I,J,K,
+    NumSets:   integer;
+    Dummy,sPart,
+    sCalFile,
+    sColHead:  string;
+    cGy,                       {if dose is in Gy convert to cGy}
+    Value,
+    LDet,                      {position of left most value}
+    RDet:      double;         {position of right most value}
+    Infile:    textfile;
+
+begin
+Result := false;
+AssignFile(Infile, sFileName);
+Reset(Infile);
+cGy := 1;
+
+readln(Infile,Dummy);
+if LeftStr(Dummy,8) = 'BrainLAB' then {file is BrainLab}
+   begin
+   {get dimensions and scan down to interpolated data}
+   sCalFile := '-----------------------------------------------------';
+   while (Dummy <> sCalFile) and (not eof(Infile)) do
+      begin
+      readln(Infile,Dummy);
+      sPart := ExtractDelimited(1,Dummy,[':']);
+      if sPart = 'Number of Rows' then
+         begin
+         sPart:= ExtractDelimited(2,Dummy,[':']);
+         Beam.Rows := StrToInt(sPart);
+         end;
+      if sPart = 'Number of Columns' then
+         begin
+         sPart:= ExtractDelimited(2,Dummy,[':']);
+         Beam.Cols := StrToInt(sPart) + 2;  {include row and detector no}
+         end;
+      if sPart = 'Number of Planes' then
+         begin
+         sPart:= ExtractDelimited(2,Dummy,[':']);
+         NumSets := StrToInt(sPart);
+         end;
+      if Dummy = 'Table Entries in Gy' then cGy := 100;
+      end;
+   readln(Infile,sColHead);                          {get col headers}
+
+   {Sum data sets}
+   if (not eof(Infile)) and (Beam.Rows <> 0) and (Beam.Cols <> 0) then
+      begin
+      for K:=1 to NumSets do
+         begin
+         if K = 1 then SetLength(Beam.Data,Beam.Rows);
+         for I := 0 to Beam.Rows - 1 do
+            begin
+            if K = 1 then SetLength(Beam.Data[I],Beam.Cols);
+            for J := 1 to Beam.Cols - 1 do
+               begin
+               read(Infile, Value);
+               if (K = 1) then
+                  begin
+                  if (J = 1) then Beam.Data[I,J] := Value
+                     else Beam.Data[I,J] := Value*cGy;
+                  end
+                 else
+                  begin
+                  if (J = 1) then Beam.Data[I,J] := Value
+                     else Beam.Data[I,J] := Beam.Data[I,J] + Value*cGy;
+                  end;
+               end;
+            end;
+
+
+         while (Dummy <> sCalFile) and (not eof(Infile)) do
+            readln(Infile,Dummy);                       {scan to next ------}
+         readln(Infile,Dummy);                          {get col headers}
+         end;
+      end;
+
+   {average and get Min/Max}
+   Beam.Max := 0;
+   Beam.Min := 1.7E308;
+   if (Beam.Rows <> 0) and (Beam.Cols <> 0) then
+      begin
+      for I := 0 to Beam.Rows - 1 do
+         begin
+         for J := 2 to Beam.Cols - 1 do
+            begin
+            Beam.Data[I,J] := Beam.Data[I,J]/NumSets;
+            if Beam.Data[I,J] > Beam.Max then Beam.Max := Beam.Data[I,J];
+            if Beam.Data[I,J] < Beam.Min then Beam.Min := Beam.Data[I,J];
+            end;
+         end;
+      end;
+
+   {set dimensions}
+   with Beam do
+      begin
+      LDet:= StrToFloat(ExtractDelimited(2,sColHead,[#9]));
+      sPart := sColHead;
+      I := 3;
+      while sPart <> '' do
+         begin
+         sPart := ExtractDelimited(I,sColHead,[#9]);
+         if sPart <> '' then RDet := StrToFloat(sPart);
+         Inc(I);
+         end;
+      Width := abs(LDet - RDet)/10;
+      Height := abs(Data[0,1] - Data[Beam.Rows-1,1])/10;
+      XRes := Height/(Rows - 1);             //number of spaces are detectors - 1
+      YRes := Width/(Cols - 3);
       end;
    Result := true;
    end
@@ -1711,6 +1852,14 @@ begin
 ResForm := TResForm.Create(Self);
 ResForm.ShowModal;
 ResForm.Free;
+end;
+
+
+procedure TBSForm.miAboutClick(Sender: TObject);
+begin
+  AboutForm := TAboutForm.Create(Self);
+  AboutForm.ShowModal;
+  AboutForm.Free;
 end;
 
 

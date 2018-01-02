@@ -1,0 +1,13 @@
+# files to ignore
+.ppu
+.o
+.a
+.txt
+.compiled
+
+# directories to ignore
+backup/
+
+#files to include
+!licence.txt
+!readme.txt

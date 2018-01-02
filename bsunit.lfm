@@ -1,12 +1,12 @@
 object BSForm: TBSForm
   Left = 306
-  Height = 655
+  Height = 656
   Top = 80
   Width = 602
   HorzScrollBar.Page = 737
   VertScrollBar.Page = 755
   Caption = 'Beam Scheme'
-  ClientHeight = 635
+  ClientHeight = 636
   ClientWidth = 602
   DesignTimePPI = 95
   Menu = MainMenu1
@@ -15,16 +15,16 @@ object BSForm: TBSForm
   LCLVersion = '1.8.0.5'
   object pBeam: TPanel
     Left = 0
-    Height = 305
+    Height = 306
     Top = 0
     Width = 300
-    ClientHeight = 305
+    ClientHeight = 306
     ClientWidth = 300
     TabOrder = 0
     object iBeam: TImage
       Left = 1
       Height = 256
-      Top = 48
+      Top = 49
       Width = 256
       Align = alClient
       Proportional = True
@@ -32,18 +32,18 @@ object BSForm: TBSForm
     end
     object Panel1: TPanel
       Left = 1
-      Height = 27
+      Height = 28
       Top = 21
       Width = 298
       Align = alTop
-      ClientHeight = 27
+      ClientHeight = 28
       ClientWidth = 298
       TabOrder = 0
       object sbOpen: TSpeedButton
         Left = 0
         Height = 26
-        Hint = 'Open MapCheck'
-        Top = 2
+        Hint = 'Open file or image'
+        Top = 1
         Width = 26
         Glyph.Data = {
           46050000424D4605000000000000360000002800000012000000120000000100
@@ -99,7 +99,7 @@ object BSForm: TBSForm
         Left = 170
         Height = 26
         Hint = 'Print'
-        Top = 2
+        Top = 1
         Width = 26
         Glyph.Data = {
           36040000424D3604000000000000360000002800000010000000100000000100
@@ -146,7 +146,7 @@ object BSForm: TBSForm
         Left = 266
         Height = 26
         Hint = 'Exit'
-        Top = 2
+        Top = 1
         Width = 26
         Glyph.Data = {
           36040000424D3604000000000000360000002800000010000000100000000100
@@ -193,7 +193,7 @@ object BSForm: TBSForm
         Left = 70
         Height = 26
         Hint = 'Invert'
-        Top = 2
+        Top = 1
         Width = 26
         Glyph.Data = {
           C6070000424DC607000000000000360000002800000016000000160000000100
@@ -269,7 +269,7 @@ object BSForm: TBSForm
         Left = 95
         Height = 26
         Hint = 'Normalise to CAX'
-        Top = 2
+        Top = 1
         Width = 26
         Glyph.Data = {
           C6070000424DC607000000000000360000002800000016000000160000000100
@@ -345,7 +345,7 @@ object BSForm: TBSForm
         Left = 120
         Height = 26
         Hint = 'Normalise to maximum'
-        Top = 2
+        Top = 1
         Width = 23
         Glyph.Data = {
           C6070000424DC607000000000000360000002800000016000000160000000100
@@ -420,7 +420,7 @@ object BSForm: TBSForm
         Left = 145
         Height = 26
         Hint = 'Centre field (resample)'
-        Top = 2
+        Top = 1
         Width = 23
         Glyph.Data = {
           C6070000424DC607000000000000360000002800000016000000160000000100
@@ -622,7 +622,7 @@ object BSForm: TBSForm
     object pMaxMin: TPanel
       Left = 257
       Height = 256
-      Top = 48
+      Top = 49
       Width = 42
       Align = alRight
       ClientHeight = 256
@@ -663,19 +663,19 @@ object BSForm: TBSForm
   end
   object pXProfile: TPanel
     Left = 301
-    Height = 305
+    Height = 306
     Top = 0
     Width = 300
-    ClientHeight = 305
+    ClientHeight = 306
     ClientWidth = 300
     TabOrder = 1
     object Panel3: TPanel
       Left = 1
-      Height = 27
+      Height = 28
       Top = 21
       Width = 298
       Align = alTop
-      ClientHeight = 27
+      ClientHeight = 28
       ClientWidth = 298
       TabOrder = 0
       object Label1: TLabel
@@ -864,7 +864,7 @@ object BSForm: TBSForm
     object cXProfile: TChart
       Left = 1
       Height = 256
-      Top = 48
+      Top = 49
       Width = 298
       AxisList = <      
         item
@@ -900,7 +900,7 @@ object BSForm: TBSForm
   object pYProfile: TPanel
     Left = 0
     Height = 305
-    Top = 306
+    Top = 307
     Width = 300
     ClientHeight = 305
     ClientWidth = 300
@@ -1141,7 +1141,7 @@ object BSForm: TBSForm
   object pResults: TPanel
     Left = 301
     Height = 305
-    Top = 306
+    Top = 307
     Width = 300
     BevelOuter = bvLowered
     ClientHeight = 305
@@ -1319,7 +1319,7 @@ object BSForm: TBSForm
   object StatusBar: TStatusBar
     Left = 0
     Height = 22
-    Top = 613
+    Top = 614
     Width = 602
     Panels = <>
     ParentShowHint = False
@@ -1375,6 +1375,13 @@ object BSForm: TBSForm
       object miRestore: TMenuItem
         Caption = 'R&estore'
         OnClick = miRestoreClick
+      end
+    end
+    object miHelp: TMenuItem
+      Caption = '&Help'
+      object miAbout: TMenuItem
+        Caption = '&About'
+        OnClick = miAboutClick
       end
     end
   end
