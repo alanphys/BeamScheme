@@ -28,9 +28,9 @@ object AboutForm: TAboutForm
         Width = 422
         Align = alClient
         Lines.Strings = (
-          'BeamScheme 2008-2018 copyright AC chamberlain'
+          'BeamScheme 2008-2018 copyright AC Chamberlain'
           ''
-          'Welcome to BeamScheme version 0.35'
+          'Welcome to BeamScheme version 0.34'
           ''
           'This software will assist you in extracting 1D profiles from 2D datasets and calculating various parameters on the profiles. BeamScheme can open various image and 2D array file formats such as SNC MapCheck, PTW 720, IBA Matrix and StarTrack, XiO, DICOM, jpg, etc.'
           ''

@@ -9,8 +9,8 @@ LazarusResources.Add('TAboutForm','FORMDATA',[
   +#8'TabOrder'#2#0#0#9'TTabSheet'#9'TabSheet1'#7'Caption'#6#5'About'#12'Client'
   +'Height'#3#219#0#11'ClientWidth'#3#166#1#0#5'TMemo'#6'mAbout'#4'Left'#2#0#6
   +'Height'#3#219#0#3'Top'#2#0#5'Width'#3#166#1#5'Align'#7#8'alClient'#13'Lines'
-  +'.Strings'#1#6'-BeamScheme 2008-2018 copyright AC chamberlain'#6#0#6'"Welcom'
-  +'e to BeamScheme version 0.35'#6#0#12#7#1#0#0'This software will assist you '
+  +'.Strings'#1#6'-BeamScheme 2008-2018 copyright AC Chamberlain'#6#0#6'"Welcom'
+  +'e to BeamScheme version 0.34'#6#0#12#7#1#0#0'This software will assist you '
   +'in extracting 1D profiles from 2D datasets and calculating various paramete'
   +'rs on the profiles. BeamScheme can open various image and 2D array file for'
   +'mats such as SNC MapCheck, PTW 720, IBA Matrix and StarTrack, XiO, DICOM, j'

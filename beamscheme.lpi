@@ -71,9 +71,7 @@
         <ComponentName Value="BSForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="36"/>
-        <CursorPos X="45" Y="57"/>
+        <CursorPos X="35" Y="16"/>
         <FoldState Value=" T3.W0.1 pjGl30{A]Alfo90z1V"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -801,7 +799,9 @@
         <Filename Value="aboutunit.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="AboutForm"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <CursorPos X="48" Y="22"/>
         <UsageCount Value="24"/>
@@ -921,14 +921,18 @@
       </SyntaxOptions>
     </Parsing>
     <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
       <Optimizations>
         <VariablesInRegisters Value="True"/>
       </Optimizations>
     </CodeGeneration>
     <Linking>
       <Debugging>
+        <GenerateDebugInfo Value="False"/>
         <DebugInfoType Value="dsDwarf2Set"/>
+        <StripSymbols Value="True"/>
       </Debugging>
+      <LinkSmart Value="True"/>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>

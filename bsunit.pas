@@ -20,8 +20,8 @@ unit bsunit;
  21/5/2015 Combine open dialog and DICOM dialog
  20/7/2015 Add messaging system
  Version 0.3 released 20/7/2015
- 26/8/2016 Add normalise to max
  28/6/2016 Support PTW 729 mcc
+ 26/8/2016 Add normalise to max
  29/9/2016 Fix PTW 729 memory error
  21/10/2016 Add PowerPDF for output
  24/10/2016 Fix Profile event misfire
