@@ -9,7 +9,7 @@ Sorry, I did warn you!
 2) Installation
 It is not necessary to remove previous versions unless these were installed manually.
 
-Run the MPSetup.exe file.
+Run the BSSetup.exe file.
 
 Alternatively extract the files manually and copy into a directory of your
 choosing.
