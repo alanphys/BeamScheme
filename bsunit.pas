@@ -31,7 +31,8 @@ unit bsunit;
             Fix profile offset limit error
  7/12/2017 Fix even number of detectors offset
  15/12/2017 Support Brainlab iPlan Dose plane format
-            Add text file format identification}
+            Add text file format identification
+ 8/1/2018 Fix windowing error on normalise to CAX}
 
 {$mode objfpc}{$H+}
 
@@ -1936,11 +1937,11 @@ if Max <> Beam.Min then
         Z :=(Z - Beam.Min)*100/(Max - Beam.Min);
         Beam.Data[I,J] := Z;
         end;
-Beam.Max := Beam.Max*100/Max;
+Beam.Max := (Beam.Max - Beam.Min)*100/(Max - Beam.Min);
 Beam.Min := 0;
-DTrackBar.Max := 100;
+DTrackBar.Max := Round(Beam.Max);
 DTrackBar.Min := 0;
-DTrackBar.PositionU:= 100;
+DTrackBar.PositionU:= DTrackBar.Max;
 DTrackBar.PositionL := 0;
 DTrackBar.LargeChange := 5;
 DTrackBar.SmallChange := 1;
@@ -2035,8 +2036,8 @@ for J:= 0 to MaxJ do
          if NI > MaxI - 1 then NI := MaxI - 1;
       ShiftData[J,I+2] := Beam.Data[NJ,NI+2]*(1-RemX)*(1-RemY) + Beam.Data[NJ,NI+3]*RemX*(1-RemY)
          + Beam.Data[NJ+1,NI+2]*(1-RemX)*RemY + Beam.Data[NJ+1,NI+3]*RemX*RemY;
-						end;
- 		end;
+      end;
+   end;
 Beam.Data := ShiftData;
 DisplayBeam;
 seXAngleChange(Self);

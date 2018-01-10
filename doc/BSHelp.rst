@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Beamscheme help's documentation!
-===========================================
+Welcome to BeamScheme's documentation!
+======================================
 
 .. toctree::
    :maxdepth: 2
@@ -16,15 +16,17 @@ Welcome to Beamscheme help's documentation!
    BSHelp4.rst
    BSHelp5.rst
    BSHelp6.rst
-   BSHelp7.rst
    BSHelp8.rst
+   BSHelp7.rst
    BSHelp9.rst
    BSHelp10.rst
+   BSHelp11.rst
+   BSHelp12.rst
+   BSHelp13.rst
    
 
 Indices and tables
 ==================
 
 * :ref:`genindex`
-* :ref:`modindex`
 * :ref:`search`

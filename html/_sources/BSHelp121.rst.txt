@@ -1,0 +1,4 @@
+Unrecognised file
+-----------------
+
+BeamScheme does not recognise this type of file. Please check that the file is in the list of :ref:`Supported File Formats`. Also check that the file does not contain compression or encryption.

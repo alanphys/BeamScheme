@@ -3,9 +3,12 @@
 *.o
 *.a
 *.compiled
+*.gitignore
+*.directory
 
 # directories to ignore
 backup/
+_build/
 
 #files to include
 

@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Diagonal/Skew Profiles &#8212; Beamscheme help 2 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <title>Diagonal/Skew Profiles &#8212; BeamScheme 0.40-alpha documentation</title>
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2',
+        VERSION:     '0.40-alpha',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -24,16 +24,26 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Algorithms" href="BSHelp9.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
+    <link rel="next" title="Parameters" href="BSHelp11.html" />
+    <link rel="prev" title="Algorithms" href="BSHelp9.html" /> 
   </head>
   <body>
-  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="BSHelp11.html" title="Parameters"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="BSHelp9.html" title="Algorithms"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.40-alpha documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="BSHelp9.html" accesskey="U">Algorithms</a> &#187;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -43,21 +53,32 @@
   <div class="section" id="diagonal-skew-profiles">
 <span id="index-0"></span><h1>Diagonal/Skew Profiles<a class="headerlink" href="#diagonal-skew-profiles" title="Permalink to this headline">¶</a></h1>
 <p>Diagonal or skew profiles introduce a number of inaccuracies, which is probably why none of the major vendors offer them. However, if these inaccuracies are understood then skew profiles may yield a lot of useful information. The problem is simple. Consider the following situation.</p>
-<img alt="_images/Profile.svg" src="_images/Profile.svg" /></div>
+<img alt="_images/Profile.png" class="align-center" src="_images/Profile.png" />
+<p>The squares represent pixels or detectors from a 2D dataset. The red line is an ideal skew profile. If the profile completely bisects a square or detector that value is added to the actual profile (blue square). The problem occurs where the ideal profile partially bisects a square or adjacent squares (green squares). There are a number of possible schemes to solve this such as selecting the nearest pixel or interpolating between adjacent pixels. BeamScheme calculates the length of the profile and then increments an index sequentially along this length. The index is separated into its x and y components which are rounded off to give the pixel indexes along the profile. While the potential does exist for pixels to be skipped or selected twice this is a more robust method and less open to interpretation.</p>
+<p>The situation is made worse by the introduction of wide profiles. A wide profile is a profile more than one pixel wide. BeamScheme uses a similar algorithm to that above in that for each index along the profile the normal to the profile is calculated and a second index is sequentially incremented and separated into its x and y components to give the correct pixel. The pixel values are summed. This is done symmetrically on either side of the ideal profile. Thus, the width of the profile will always be odd. This is because an even width will introduce asymmetry in the profile which can lead to further problems.</p>
+<p>Skew wide profiles are clipped at the edge of the detector area. This means that the start and finish of wide profiles should be treated with caution and may not be a reflection of reality. The array/image edge will tend to be blurred depending on how skew the profile is.</p>
+<p>A similar problem occurs where the profile crosses field edges. If the wide profile is not perpendicular to the field edge this will blur the field edge and increase the penumbra.</p>
+</div>
 
 
           </div>
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="BSHelp.html">Documentation overview</a><ul>
-      <li>Previous: <a href="BSHelp9.html" title="previous chapter">Algorithms</a></li>
-  </ul></li>
-</ul>
-</div>
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="BSHelp9.html"
+                        title="previous chapter">Algorithms</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="BSHelp11.html"
+                        title="next chapter">Parameters</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/BSHelp10.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -72,20 +93,25 @@
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy;2017, AC Chamberlain.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
-      
-      |
-      <a href="_sources/BSHelp10.rst.txt"
-          rel="nofollow">Page source</a>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="BSHelp11.html" title="Parameters"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="BSHelp9.html" title="Algorithms"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.40-alpha documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="BSHelp9.html" >Algorithms</a> &#187;</li> 
+      </ul>
     </div>
-
-    
-
-    
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, AC Chamberlain.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+    </div>
   </body>
 </html>

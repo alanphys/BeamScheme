@@ -23,10 +23,6 @@ are permitted provided that the following conditions are met:
    5. Installation, copying or use of this program indicates acceptance of these
       licence conditions.
 
-   6. This software is provided as part of the medical physics services of 
-      Yenzakahle Consulting CC and the authors and may be removed at their
-      discretion.
-
 Yenzakahle Consulting CC, their subsidiaries and associated companies or practices
 make no representations or warranties, expressly or implied regarding the
 program and associated computer files forming the software.  No representations

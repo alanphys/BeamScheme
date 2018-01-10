@@ -4,7 +4,7 @@
 # You can set these variables from the command line.
 SPHINXOPTS    =
 SPHINXBUILD   = sphinx-build
-SPHINXPROJ    = Beamschemehelp
+SPHINXPROJ    = BeamScheme
 SOURCEDIR     = .
 BUILDDIR      = _build
 

@@ -92,4 +92,5 @@ Version 0.3 released 20/7/2015
            Fix profile offset limit error
 18/11/2017 Fix even number of detectors offset
 15/12/2017 Support Brainlab iPlan Dose plane format
-           Add text file format identification}
+           Add text file format identification
+8/1/2018 Fix windowing error on normalise to CAX

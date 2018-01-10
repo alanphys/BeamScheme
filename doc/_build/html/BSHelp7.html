@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Supported file formats &#8212; Beamscheme help 2 documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <title>Supported File Formats &#8212; BeamScheme 0.40-alpha documentation</title>
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '2',
+        VERSION:     '0.40-alpha',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -24,17 +24,25 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Using BeamScheme" href="BSHelp8.html" />
-    <link rel="prev" title="Running BeamScheme under Linux" href="BSHelp62.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
+    <link rel="next" title="DICOM" href="BSHelp71.html" />
+    <link rel="prev" title="The Results Pane" href="BSHelp84.html" /> 
   </head>
   <body>
-  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="BSHelp71.html" title="DICOM"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="BSHelp84.html" title="The Results Pane"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.40-alpha documentation</a> &#187;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
@@ -42,37 +50,37 @@
           <div class="body" role="main">
             
   <div class="section" id="supported-file-formats">
-<span id="index-0"></span><h1>Supported file formats<a class="headerlink" href="#supported-file-formats" title="Permalink to this headline">¶</a></h1>
+<span id="index-0"></span><h1>Supported File Formats<a class="headerlink" href="#supported-file-formats" title="Permalink to this headline">¶</a></h1>
 <table border="1" class="docutils">
 <colgroup>
-<col width="18%" />
-<col width="21%" />
-<col width="61%" />
+<col width="23%" />
+<col width="20%" />
+<col width="58%" />
 </colgroup>
 <thead valign="bottom">
 <tr class="row-odd"><th class="head">Source</th>
-<th class="head">File Type</th>
+<th class="head">File Extension</th>
 <th class="head">Description</th>
 </tr>
 </thead>
 <tbody valign="top">
-<tr class="row-even"><td>DICOM</td>
+<tr class="row-even"><td><a class="reference internal" href="BSHelp71.html#dicom"><span class="std std-ref">DICOM</span></a></td>
 <td>*.dcm</td>
 <td>Dicom CT or RT image files uncompressed</td>
 </tr>
-<tr class="row-odd"><td>MapCheck</td>
+<tr class="row-odd"><td><a class="reference internal" href="BSHelp72.html#mapcheck"><span class="std std-ref">MapCheck</span></a></td>
 <td>*.txt</td>
 <td>MapCheck text files</td>
 </tr>
-<tr class="row-even"><td>PTW</td>
+<tr class="row-even"><td><a class="reference internal" href="BSHelp73.html#ptw"><span class="std std-ref">PTW</span></a></td>
 <td>*.mcc</td>
 <td>PTW 729 array files only at this stage</td>
 </tr>
-<tr class="row-odd"><td>IBA</td>
+<tr class="row-odd"><td><a class="reference internal" href="BSHelp74.html#iba"><span class="std std-ref">IBA</span></a></td>
 <td>*.opg</td>
 <td>IBA Matrix and StarTrack opg files</td>
 </tr>
-<tr class="row-even"><td>Image</td>
+<tr class="row-even"><td><a class="reference internal" href="BSHelp75.html#image"><span class="std std-ref">Image</span></a></td>
 <td>*.bmp</td>
 <td>Windows bitmap</td>
 </tr>
@@ -84,13 +92,17 @@
 <td>*.jpg,*.jpeg</td>
 <td>Joint Photographic Expert Group files</td>
 </tr>
-<tr class="row-odd"><td>&#160;</td>
+<tr class="row-odd"><td><a class="reference internal" href="BSHelp76.html#his"><span class="std std-ref">HIS</span></a></td>
 <td>*.his</td>
 <td>Raw unstructured data</td>
 </tr>
-<tr class="row-even"><td>XiO</td>
-<td>&#160;</td>
+<tr class="row-even"><td><a class="reference internal" href="BSHelp77.html#xio"><span class="std std-ref">XiO</span></a></td>
+<td>None</td>
 <td>Elekta XiO dose plane export text file</td>
+</tr>
+<tr class="row-odd"><td><a class="reference internal" href="BSHelp78.html#iplan"><span class="std std-ref">iPlan</span></a></td>
+<td>None</td>
+<td>BrainLab iPlan dose plane text file</td>
 </tr>
 </tbody>
 </table>
@@ -98,6 +110,8 @@
 guarantee of BeamScheme operating correctly on them. If you have a file that is
 causing BeamScheme to crash or is giving strange results please forward the file
 along with a description of the problem to <a class="reference external" href="mailto:alanphys&#37;&#52;&#48;yenzakahle&#46;co&#46;za">alanphys<span>&#64;</span>yenzakahle<span>&#46;</span>co<span>&#46;</span>za</a>.</p>
+<div class="toctree-wrapper compound">
+</div>
 </div>
 
 
@@ -105,15 +119,20 @@ along with a description of the problem to <a class="reference external" href="m
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
-        <div class="sphinxsidebarwrapper"><div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="BSHelp.html">Documentation overview</a><ul>
-      <li>Previous: <a href="BSHelp62.html" title="previous chapter">Running BeamScheme under Linux</a></li>
-      <li>Next: <a href="BSHelp8.html" title="next chapter">Using BeamScheme</a></li>
-  </ul></li>
-</ul>
-</div>
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="BSHelp84.html"
+                        title="previous chapter">The Results Pane</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="BSHelp71.html"
+                        title="next chapter">DICOM</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/BSHelp7.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <form class="search" action="search.html" method="get">
@@ -128,20 +147,24 @@ along with a description of the problem to <a class="reference external" href="m
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy;2017, AC Chamberlain.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.6.5</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.10</a>
-      
-      |
-      <a href="_sources/BSHelp7.rst.txt"
-          rel="nofollow">Page source</a>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="BSHelp71.html" title="DICOM"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="BSHelp84.html" title="The Results Pane"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.40-alpha documentation</a> &#187;</li> 
+      </ul>
     </div>
-
-    
-
-    
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, AC Chamberlain.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+    </div>
   </body>
 </html>
