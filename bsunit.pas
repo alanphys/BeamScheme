@@ -32,7 +32,9 @@ unit bsunit;
  7/12/2017 Fix even number of detectors offset
  15/12/2017 Support Brainlab iPlan Dose plane format
             Add text file format identification
- 8/1/2018 Fix windowing error on normalise to CAX}
+ 8/1/2018 Fix windowing error on normalise to CAX
+ 26/1/2018 Fix panel maximise under QT5
+           Fix window level control size under max/min}
 
 {$mode objfpc}{$H+}
 
@@ -41,8 +43,8 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, Menus,
   ExtCtrls, Buttons, TAGraph, TASeries, TATools, StdCtrls, Graphtype,
-  IntfGraphics, Spin, ComCtrls, Tracker2,
-  FPImage;
+  IntfGraphics, Spin, ComCtrls, LazHelpHTML, Tracker2, lNetComponents,
+  lwebserver, FPImage;
 
 const pi = 3.14159265359;
 
@@ -105,6 +107,10 @@ type
     ChartToolsetYDataPointHintTool: TDataPointHintTool;
      cXProfile: TChart;
      cXprof: TLabel;
+     HTMLBrowserHelpViewer: THTMLBrowserHelpViewer;
+     HTMLHelpDatabase: THTMLHelpDatabase;
+     HelpServer: TLHTTPServerComponent;
+     miContents: TMenuItem;
      miAbout: TMenuItem;
      miHelp: TMenuItem;
      miExportY: TMenuItem;
@@ -185,9 +191,9 @@ type
      procedure DTrackBarChange(Sender: TObject);
      procedure DTrackBarClick(Sender: TObject);
      procedure FormCreate(Sender: TObject);
+     function FormHelp(Command: Word; Data: PtrInt; var CallHelp: Boolean): Boolean;
      function DICOMOpen(sFileName:string):boolean;
      procedure FormResize(Sender: TObject);
-     procedure miAboutClick(Sender: TObject);
      function TextOpen(sFileName:string):boolean;
      function MapCheckOpen(sFileName:string):boolean;
      function IBAOpen(sFileName:string):boolean;
@@ -204,6 +210,8 @@ type
      procedure miOpenClick(Sender: TObject);
      procedure miPDFPrint(Sender: TObject);
      procedure miRestoreClick(Sender: TObject);
+     procedure miAboutClick(Sender: TObject);
+     procedure miContentsClick(Sender: TObject);
      procedure sbIMinClick(Sender: TObject);
      procedure sbInvertClick(Sender: TObject);
      procedure sbNormClick(Sender: TObject);
@@ -222,7 +230,10 @@ type
     { private declarations }
   public
     { public declarations }
-  end; 
+     FileHandler: TFileHandler;
+     CGIHandler: TCGIHandler;
+     PHPCGIHandler: TPHPFastCGIHandler;
+  end;
 
 var
     BSForm:      TBSForm;
@@ -244,7 +255,7 @@ procedure CalcParams(PArr:TPArr; var BeamParams:TBeamParams);
 
 implementation
 
-uses DICOM, define_types, types, StrUtils, resunit, aboutunit;
+uses DICOM, define_types, types, StrUtils, helpintfs, resunit, aboutunit;
 
 const AllChars = [#0..#255] - DigitChars - ['.'];
 
@@ -309,6 +320,7 @@ with Beam do if (Rows>0) and (Cols>0) then
            IntFImage.Colors[J-2,I] := GreyVal;
            end;
      BSForm.iBeam.Picture.Bitmap.LoadFromIntfImage(IntFImage);
+     IntFImage.Free;
    end;
 end;
 
@@ -880,10 +892,42 @@ end;
 
 procedure TBSForm.FormCreate(Sender: TObject);
 var I          :integer;
+    sExePath:   string;
 
 begin
 Beam := TBeam.Create;
 StatusMessages := TStringList.Create;
+
+{Set directory path to program files}
+sExePath := ExtractFilePath(Application.ExeName);
+SetCurrentDir(sExePath);
+
+{start web server for online help}
+FileHandler := TFileHandler.Create;
+FileHandler.MimeTypeFile := sExePath + 'html' + DirectorySeparator + 'mime.types';
+FileHandler.DocumentRoot := sExePath + 'html';
+
+CGIHandler := TCGIHandler.Create;
+CGIHandler.FCGIRoot := sExePath + 'html' + DirectorySeparator + 'cgi-bin';
+CGIHandler.FDocumentRoot := sExePath + 'html' + DirectorySeparator + 'cgi-bin';
+CGIHandler.FEnvPath := sExePath + 'html' + DirectorySeparator + 'cgi-bin';
+CGIHandler.FScriptPathPrefix := 'cgi-bin' + DirectorySeparator;
+
+PHPCGIHandler := TPHPFastCGIHandler.Create;
+PHPCGIHandler.Host := 'localhost';
+PHPCGIHandler.Port := 4665;
+PHPCGIHandler.AppEnv := 'PHP_FCGI_CHILDREN=5:PHP_FCGI_MAX_REQUESTS=10000';
+PHPCGIHandler.AppName := 'php-cgi.exe';
+PHPCGIHandler.EnvPath := sExePath + 'html' + DirectorySeparator + 'cgi-bin';
+
+HelpServer.RegisterHandler(FileHandler);
+HelpServer.RegisterHandler(CGIHandler);
+
+FileHandler.DirIndexList.Add('BSHelp.html');
+FileHandler.DirIndexList.Add('index.htm');
+FileHandler.DirIndexList.Add('index.php');
+FileHandler.DirIndexList.Add('index.cgi');
+FileHandler.RegisterHandler(PHPCGIHandler);
 
 YPTR := Point(0,0);
 YPTL := Point(0,0);
@@ -901,8 +945,26 @@ for I:=0 to lvResults.Items.Count - 1 do
    lvResults.Items[I].SubItems.Add('');
    lvResults.Items[I].SubItems.Add('');
    end;
+
+if not HelpServer.Listen(3880) then
+   begin
+   BSMessage('Error starting help server. Online help may not be available. ');
+   end;
+
 Safe := true;
 end;
+
+
+function TBSForm.FormHelp(Command: Word; Data: PtrInt; var CallHelp: Boolean): Boolean;
+var Ctrl:      TControl;
+begin
+Ctrl := Application.GetControlAtMouse;
+if Ctrl.HelpKeyword <> '' then
+   ShowHelpOrErrorForKeyword('',Ctrl.HelpKeyword)
+  else
+   ShowHelpOrErrorForKeyword('','HTML/BSHelp.html');
+end;
+
 
 procedure TBSForm.DTrackBarChange(Sender: TObject);
 begin
@@ -1863,6 +1925,11 @@ begin
   AboutForm.Free;
 end;
 
+procedure TBSForm.miContentsClick(Sender: TObject);
+begin
+ShowHelpOrErrorForKeyword('','HTML/BSHelp.html');
+end;
+
 
 procedure TBSForm.miRestoreClick(Sender: TObject);
 begin
@@ -1870,21 +1937,6 @@ sbIMinClick(Sender);
 sbXMinClick(Sender);
 sbYMinClick(Sender);
 sbRMinClick(Sender);
-end;
-
-procedure TBSForm.sbIMinClick(Sender: TObject);
-begin
-pBeam.Height := (BSForm.ClientHeight - 20) div 2 - 1;
-pBeam.Width := BSForm.ClientWidth div 2 - 1;
-pBeam.SendToBack;
-sbIMax.Left := pBeam.Width - 30;
-sbIMax.Enabled := true;
-sbIMax.Visible := true;
-sbIMin.Left := pBeam.Width - 30;
-sbIMin.Enabled := false;
-sbIMin.Visible := false;
-lMin.Top := pMaxMin.Height - 20;
-DTrackbar.Height := pMaxMin.Height - 40;
 end;
 
 procedure TBSForm.sbInvertClick(Sender: TObject);
@@ -2045,6 +2097,44 @@ seYAngleChange(Self);
 end;
 
 
+procedure TBSForm.sbIMaxClick(Sender: TObject);
+begin
+pBeam.Height := ClientHeight - 20;
+pBeam.Width := ClientWidth;
+pBeam.BringToFront;
+sbIMax.Enabled := False;
+sbIMax.Visible := False;
+sbIMin.Left := pBeam.Width - 30;
+sbIMin.Enabled := True;
+sbIMin.Visible := True;
+lMin.Top := pMaxMin.Height - 20;
+DTrackbar.Height := pMaxMin.Height - 40;
+pXProfile.Hide;
+pYProfile.Hide;
+PResults.Hide;
+end;
+
+
+procedure TBSForm.sbIMinClick(Sender: TObject);
+begin
+pBeam.Height := (BSForm.ClientHeight - 20) div 2 - 1;
+pBeam.Width := BSForm.ClientWidth div 2 - 1;
+pBeam.SendToBack;
+sbIMax.Left := pBeam.Width - 30;
+sbIMax.Enabled := true;
+sbIMax.Visible := true;
+sbIMin.Left := pBeam.Width - 30;
+sbIMin.Enabled := false;
+sbIMin.Visible := false;
+pMaxMin.Height := pBeam.Height - 49;
+lMin.Top := pMaxMin.Height - 20;
+DTrackbar.Height := pMaxMin.Height - 40;
+pXProfile.Show;
+pYProfile.Show;
+pResults.Show;
+end;
+
+
 procedure TBSForm.sbRMaxClick(Sender: TObject);
 begin
 pResults.Height := ClientHeight - 20;
@@ -2057,6 +2147,9 @@ sbRMax.Visible := false;
 sbRMin.Left := pResults.Width - 30;
 sbRMin.Enabled := true;
 sbRMin.Visible := true;
+pBeam.Hide;
+pXProfile.Hide;
+pYProfile.Hide;
 end;
 
 procedure TBSForm.sbRMinClick(Sender: TObject);
@@ -2072,6 +2165,9 @@ sbRMax.Visible := true;
 sbRMin.Left := pResults.Width - 30;
 sbRMin.Enabled := false;
 sbRMin.Visible := false;
+pBeam.Show;
+pXProfile.Show;
+pYProfile.Show;
 end;
 
 
@@ -2086,6 +2182,9 @@ sbXMax.Visible := false;
 sbXMin.Left := pXProfile.Width - 30;
 sbXMin.Enabled := true;
 sbXMin.Visible := true;
+pBeam.Hide;
+pYProfile.Hide;
+pResults.Hide;
 end;
 
 
@@ -2101,6 +2200,9 @@ sbXMax.Visible := true;
 sbXMin.Left := pXProfile.Width - 30;
 sbXMin.Enabled := false;
 sbXMin.Visible := false;
+pBeam.Show;
+pYProfile.Show;
+PResults.Show;
 end;
 
 procedure TBSForm.sbYMaxClick(Sender: TObject);
@@ -2114,6 +2216,9 @@ sbYMax.Visible := false;
 sbYMin.Left := pYProfile.Width - 30;
 sbYMin.Enabled := true;
 sbYMin.Visible := true;
+pBeam.Hide;
+pXProfile.Hide;
+pResults.Hide;
 end;
 
 
@@ -2129,6 +2234,9 @@ sbYMax.Visible := true;
 sbYMin.Left := pYProfile.Width - 30;
 sbYMin.Enabled := false;
 sbYMin.Visible := false;
+pBeam.Show;
+pXProfile.Show;
+pResults.Show;
 end;
 
 
@@ -2260,20 +2368,6 @@ with BeamParams do
    Inc(I);
    lvResults.Items[I].SubItems[1] := FloatToStrf(RCAX,ffFixed,3,2) + ' %';
    end;
-end;
-
-procedure TBSForm.sbIMaxClick(Sender: TObject);
-begin
-pBeam.Height := ClientHeight - 20;
-pBeam.Width := ClientWidth;
-pBeam.BringToFront;
-sbIMax.Enabled := False;
-sbIMax.Visible := False;
-sbIMin.Left := pBeam.Width - 30;
-sbIMin.Enabled := True;
-sbIMin.Visible := True;
-lMin.Top := pMaxMin.Height - 20;
-DTrackbar.Height := pMaxMin.Height - 40;
 end;
 
 

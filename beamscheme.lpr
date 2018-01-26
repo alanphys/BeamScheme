@@ -9,8 +9,8 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms
   { you can add units after this }, bsunit, TAChartLazarusPkg, tachartprint,
-  Printer4Lazarus, dicom, define_types, dtrackbar, pack_powerpdf, resunit,
-  aboutunit;
+  Printer4Lazarus, dicom, define_types, dtrackbar, pack_powerpdf, lnetvisual,
+  resunit, aboutunit;
 
 {$R *.res}
 
