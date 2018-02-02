@@ -5,95 +5,95 @@ unit resunit;
 interface
 
 uses
-   Classes, SysUtils, FileUtil, PReport, PrintersDlgs, LResources, Forms,
-			Controls, Graphics, Dialogs, Menus, ExtCtrls, ComCtrls;
+Classes, SysUtils, FileUtil, PReport, PrintersDlgs, LResources, Forms,
+Controls, Graphics, Dialogs, Menus, ExtCtrls, ComCtrls;
 
 type
 
-			{ TResForm }
+{ TResForm }
 
-   TResForm = class(TForm)
-						PReport: TPReport;
-						priYProf: TPRImage;
-						priXProf: TPRImage;
-						PrintDialog: TPrintDialog;
-						PRLabel1: TPRLabel;
-						PRLabel10: TPRLabel;
-						PRLabel11: TPRLabel;
-						PRLabel12: TPRLabel;
-						PRLabel13: TPRLabel;
-						PRLabel14: TPRLabel;
-						PRLabel15: TPRLabel;
-						PRLabel16: TPRLabel;
-						PRLabel17: TPRLabel;
-						PRLabel18: TPRLabel;
-						PRLabel19: TPRLabel;
-						PRLabel2: TPRLabel;
-						PRLabel20: TPRLabel;
-						prlXWidth: TPRLabel;
-						prlXAngle: TPRLabel;
-						prlYOffset: TPRLabel;
-						prlYWidth: TPRLabel;
-						prlYAngle: TPRLabel;
-						prlXOffset: TPRLabel;
-						prlDate: TPRLabel;
-						prlSource: TPRLabel;
-						prlYArea: TPRLabel;
-						prlYCentre: TPRLabel;
-						prlYEdge: TPRLabel;
-						prlYFlatP: TPRLabel;
-						prlYFlatR: TPRLabel;
-						prlYMAX: TPRLabel;
-						prlYPen50: TPRLabel;
-						prlYPen80: TPRLabel;
-						prlYPen90: TPRLabel;
-						prlXSize: TPRLabel;
-						prlXCentre: TPRLabel;
-						prlXEdge: TPRLabel;
-						PRLabel3: TPRLabel;
-						PRLabel4: TPRLabel;
-						PRLabel5: TPRLabel;
-						PRLabel6: TPRLabel;
-						PRLabel7: TPRLabel;
-						PRLabel8: TPRLabel;
-						PRLabel9: TPRLabel;
-						PRLayoutPanel1: TPRLayoutPanel;
-						prlXPen90: TPRLabel;
-						prlXPen80: TPRLabel;
-						prlXPen50: TPRLabel;
-						prlXArea: TPRLabel;
-						prlXFlatR: TPRLabel;
-						prlXMAX: TPRLabel;
-						prlYSize: TPRLabel;
-						prlYSymP: TPRLabel;
-						prlXSymR: TPRLabel;
-						prlXSymP: TPRLabel;
-						prlXFlatP: TPRLabel;
-						prlYSymR: TPRLabel;
-						PRPage: TPRPage;
-						PRRect1: TPRRect;
-						rfImageList: TImageList;
-						MainMenu1: TMainMenu;
-						miExit: TMenuItem;
-						miPrint: TMenuItem;
-						miPDF: TMenuItem;
-						rfSaveDialog: TSaveDialog;
-						ScrollBox1: TScrollBox;
-						ToolBar1: TToolBar;
-						tbPDF: TToolButton;
-						ToolButton1: TToolButton;
-						tbPrint: TToolButton;
-						ToolButton2: TToolButton;
-						tbExit: TToolButton;
-						procedure FormCreate(Sender: TObject);
-      procedure miExitClick(Sender: TObject);
-						procedure tbPDFClick(Sender: TObject);
-						procedure tbPrintClick(Sender: TObject);
-   private
+TResForm = class(TForm)
+  PReport: TPReport;
+  priYProf: TPRImage;
+  priXProf: TPRImage;
+  PrintDialog: TPrintDialog;
+  PRLabel1: TPRLabel;
+  PRLabel10: TPRLabel;
+  PRLabel11: TPRLabel;
+  PRLabel12: TPRLabel;
+  PRLabel13: TPRLabel;
+  PRLabel14: TPRLabel;
+  PRLabel15: TPRLabel;
+  PRLabel16: TPRLabel;
+  PRLabel17: TPRLabel;
+  PRLabel18: TPRLabel;
+  PRLabel19: TPRLabel;
+  PRLabel2: TPRLabel;
+  PRLabel20: TPRLabel;
+  prlXWidth: TPRLabel;
+  prlXAngle: TPRLabel;
+  prlYOffset: TPRLabel;
+  prlYWidth: TPRLabel;
+  prlYAngle: TPRLabel;
+  prlXOffset: TPRLabel;
+  prlDate: TPRLabel;
+  prlSource: TPRLabel;
+  prlYArea: TPRLabel;
+  prlYCentre: TPRLabel;
+  prlYEdge: TPRLabel;
+  prlYFlatP: TPRLabel;
+  prlYFlatR: TPRLabel;
+  prlYMAX: TPRLabel;
+  prlYPen50: TPRLabel;
+  prlYPen80: TPRLabel;
+  prlYPen90: TPRLabel;
+  prlXSize: TPRLabel;
+  prlXCentre: TPRLabel;
+  prlXEdge: TPRLabel;
+  PRLabel3: TPRLabel;
+  PRLabel4: TPRLabel;
+  PRLabel5: TPRLabel;
+  PRLabel6: TPRLabel;
+  PRLabel7: TPRLabel;
+  PRLabel8: TPRLabel;
+  PRLabel9: TPRLabel;
+  PRLayoutPanel1: TPRLayoutPanel;
+  prlXPen90: TPRLabel;
+  prlXPen80: TPRLabel;
+  prlXPen50: TPRLabel;
+  prlXArea: TPRLabel;
+  prlXFlatR: TPRLabel;
+  prlXMAX: TPRLabel;
+  prlYSize: TPRLabel;
+  prlYSymP: TPRLabel;
+  prlXSymR: TPRLabel;
+  prlXSymP: TPRLabel;
+  prlXFlatP: TPRLabel;
+  prlYSymR: TPRLabel;
+  PRPage: TPRPage;
+  PRRect1: TPRRect;
+  rfImageList: TImageList;
+  MainMenu1: TMainMenu;
+  miExit: TMenuItem;
+  miPrint: TMenuItem;
+  miPDF: TMenuItem;
+  rfSaveDialog: TSaveDialog;
+  ScrollBox1: TScrollBox;
+  ToolBar1: TToolBar;
+  tbPDF: TToolButton;
+  ToolButton1: TToolButton;
+  tbPrint: TToolButton;
+  ToolButton2: TToolButton;
+  tbExit: TToolButton;
+  procedure FormCreate(Sender: TObject);
+  procedure miExitClick(Sender: TObject);
+  procedure tbPDFClick(Sender: TObject);
+  procedure tbPrintClick(Sender: TObject);
+  private
       { private declarations }
-   public
+  public
       { public declarations }
-   end;
+  end;
 
 var
    ResForm: TResForm;

@@ -5,7 +5,7 @@
 MAX/CAX
 =======
 
-MAX/CAX flatness is the ratio of the CAX profile value to the maximum profile value expressed as a percent:
+MAX/CAX flatness is the ratio of the CAX profile value to the maximum profile value expressed as a percent taken over 80% of the field size:
 
 .. math:: \cfrac {max} {cax} * 100
    

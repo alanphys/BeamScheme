@@ -5,7 +5,7 @@
 Percent Symmetry
 ================
 
-Percent symmetry the ratio symmetry expressed as a percentage:
+Percent symmetry is the ratio symmetry expressed as a percentage:
 
 .. math:: (RS - 1) * 100)
    

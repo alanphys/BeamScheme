@@ -4,7 +4,7 @@ LazarusResources.Add('TResForm','FORMDATA',[
   'TPF0'#8'TResForm'#7'ResForm'#4'Left'#3'$'#1#6'Height'#3#136#3#3'Top'#2'4'#5
   +'Width'#3'o'#2#7'Caption'#6#18'BeamScheme Results'#12'ClientHeight'#3't'#3#11
   +'ClientWidth'#3'o'#2#13'DesignTimePPI'#2'_'#4'Menu'#7#9'MainMenu1'#8'OnCreat'
-  +'e'#7#10'FormCreate'#10'LCLVersion'#6#7'1.8.0.5'#0#8'TToolBar'#8'ToolBar1'#4
+  +'e'#7#10'FormCreate'#10'LCLVersion'#6#7'1.9.0.0'#0#8'TToolBar'#8'ToolBar1'#4
   +'Left'#2#0#6'Height'#2#26#3'Top'#2#0#5'Width'#3'o'#2#7'Caption'#6#8'ToolBar1'
   +#6'Images'#7#11'rfImageList'#8'TabOrder'#2#0#0#11'TToolButton'#5'tbPDF'#4'Le'
   +'ft'#2#1#4'Hint'#6#8'Save PDF'#3'Top'#2#2#7'Caption'#6#8'Save PDF'#10'ImageI'

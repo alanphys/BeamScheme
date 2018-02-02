@@ -25,7 +25,11 @@ the user must perform. Here is a list of these actions and their meanings.
 
 -   An icon like this |Note| indicates important information about which you should be aware.
 
+-   A hint or short cut is shown like this |Hint|.
+
 .. |Note| image:: _static/Note.png
+
+.. |Hint| image:: _static/Hint.png
 
 
 It should be mentioned here that when this manual uses the word 'field' it is

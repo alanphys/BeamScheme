@@ -5,7 +5,7 @@
 Ratio Flatness
 ==============
 
-Ratio flatness is the ratio of the maximum profile value to the minimum profile value expressed as a percent:
+Ratio flatness is the ratio of the maximum profile value to the minimum profile value expressed as a percent taken over 80% of the field size:
 
 .. math:: \cfrac {max} {min} * 100
    

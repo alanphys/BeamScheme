@@ -32,6 +32,7 @@ object BSForm: TBSForm
       HelpKeyword = 'HTML/BSHelp82.html'
       AntialiasingMode = amOff
       Align = alClient
+      OnClick = iBeamClick
       Proportional = True
       Stretch = True
     end

@@ -9,7 +9,7 @@ object ResForm: TResForm
   DesignTimePPI = 95
   Menu = MainMenu1
   OnCreate = FormCreate
-  LCLVersion = '1.8.0.5'
+  LCLVersion = '1.9.0.0'
   object ToolBar1: TToolBar
     Left = 0
     Height = 26

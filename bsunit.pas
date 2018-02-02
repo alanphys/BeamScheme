@@ -34,7 +34,13 @@ unit bsunit;
             Add text file format identification
  8/1/2018 Fix windowing error on normalise to CAX
  26/1/2018 Fix panel maximise under QT5
-           Fix window level control size under max/min}
+           Fix window level control size under max/min
+ 30/1/2018 Fix area symmetry off by 1
+           Fix CAX for even no of detectors
+           Fix image autoscale
+ 1/2/2018 Add mouse control for profiles
+ 2/2/2018 Fix off by 1 error profile limits}
+
 
 {$mode objfpc}{$H+}
 
@@ -194,6 +200,7 @@ type
      function FormHelp(Command: Word; Data: PtrInt; var CallHelp: Boolean): Boolean;
      function DICOMOpen(sFileName:string):boolean;
      procedure FormResize(Sender: TObject);
+     procedure iBeamClick(Sender: TObject);
      function TextOpen(sFileName:string):boolean;
      function MapCheckOpen(sFileName:string):boolean;
      function IBAOpen(sFileName:string):boolean;
@@ -255,7 +262,7 @@ procedure CalcParams(PArr:TPArr; var BeamParams:TBeamParams);
 
 implementation
 
-uses DICOM, define_types, types, StrUtils, helpintfs, resunit, aboutunit;
+uses DICOM, define_types, types, math, StrUtils, helpintfs, resunit, aboutunit;
 
 const AllChars = [#0..#255] - DigitChars - ['.'];
 
@@ -392,7 +399,7 @@ if (Angle > -TanA) and (Angle <= TanA) then {Profile is X profile}
       TL := Limit(0,1,-MidY,Phi,Offset,MidX,MidY);
       end
      else
-      if TL.Y > UpperY then
+      if TL.Y >= UpperY then
          begin {must intersect bottom axis}
          TL := Limit(0,1,MidY,Phi,Offset,MidX,MidY);
          end;
@@ -404,7 +411,7 @@ if (Angle > -TanA) and (Angle <= TanA) then {Profile is X profile}
       BR := Limit(0,1,-MidY,Phi,Offset,MidX,MidY);
       end
      else
-      if BR.Y > UpperY then
+      if BR.Y >= UpperY then
          begin {must intersect bottom axis}
          BR := Limit(0,1,MidY,Phi,Offset,MidX,MidY);
          end;
@@ -418,7 +425,7 @@ if (Angle > -TanA) and (Angle <= TanA) then {Profile is X profile}
       TL := Limit(1,0,-MidX,Phi,Offset,MidX,MidY);
       end
      else
-      if TL.X > UpperX then
+      if TL.X >= UpperX then
          begin {must intersect right axis}
          TL := Limit(1,0,MidX,Phi,Offset,MidX,MidY);
          end;
@@ -430,7 +437,7 @@ if (Angle > -TanA) and (Angle <= TanA) then {Profile is X profile}
       BR := Limit(1,0,-MidX,Phi,Offset,MidX,MidY);
       end
      else
-      if BR.X > UpperX then
+      if BR.X >= UpperX then
          begin {must intersect right axis}
          BR := Limit(1,0,MidX,Phi,Offset,MidX,MidY);
          end;
@@ -542,10 +549,11 @@ if PrevW > 0 then
          if Z > BSForm.DTrackBar.PositionU then Z := BSForm.DTrackBar.PositionU;
          PArr[K].Y := PArr[K].Y + Z;
          inc(OLN);
-									end
+         end
         else
          OverLimit := true;
-						{add positive profile}
+
+      {add positive profile}
       WI := round(WPY);
       WJ := round(WPX);
       if (WJ >= 0) and (WJ < LimX) and (WI >= 0) and (WI < LimY) then
@@ -555,7 +563,7 @@ if PrevW > 0 then
          if Z > BSForm.DTrackBar.PositionU then Z := BSForm.DTrackBar.PositionU;
          PArr[K].Y := PArr[K].Y + Z;
          inc(OLP);
-									end
+         end
         else
          OverLimit := true;
       end;
@@ -602,7 +610,7 @@ repeat
             if Z > BSForm.DTrackBar.PositionU then Z := BSForm.DTrackBar.PositionU;
             PArr[K].Y := PArr[K].Y + Z;
             inc(OLN);
-   									end
+            end
            else
             OverLimit := true;
          {add positive profile}
@@ -659,8 +667,7 @@ var I,
     ALeft,
     ARight,
     Diff,
-    Res,
-    fHLPArr:   double;
+    Res:   double;
 
 function ILReg(X1,X2,Y1,Y2,Y:double):double;
 var m,c:       double;
@@ -699,7 +706,10 @@ with BeamParams do
       begin
 
       {initialise vars}
-      CMax := PArr[HLPArr].Y;
+      if not odd(LPArr) then
+         CMax := PArr[HLPArr].Y
+        else
+         CMax := (PArr[HLPArr].Y + PArr[HLPArr - 1].Y)/2;
       CMin := CMax;
       for I:=0 to LPArr do
          if PArr[I].Y < CMin
@@ -711,8 +721,16 @@ with BeamParams do
       M20 := (CMax-CMin)*0.2 + CMin;
       M10 := (CMax-CMin)*0.1 + CMin;
       I := 0;
-      NegP := trunc(LPArr/2);
-      PosP := round(LPArr/2);
+      if not odd(LPArr) then
+         begin                        {symmetric around central detector}
+         NegP := LPArr div 2 - 1;
+         PosP := LPArr div 2 + 1;
+         end
+        else
+         begin                        {central detectors straddle axis}
+         NegP := LPArr div 2;
+         PosP := LPArr div 2 + 1;
+         end;
       NNegP80 := NegP;
       NPosP80 := PosP;
       NegP80 := 0;
@@ -724,37 +742,40 @@ with BeamParams do
          begin
          if LEdge = 0 then
             begin
-            if PArr[NegP].Y < HMax then
+            if PArr[NegP].Y <= HMax then
                begin
                LEdge := ILReg(PArr[NegP].X,PArr[NegP+1].X,PArr[NegP].Y,PArr[NegP+1].Y,HMax);
-               ALeft := ALeft + HMax*abs(LEdge-PArr[NegP].X);
+               ALeft := ALeft + HMax*abs(LEdge-PArr[NegP+1].X);
 	       end
               else
+               begin
+               ALeft := ALeft + PArr[NegP].Y*Res;
                if NegP80 <> NNegP80 then
                   begin
                   NegP80 := NNegP80;
                   {use regression for symmetry as points may not be symmetric}
                   {ALeft := ALeft + LReg(PArr[NegP80].X,PArr[NegP80+1].X,PArr[NegP80].Y,
                      PArr[NegP80+1].Y,trunc(-I*Res*0.8)); }
-                  ALeft := ALeft + PArr[NegP].Y*Res;
                   if PArr[NegP80].Y > CMax then CMax := PArr[NegP80].Y;
                   if PArr[NegP80].Y < CMin then CMin := PArr[NegP80].Y;
                  end;
+               end;
             end;
          if REdge = 0 then
             begin
-            if PArr[PosP].Y < HMax then
+            if PArr[PosP].Y <= HMax then
                begin
                REdge := ILReg(PArr[PosP].X,PArr[PosP-1].X,PArr[PosP].Y,PArr[PosP-1].Y,HMax);
-               ARight := ARight + HMax*abs(REdge - PArr[PosP].X);
+               ARight := ARight + HMax*abs(REdge - PArr[PosP-1].X);
 	       end
               else
+               begin
+               ARight := ARight + PArr[PosP].Y*Res;
                if PosP80 <> NPosP80 then
                   begin
                   PosP80 := NPosP80;
                   {ARight := ARight + LReg(PArr[PosP80].X,PArr[PosP80-1].X,PArr[PosP80].Y,
                      PArr[PosP80-1].Y,trunc(I*Res*0.8)); }
-                  ARight := ARight + PArr[PosP].Y*Res;
                   if PArr[PosP80].Y > CMax then CMax := PArr[PosP80].Y;
                   if PArr[PosP80].Y < CMin then CMin := PArr[PosP80].Y;
                   if Parr[PosP80].y > 0 then Diff:= PArr[NegP80].Y/PArr[PosP80].Y
@@ -762,6 +783,7 @@ with BeamParams do
                   if (Diff < 1.0) and (Diff <> 0) then Diff := 1/(Diff);
                   if PSym < Diff then PSym := Diff;
                   end;
+               end;
             end;
          if L90 = 0 then
             if PArr[NegP].Y < M90 then
@@ -970,20 +992,20 @@ procedure TBSForm.DTrackBarChange(Sender: TObject);
 begin
 if Safe then
    begin
-	  DTrackBar.Invalidate;
-	  DisplayBeam;
-	  ShowProfile(iBeam.Picture.Bitmap,seYWidth.Value,YPTL,YPTR,YPBR,YPBL);
-	  ShowProfile(iBeam.Picture.Bitmap,seXWidth.Value,XPTL,XPTR,XPBR,XPBL);
-			end;
+   DTrackBar.Invalidate;
+   DisplayBeam;
+   ShowProfile(iBeam.Picture.Bitmap,seYWidth.Value,YPTL,YPTR,YPBR,YPBL);
+   ShowProfile(iBeam.Picture.Bitmap,seXWidth.Value,XPTL,XPTR,XPBR,XPBL);
+   end;
 end;
 
 procedure TBSForm.DTrackBarClick(Sender: TObject);
 begin
 if Safe then
    begin
-	  seXAngleChange(Self);
-	  seYAngleChange(Self);
-			end;
+   seXAngleChange(Self);
+   seYAngleChange(Self);
+   end;
 end;
 
 
@@ -1032,7 +1054,7 @@ with OpenDialog do
    {$IFDEF win32}
    Filter := 'DICOM Image|*.dcm|MapCheck Text Files|*.txt|PTW|*.mcc|IBA|*.opg|Windows bitmap|*.bmp|Tiff bitmap|*.tif|JPEG image|*.jpg|HIS image|*.his|All Files|*.*';
    {$ELSE}
-   Filter := 'DICOM Image|*.dcm|MapCheck Text Files|*.txt|PTW|*.mcc|IBA|*.opg|Windows bitmap|*.bmp|Tiff bitmap|*.tif|JPEG image|*.jpg|HIS image|*.his|All Files|*';
+   Filter := 'DICOM Image|*.dcm|MapCheck Text Files|*.txt|PTW|*.mcc|IBA|*.opg|Windows bitmap|*.bmp|Tiff bitmap|*.tif|JPEG image|*.jpg;*jpeg|HIS image|*.his|All Files|*';
    {$ENDIF}
    Title := 'Open file';
    InitialDir := sExePath;
@@ -1052,7 +1074,7 @@ if OpenDialog.Execute then
       DataOK := BMPOpen(OpenDialog.Filename);
    if (not DataOK) and (Dummy = '.TIF') then
       DataOK := BMPOpen(OpenDialog.Filename);
-   if (not DataOK) and (Dummy = '.JPG') then
+   if (not DataOK) and ((Dummy = '.JPG') or (Dummy = '.JPEG')) then
       DataOK := BMPOpen(OpenDialog.Filename);
    if not DataOK then {assume file is text}
       DataOK := TextOpen(Opendialog.FileName);
@@ -1673,11 +1695,6 @@ Result := false;
    end;
 end;
 
-procedure TBSForm.FormResize(Sender: TObject);
-begin
-miRestoreClick(Sender);
-end;
-
 
 function TBSForm.XiOOpen(sFileName:string):boolean;
 var I,J:       integer;
@@ -1883,6 +1900,8 @@ SrcIntfImage.SetRawImage(lRawImage);
 SrcIntfImage.LoadFromFile(sFileName);
 Beam.Cols := SrcIntfImage.Width + 2;
 Beam.Rows := SrcIntfImage.Height;
+Beam.Max := 0;
+Beam.Min := 1.7E308;
 if (Beam.Rows > 0) and (Beam.Cols > 0) then
    begin
    SetLength(Beam.Data,Beam.Rows);
@@ -1907,6 +1926,50 @@ if (Beam.Rows > 0) and (Beam.Cols > 0) then
    BSError('File error, no data found!');
    end;
 SrcIntfImage.Free;
+end;
+
+
+procedure TBSForm.FormResize(Sender: TObject);
+begin
+miRestoreClick(Sender);
+end;
+
+procedure TBSForm.iBeamClick(Sender: TObject);
+var MouseXY:   TPoint;
+    BMPH,                      {Bitmap height}
+    BMPW:      integer;        {Bitmap width}
+    PX,
+    PY,
+    R,
+    Theta,
+    Phi,
+    AR:        double;         {Aspect ratio}
+
+begin
+MouseXY := iBeam.ScreenToControl(Mouse.CursorPos);
+BMPH := iBeam.Picture.Bitmap.Height;
+BMPW := iBeam.Picture.Bitmap.Width;
+AR := BMPW/BMPH;
+
+if AR >= 1 then
+   begin
+   PY := (Beam.Rows div 2) - MouseXY.Y*(Beam.Rows/iBeam.Height)*AR;
+   PX := MouseXY.X*((Beam.Cols - 2)/iBeam.Width) - ((Beam.Cols -2) div 2);
+   end
+  else
+   begin
+   PY := (Beam.Rows div 2) - MouseXY.Y*(Beam.Rows/iBeam.Height);
+   PX := MouseXY.X*((Beam.Cols - 2)/iBeam.Width)/AR - ((Beam.Cols -2) div 2);
+   end;
+
+R := sqrt(PX*PX + PY*PY);
+Theta := arctan2(PX,PY);
+
+Phi := seXAngle.Value*2*PI/360;
+seXOffset.Value := R*cos(Theta - Phi);
+
+Phi := seYAngle.Value*2*PI/360;
+seYOffset.Value := R*cos(Theta - Phi);
 end;
 
 
@@ -2250,18 +2313,18 @@ begin
 if Safe then
    begin
    Angle := seYAngle.Value;
-	  Offset := -seYOffset.Value;
-	  Wdth := seYWidth.Value;
-	  if (iBeam.Picture.Bitmap <> nil) and (length(Beam.Data) <> 0) then
-	     begin
-	     MBitmap := iBeam.Picture.Bitmap;
-	     DrawProfile(MBitmap,Beam,Angle,Offset,Wdth,
-	        YProfile,YPArr, YPTL,YPTR,YPBL,YPBR,YPW);
-	     iBeam.Picture.Bitmap := MBitmap;
-	     CalcParams(YPArr,YBParams);
-	     ShowYResults(YBParams);
-	     end;
-			end;
+   Offset := -seYOffset.Value;
+   Wdth := seYWidth.Value;
+   if (iBeam.Picture.Bitmap <> nil) and (length(Beam.Data) <> 0) then
+      begin
+      MBitmap := iBeam.Picture.Bitmap;
+      DrawProfile(MBitmap,Beam,Angle,Offset,Wdth,
+         YProfile,YPArr, YPTL,YPTR,YPBL,YPBR,YPW);
+      iBeam.Picture.Bitmap := MBitmap;
+      CalcParams(YPArr,YBParams);
+      ShowYResults(YBParams);
+      end;
+   end;
 end;
 
 
@@ -2273,20 +2336,20 @@ var Angle,
 
 begin
 if Safe then
-  begin
-	  Angle := seXAngle.Value;
-	  Offset := -seXOffset.Value;
-	  Wdth := seXWidth.Value;
-	  if (iBeam.Picture.Bitmap <> nil) and (length(Beam.Data) <> 0) then
-	     begin
-	     MBitmap := iBeam.Picture.Bitmap;
-	     DrawProfile(MBitmap,Beam,Angle,Offset,Wdth,
-	        XProfile,XPArr,XPTL,XPTR,XPBL,XPBR,XPW);
-	     iBeam.Picture.Bitmap := MBitmap;
-	     CalcParams(XPArr,XBParams);
-	     ShowXResults(XBParams);
-	     end;
-		end;
+   begin
+   Angle := seXAngle.Value;
+   Offset := -seXOffset.Value;
+   Wdth := seXWidth.Value;
+   if (iBeam.Picture.Bitmap <> nil) and (length(Beam.Data) <> 0) then
+      begin
+      MBitmap := iBeam.Picture.Bitmap;
+      DrawProfile(MBitmap,Beam,Angle,Offset,Wdth,
+         XProfile,XPArr,XPTL,XPTR,XPBL,XPBR,XPW);
+      iBeam.Picture.Bitmap := MBitmap;
+      CalcParams(XPArr,XBParams);
+      ShowXResults(XBParams);
+      end;
+   end;
 end;
 
 procedure TBSForm.ShowXResults(BeamParams:TBeamParams);

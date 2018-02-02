@@ -69,31 +69,35 @@ fixed profile display
 fixed symmetry calculation
 cleaned up printout 
 Version 0.2 released 1/8/2011
-22/8/2011 Fix field centre error,
-          Fix Y resolution error for MapCheck 2
-15/2/2012 Fix CAX normalisation error,
-2/4/2013  Add read for XiO Dose plane file
-20/6/2014 Removed redundant DICOM read code causing memory bug
-24/6/2014 Fixed XiO read offset by 1
-          Fixed MapCheck read if dose cal file not present
-          Included Min/Max as part of beam class
-          Fixed panel maximise to form area
-21/5/2015 combine open dialog and DICOM dialog
-20/7/2015 add messaging system
+22/8/2011  Fix field centre error,
+           Fix Y resolution error for MapCheck 2
+15/2/2012  Fix CAX normalisation error,
+2/4/2013   Add read for XiO Dose plane file
+20/6/2014  Removed redundant DICOM read code causing memory bug
+24/6/2014  Fixed XiO read offset by 1
+           Fixed MapCheck read if dose cal file not present
+           Included Min/Max as part of beam class
+           Fixed panel maximise to form area
+21/5/2015  combine open dialog and DICOM dialog
+20/7/2015  add messaging system
 Version 0.3 released 20/7/2015
-26/8/2016 Add normalise to max
-28/6/2016 Support PTW 729 mcc
-29/9/2016 Fix PTW 729 memory error
+26/8/2016  Add normalise to max
+28/6/2016  Support PTW 729 mcc
+29/9/2016  Fix PTW 729 memory error
 21/10/2016 Add PowerPDF for output
 24/10/2016 Fix Profile event misfire
-15/8/2017 Fix image integer conversion
+15/8/2017  Fix image integer conversion
 13/10/2017 Support IBA Matrix and StartTrack opg
 16/10/2017 Fix Diff divide by zero error
            Fix profile offset limit error
 18/11/2017 Fix even number of detectors offset
 15/12/2017 Support Brainlab iPlan Dose plane format
            Add text file format identification
-8/1/2018 Fix windowing error on normalise to CAX
-25/1/2018 QT5 version must be compiled on Lazarus 1.9 r57132 for correct image display
-26/1/2018 Fix panel maximise under QT5
-          Fix window level control size under max/min
+8/1/2018   Fix windowing error on normalise to CAX
+25/1/2018  QT5 version must be compiled on Lazarus 1.9 r57132 for correct image display
+26/1/2018  Fix panel maximise under QT5
+           Fix window level control size under max/min
+30/1/2018  Fix area symmetry off by 1
+           Fix CAX for even no of detectors
+1/2/2018   Add mouse control for profiles
+2/2/2018   Fix off by 1 error profile limits
