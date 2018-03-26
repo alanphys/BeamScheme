@@ -32,7 +32,8 @@ unit bsunit;
  7/12/2017 Fix even number of detectors offset
  15/12/2017 Support Brainlab iPlan Dose plane format
             Add text file format identification
- 8/1/2018 Fix windowing error on normalise to CAX
+ 8/1/2018 Add help system
+          Fix windowing error on normalise to CAX
  26/1/2018 Fix panel maximise under QT5
            Fix window level control size under max/min
  30/1/2018 Fix area symmetry off by 1

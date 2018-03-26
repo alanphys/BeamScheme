@@ -93,7 +93,8 @@ Version 0.3 released 20/7/2015
 18/11/2017 Fix even number of detectors offset
 15/12/2017 Support Brainlab iPlan Dose plane format
            Add text file format identification
-8/1/2018   Fix windowing error on normalise to CAX
+8/1/2018   Add help system
+           Fix windowing error on normalise to CAX
 25/1/2018  QT5 version must be compiled on Lazarus 1.9 r57132 for correct image display
 26/1/2018  Fix panel maximise under QT5
            Fix window level control size under max/min
