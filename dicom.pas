@@ -10,6 +10,7 @@ unit dicom;
 //  *NOTE: If your software does not decompress images, check to make sure that
 //         DICOMdata.CompressOffset = 0
 //        This value will be > 0 for any DICOM/GE/Elscint file with compressed image data
+// modified ACC 27/3/2018 to handle regional settings
 
 {$IFDEF FPC}       //ACC 1/7/2009
    {$mode delphi}
@@ -80,6 +81,29 @@ var
   green_table : ByteP;
   blue_table  : ByteP;
 implementation
+
+
+function RobustStrToFloat(s:string):extended;
+var fs:        TFormatSettings;
+
+begin
+fs := DefaultFormatSettings;
+Result := 0;
+   try
+   Result := StrToFloat(s);
+   except
+   on EConvertError do         {try again using other decimal separator}
+      begin
+      if fs.DecimalSeparator = ',' then
+         fs.DecimalSeparator := '.'
+        else
+         fs.DecimalSeparator := ',';
+      Result := StrToFloat(s,fs);
+      end;
+   end;
+end;
+
+
 procedure write_interfile_hdr (lHdrName,lImgName: string; var pDICOMdata: DICOMdata);
 var
    lTextFile: textfile;
@@ -939,7 +963,7 @@ begin
         inc(lPos);
   end;
     try
-       result := strtofloat(lStr);
+       result := Robuststrtofloat(lStr);               //ACC
     except
           on EConvertError do begin
              showmessage('Unable to convert the string '+lStr+' to a number');
@@ -1086,7 +1110,7 @@ var
 function readVistaFloat:single;
 begin
     try
-       result := strtofloat(lUpCaseValue);
+       result := Robuststrtofloat(lUpCaseValue);             //ACC
     except
           on EConvertError do begin
              showmessage('Unable to convert the string '+lUpCaseValue+' to a number');
@@ -1119,9 +1143,9 @@ begin
     if length(lStr) > 0 then begin
     try
        case lVal of
-            1: lS1 := strtofloat(lStr);
-            2: lS2 := strtofloat(lStr);
-            3: lS3 := strtofloat(lStr);
+            1: lS1 := Robuststrtofloat(lStr);          //ACC
+            2: lS2 := Robuststrtofloat(lStr);          //ACC
+            3: lS3 := Robuststrtofloat(lStr);          //ACC
        end;
     except
           on EConvertError do begin
@@ -1407,7 +1431,7 @@ begin
   //exit;
   if lStr = '' then exit;
     try
-       result := strtofloat(lStr);
+       result := Robuststrtofloat(lStr);         //ACC
     except
           on EConvertError do begin
              showmessage('Unable to convert the string '+lStr+' to a number');
@@ -1600,9 +1624,9 @@ begin
     if lStr <> '' then begin //string to convert
        try
           case n of
-               1: lF1 := strtofloat(lStr);
-               2: lF2 := strtofloat(lStr);
-               3: lF3 := strtofloat(lStr);
+               1: lF1 := Robuststrtofloat(lStr);         //ACC
+               2: lF2 := Robuststrtofloat(lStr);         //ACC
+               3: lF3 := Robuststrtofloat(lStr);         //ACC
           end;
        except
           on EConvertError do begin
@@ -1765,7 +1789,7 @@ begin
   end;
   if lStr <> '' then begin
     try
-       lDouble := strtofloat(lStr);
+       lDouble := Robuststrtofloat(lStr);             //ACC
     except
           on EConvertError do begin
              showmessage('Unable to convert the string '+lStr+' to a number');
@@ -1963,7 +1987,7 @@ begin
   end;
   if lStr = '' then exit;
     try
-       result := strtofloat(lStr);
+       result := Robuststrtofloat(lStr);              //ACC
     except
           on EConvertError do begin
              showmessage('read_PAR_data: Unable to convert the string '+lStr+' to a number');
@@ -3227,7 +3251,7 @@ begin
          if lValStr[lI] in ['0'..'9'] then
             lConvStr := lConvStr+ lValStr[lI];
      if Length(lConvStr) < 1 then exit;
-     Result := strtofloat(lConvStr);
+     Result := Robuststrtofloat(lConvStr);           //ACC
 end;
 begin
   Result := false;
@@ -3262,6 +3286,7 @@ begin
   end; //verboseread, or vital value
   result := true;
 end;
+
 function FindStr(l1,l2,l3,l4,l5: Char; lReadNum: boolean; var lNum: integer): boolean;
 var //lMarker: integer;
     lNumStr: String;
@@ -4087,11 +4112,11 @@ begin
                   end;
                  if ltmpstr = '' then {no value to read}
                  else if lInfo = 'AXIS_2' then
-                     lDicomData.XYZmm[1] := strtofloat(ltmpstr)
+                     lDicomData.XYZmm[1] := Robuststrtofloat(ltmpstr)       //ACC
                  else if lInfo = 'AXIS_3' then
-                     lDicomData.XYZmm[2] := strtofloat(ltmpstr)
+                     lDicomData.XYZmm[2] := Robuststrtofloat(ltmpstr)       //ACC
                  else if linfo = 'AXIS_4' then
-                     lDicomData.XYZmm[3] := strtofloat(ltmpstr);
+                     lDicomData.XYZmm[3] := Robuststrtofloat(ltmpstr);      //ACC
                   lDynStr := lDynStr+lStr+kCR;
               end; //Str length > 6
              //end;//notetype
@@ -4205,7 +4230,9 @@ procedure readfloats (var fp: file; remaining: integer; var lOutStr: string; var
 var  lDigit : boolean;
    li,lLen,n: integer;
     lfStr: string;
+    fs:        TFormatSettings; {ACC}
 begin
+    fs := DefaultFormatSettings;   {ACC}
     lf1 := 1;
     lf2 := 2;
     if e_len = 0 then begin
@@ -4251,12 +4278,13 @@ begin
     end;
     //QStr(lfStr);
     try
-       lf1 := strtofloat(lfStr);
+       lf1 := Robuststrtofloat(lfStr);             //ACC
     except
-          on EConvertError do begin
-             showmessage('Unable to convert the string '+lfStr+' to a real number');
-             lf1 := 1;
-             exit;
+       on EConvertError do
+          begin
+          showmessage('Unable to convert the string '+lfStr+' to a real number');
+          lf1 := 1;
+          exit;
           end;
     end; {except}
     lfStr := '';
@@ -4273,13 +4301,15 @@ begin
     if not lDigit then exit;
     //QStr(lfStr);
     try
-       lf2 := strtofloat(lfStr);
+       lf2 := Robuststrtofloat(lfStr);             //ACC
     except
-          on EConvertError do begin
-             showmessage('Unable to convert the string '+lfStr+' to a real number');
-             exit;
+       on EConvertError do
+          begin
+          showmessage('Unable to convert the string '+lfStr+' to a real number');
+          lf2 := 1;
+          exit;
           end;
-    end;
+    end; {except}
 
 end;
 
@@ -4394,7 +4424,7 @@ begin
      //showmessage(inttostr(length(lSOmaStr)));
 
      if length(lSOmaStr) > 0 then
-        result := StrToFloat(lSomaStr)
+        result := RobustStrToFloat(lSomaStr)                  //ACC
      else
          result := 0;
 end;
@@ -5244,7 +5274,7 @@ if (ord(tx[0]) = 1) and (ord(tx[1])=2) and ((ljunk mod lMatrixSz)=0){128*128*2by
       if tx[ljunk] in ['0'..'9','.'] then
          lStr := lStr+ tx[ljunk];
    if lStr <> '' then
-      lDicomData.XYZmm[3] := strtofloat(lStr);
+      lDicomData.XYZmm[3] := Robuststrtofloat(lStr);        //ACC
    //start: voxel size
    dseek(fp,594);
    dBlockRead(fp, tx, 12*SizeOf(Char), n);
@@ -5253,7 +5283,7 @@ if (ord(tx[0]) = 1) and (ord(tx[1])=2) and ((ljunk mod lMatrixSz)=0){128*128*2by
       if tx[ljunk] in ['0'..'9','.'] then
          lStr := lStr+ tx[ljunk];
    if lStr <> '' then
-      lDicomData.XYZmm[1] := strtofloat(lStr);
+      lDicomData.XYZmm[1] := Robuststrtofloat(lStr);           //ACC
    lDicomData.XYZmm[2] := lDicomData.XYZmm[1];
    //end: read voxel sizes
    //start: patient name

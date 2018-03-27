@@ -40,7 +40,8 @@ unit bsunit;
            Fix CAX for even no of detectors
            Fix image autoscale
  1/2/2018 Add mouse control for profiles
- 2/2/2018 Fix off by 1 error profile limits}
+ 2/2/2018 Fix off by 1 error profile limits
+ 27/3/2018 Fix regional settings decimal separator}
 
 
 {$mode objfpc}{$H+}
@@ -289,6 +290,27 @@ begin
   Data := nil;
 end;
 
+
+function RobustStrToFloat(s:string):extended;
+var Val:       extended;
+    fs:        TFormatSettings;
+
+begin
+fs := DefaultFormatSettings;
+Result := 0;
+   try
+   Result := StrToFloat(s);
+   except
+   on EConvertError do         {try again using other decimal separator}
+      begin
+      if fs.DecimalSeparator = ',' then
+         fs.DecimalSeparator := '.'
+        else
+         fs.DecimalSeparator := ',';
+      Result := StrToFloat(s,fs);
+      end;
+   end;
+end;
 
 procedure DisplayBeam;
 {Transfers the array data to a bitmap for viewing. Image is autoscaled}
@@ -1203,7 +1225,7 @@ if Dummy[1] = '*' then {file is MapCheck}
       with Beam do
          begin
          Height := Data[0,0]*2;
-         Width := StrToFloat(Dummy)*2;
+         Width := RobustStrToFloat(Dummy)*2;
          XRes := Height/(Rows - 1);             //number of spaces are detectors - 1
          YRes := Width/(Cols - 3)
          end;
@@ -1309,7 +1331,7 @@ if Dummy = '<opimrtascii>' then {file is IBA}
    with Beam do
       begin
       Height := Data[0,1]*0.2;
-      Width := abs(StrToFloat(Trim(sPart))*0.2);
+      Width := abs(RobustStrToFloat(Trim(sPart))*0.2);
       XRes := Height/(Rows - 1);             //number of spaces are detectors - 1
       YRes := Width/(Cols - 3)
       end;
@@ -1373,7 +1395,7 @@ if Dummy = 'BEGIN_SCAN_DATA' then {file is PTW}
             begin
             inc(J);
             Dummy := ExtractDelimited(3,Dummy,[#9]);
-            Value := StrToFloat(Dummy);
+            Value := RobustStrToFloat(Dummy);
             Value := Value*100;                                {convert to cGy}
             Beam.Data[Beam.Rows - I,J + 1] := Value;
             if Value > Beam.Max then Beam.Max := Value;
@@ -1392,7 +1414,7 @@ if Dummy = 'BEGIN_SCAN_DATA' then {file is PTW}
          if LeftStr(Dummy,20) = 'SCAN_OFFAXIS_INPLANE' then
             begin
             Copy2SymbDel(Dummy,'=');
-            Beam.Data[Beam.Rows - I,0] := StrToFloat(Dummy);
+            Beam.Data[Beam.Rows - I,0] := RobustStrToFloat(Dummy);
             end;
          readln(Infile,Dummy);
          Dummy := TrimLeftSet(Dummy,StdWordDelims);
@@ -1719,13 +1741,13 @@ for I:=1 to 16 do
       end;
    if LeftStr(Dummy,9) = 'DoseResmm' then
       begin
-      Beam.XRes := StrToFloat(RightStr(Dummy,3));
+      Beam.XRes := RobustStrToFloat(RightStr(Dummy,3));
       Beam.YRes := Beam.XRes;
       end;
    if LeftStr(Dummy,19) = 'OutputWidLenQAplane' then
       begin
-      Beam.Width := StrToFloat(ExtractDelimited(2,Dummy,[',']));
-      Beam.Height := StrToFloat(ExtractDelimited(3,Dummy,[',']));
+      Beam.Width := RobustStrToFloat(ExtractDelimited(2,Dummy,[',']));
+      Beam.Height := RobustStrToFloat(ExtractDelimited(3,Dummy,[',']));
       end;
    if LeftStr(Dummy,9) = 'DoseUnits' then
       begin
@@ -1745,7 +1767,7 @@ if (not eof(Infile)) and (Beam.Rows <> 0) and (Beam.Cols <> 0) then
       readln(Infile,Dummy);
       for J := 1 to Beam.Cols - 2 do
          begin
-         Value := StrToFloat(ExtractDelimited(J,Dummy,[',']))*cGy;
+         Value := RobustStrToFloat(ExtractDelimited(J,Dummy,[',']))*cGy;
          Beam.Data[I,J+1] := Value;
          if Value > Beam.Max then Beam.Max := Value;
          if Value < Beam.Min then Beam.Min := Value;
@@ -1858,13 +1880,13 @@ if LeftStr(Dummy,8) = 'BrainLAB' then {file is BrainLab}
    {set dimensions}
    with Beam do
       begin
-      LDet:= StrToFloat(ExtractDelimited(2,sColHead,[#9]));
+      LDet:= RobustStrToFloat(ExtractDelimited(2,sColHead,[#9]));
       sPart := sColHead;
       I := 3;
       while sPart <> '' do
          begin
          sPart := ExtractDelimited(I,sColHead,[#9]);
-         if sPart <> '' then RDet := StrToFloat(sPart);
+         if sPart <> '' then RDet := RobustStrToFloat(sPart);
          Inc(I);
          end;
       Width := abs(LDet - RDet)/10;

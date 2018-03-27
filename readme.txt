@@ -102,3 +102,4 @@ Version 0.3 released 20/7/2015
            Fix CAX for even no of detectors
 1/2/2018   Add mouse control for profiles
 2/2/2018   Fix off by 1 error profile limits
+27/3/2018 Fix regional settings decimal separator
