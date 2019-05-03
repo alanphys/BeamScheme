@@ -120,6 +120,8 @@ DICOMdata = record
     LongIntp0 = ^LongIntRA0;
     DWordRA = array [1..1] of DWord;
     DWordp = ^DWordRA;
+    DWordRA0 = array [0..0] of DWord;
+    DWordp0 = ^DWordRA0;
 
     ByteRA = array [1..1] of byte;
     Bytep = ^ByteRA;

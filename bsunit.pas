@@ -41,7 +41,11 @@ unit bsunit;
            Fix image autoscale
  1/2/2018 Add mouse control for profiles
  2/2/2018 Fix off by 1 error profile limits
- 27/3/2018 Fix regional settings decimal separator}
+ 27/3/2018 Fix regional settings decimal separator
+ 3/4/2018 Add mean and standard deviation
+          Fix profile increment
+ 30/4/2019 Fix DTrackbar if image max = maxlongint
+ 3/5/2019 Fix DICOM off by one and pointer conversion}
 
 
 {$mode objfpc}{$H+}
@@ -103,7 +107,9 @@ type
      PL90,
      PR90,
      PL50,
-     PR50:      double;
+     PR50,
+     Mean80,
+     Std80:      double;
     end;
 
   { TBSForm }
@@ -672,12 +678,15 @@ end;
 
 procedure CalcParams(PArr:TPArr;var BeamParams:TBeamParams);
 var I,
+    N,
     NegP,
     PosP,
     NegP80,                    {negative increment 80% field of view}
     NNegP80,                   {new negative increment 80% field of view}
     PosP80,                    {positive increment 80% field of view}
     NPosP80,                   {new positive increment 80% field of view}
+    StartNeg,                  {Start pos for negative counter}
+    StartPos,                  {Start pos for positive counter}
     LPArr,
     HLPArr:     integer;
     CMax,
@@ -689,6 +698,8 @@ var I,
     M10,
     ALeft,
     ARight,
+    ASum,
+    ASSqr,
     Diff,
     Res:   double;
 
@@ -746,16 +757,24 @@ with BeamParams do
       I := 0;
       if not odd(LPArr) then
          begin                        {symmetric around central detector}
-         NegP := LPArr div 2 - 1;
-         PosP := LPArr div 2 + 1;
+         StartNeg := LPArr div 2 - 1;
+         StartPos := LPArr div 2 + 1;
+         ASum := PArr[LPArr div 2].Y;
+         ASSqr := sqr(ASum);
+         N := 1;
          end
         else
          begin                        {central detectors straddle axis}
-         NegP := LPArr div 2;
-         PosP := LPArr div 2 + 1;
+         StartNeg := LPArr div 2;
+         StartPos := LPArr div 2 + 1;
+         ASum := 0;
+         ASSqr := 0;
+         N := 0;
          end;
-      NNegP80 := NegP;
-      NPosP80 := PosP;
+      NegP := StartNeg;
+      PosP := StartPos;
+      NNegP80 := StartNeg;
+      NPosP80 := StartPos;
       NegP80 := 0;
       PosP80 := 0;
       CMin := CMax;
@@ -781,6 +800,9 @@ with BeamParams do
                      PArr[NegP80+1].Y,trunc(-I*Res*0.8)); }
                   if PArr[NegP80].Y > CMax then CMax := PArr[NegP80].Y;
                   if PArr[NegP80].Y < CMin then CMin := PArr[NegP80].Y;
+                  ASum := ASum + PArr[NegP80].Y;
+                  ASSqr := ASSqr + sqr(PArr[NegP80].Y);
+                  Inc(N);
                  end;
                end;
             end;
@@ -801,10 +823,13 @@ with BeamParams do
                      PArr[PosP80-1].Y,trunc(I*Res*0.8)); }
                   if PArr[PosP80].Y > CMax then CMax := PArr[PosP80].Y;
                   if PArr[PosP80].Y < CMin then CMin := PArr[PosP80].Y;
-                  if Parr[PosP80].y > 0 then Diff:= PArr[NegP80].Y/PArr[PosP80].Y
+                  if PArr[PosP80].Y > 0 then Diff:= PArr[NegP80].Y/PArr[PosP80].Y
                      else Diff := 1;
                   if (Diff < 1.0) and (Diff <> 0) then Diff := 1/(Diff);
                   if PSym < Diff then PSym := Diff;
+                  ASum := ASum + PArr[PosP80].Y;
+                  ASSqr := ASSqr + sqr(PArr[PosP80].Y);
+                  Inc(N);
                   end;
                end;
             end;
@@ -835,8 +860,8 @@ with BeamParams do
          Inc(I);
          Dec(NegP);
          Inc(PosP);
-         NNegP80 := trunc(LPArr/2) - Trunc(I*0.8);
-         NPosP80 := round(LPArr/2) + Trunc(I*0.8);
+         NNegP80 := StartNeg - Trunc(I*0.8);
+         NPosP80 := StartPos + Trunc(I*0.8);
          end;
       Fsize := REdge - LEdge;
       FCentre := (REdge + LEdge)/2;
@@ -854,6 +879,11 @@ with BeamParams do
          Flat := (CMax - CMin)/(CMax + CMin)*100 else Flat := 0;
       if CMin > 0 then RFlat := CMax/CMin*100 else RFlat := 0;
       if RCAX > 0 then RCAX := CMax*100/RCAX;
+      if N > 0 then
+         begin
+         Mean80 := ASum/N;
+         Std80 := sqrt((ASSqr - sqr(ASum)/N)/(N-1))
+         end;
       end;
    end;
 end;
@@ -908,7 +938,8 @@ if XPArr <> nil then
       AssignFile(Outfile,SaveDialog.FileName);
       Rewrite(Outfile);
       for I := 0 to length(XPArr) - 1 do
-        writeln(Outfile,XPArr[I].X:5:2,',',XPArr[I].Y:1:1);
+         {writeln(Outfile,XPArr[I].X:5:2,',',XPArr[I].Y:1:1);}
+         writeln(Outfile,XPArr[I].X,',',XPArr[I].Y);
       CloseFile(Outfile);
       end;
 end;
@@ -929,7 +960,8 @@ if YPArr <> nil then
       AssignFile(Outfile,SaveDialog.FileName);
       Rewrite(Outfile);
       for I := 0 to length(YPArr) - 1 do
-        writeln(Outfile,YPArr[I].X:5:2,',',YPArr[I].Y:1:1);
+         {writeln(Outfile,YPArr[I].X:5:2,',',YPArr[I].Y:1:1); }
+         writeln(Outfile,YPArr[I].X,',',YPArr[I].Y);
       CloseFile(Outfile);
       end;
 end;
@@ -1127,6 +1159,7 @@ if OpenDialog.Execute then
       seYOffset.Value := 0;
       seYWidth.MaxValue := Beam.Cols - 2;
       seYWidth.Value := 1;
+      if Beam.Max = maxLongint then Beam.Max := Beam.Max - 10;
       DTrackBar.Max := round(Beam.Max);
       DTrackBar.Min := round(Beam.Min);
       DTrackBar.PositionU:= round(Beam.Max);
@@ -1461,7 +1494,7 @@ var Infile:    file;
     lBuff,
     TmpBuff:   bYTEp0;
     lBuff16:   WordP0;
-    lBuff32:   DWordP;
+    lBuff32:   DWordP0;
 
 begin
 Beam.Rows := 0;
@@ -2412,6 +2445,11 @@ with BeamParams do
    lvResults.Items[I].SubItems[0] := FloatToStrf(RFlat,ffFixed,3,2) + ' %';
    Inc(I);
    lvResults.Items[I].SubItems[0] := FloatToStrf(RCAX,ffFixed,3,2) + ' %';
+   Inc(I);
+   Inc(I);
+   lvResults.Items[I].SubItems[0] := FloatToStrF(Mean80,ffFixed,5,1);
+   Inc(I);
+   lvResults.Items[I].SubItems[0] := FloatToStrF(Std80,ffFixed,5,2);
    end;
 end;
 
@@ -2453,6 +2491,11 @@ with BeamParams do
    lvResults.Items[I].SubItems[1] := FloatToStrf(RFlat,ffFixed,3,2) + ' %';
    Inc(I);
    lvResults.Items[I].SubItems[1] := FloatToStrf(RCAX,ffFixed,3,2) + ' %';
+   Inc(I);
+   Inc(I);
+   lvResults.Items[I].SubItems[1] := FloatToStrF(Mean80,ffFixed,5,1);
+   Inc(I);
+   lvResults.Items[I].SubItems[1] := FloatToStrF(Std80,ffFixed,5,2);
    end;
 end;
 

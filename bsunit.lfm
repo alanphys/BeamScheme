@@ -6,7 +6,7 @@ object BSForm: TBSForm
   HorzScrollBar.Page = 737
   VertScrollBar.Page = 755
   Caption = 'Beam Scheme'
-  ClientHeight = 636
+  ClientHeight = 634
   ClientWidth = 602
   DesignTimePPI = 95
   Menu = MainMenu1
@@ -513,7 +513,7 @@ object BSForm: TBSForm
       TabOrder = 1
       object cImage: TLabel
         Left = 5
-        Height = 14
+        Height = 15
         Top = 3
         Width = 77
         Caption = 'Image Name'
@@ -631,7 +631,7 @@ object BSForm: TBSForm
       TabOrder = 2
       object Label8: TLabel
         Left = 3
-        Height = 15
+        Height = 17
         Top = 0
         Width = 36
         Caption = 'Black'
@@ -639,7 +639,7 @@ object BSForm: TBSForm
       end
       object lMin: TLabel
         Left = 1
-        Height = 15
+        Height = 17
         Top = 237
         Width = 38
         Caption = 'White'
@@ -681,7 +681,7 @@ object BSForm: TBSForm
       TabOrder = 0
       object Label1: TLabel
         Left = 2
-        Height = 15
+        Height = 17
         Top = 7
         Width = 44
         Caption = 'Offset:'
@@ -689,7 +689,7 @@ object BSForm: TBSForm
       end
       object Label2: TLabel
         Left = 104
-        Height = 15
+        Height = 17
         Top = 7
         Width = 43
         Caption = 'Width:'
@@ -697,7 +697,7 @@ object BSForm: TBSForm
       end
       object Label3: TLabel
         Left = 199
-        Height = 15
+        Height = 17
         Top = 7
         Width = 42
         Caption = 'Angle:'
@@ -705,7 +705,7 @@ object BSForm: TBSForm
       end
       object seXOffset: TSpinEdit
         Left = 50
-        Height = 22
+        Height = 24
         Top = 2
         Width = 50
         HelpType = htKeyword
@@ -717,7 +717,7 @@ object BSForm: TBSForm
       end
       object seXWidth: TSpinEdit
         Left = 146
-        Height = 22
+        Height = 24
         Top = 2
         Width = 50
         HelpType = htKeyword
@@ -730,7 +730,7 @@ object BSForm: TBSForm
       end
       object seXAngle: TSpinEdit
         Left = 242
-        Height = 22
+        Height = 24
         Top = 2
         Width = 50
         HelpType = htKeyword
@@ -754,7 +754,7 @@ object BSForm: TBSForm
       TabOrder = 1
       object cXprof: TLabel
         Left = 5
-        Height = 14
+        Height = 15
         Top = 3
         Width = 50
         Caption = 'X Profile'
@@ -957,7 +957,7 @@ object BSForm: TBSForm
       TabOrder = 0
       object Label4: TLabel
         Left = 2
-        Height = 15
+        Height = 17
         Top = 7
         Width = 44
         Caption = 'Offset:'
@@ -965,7 +965,7 @@ object BSForm: TBSForm
       end
       object Label5: TLabel
         Left = 104
-        Height = 15
+        Height = 17
         Top = 7
         Width = 43
         Caption = 'Width:'
@@ -973,7 +973,7 @@ object BSForm: TBSForm
       end
       object Label6: TLabel
         Left = 199
-        Height = 15
+        Height = 17
         Top = 7
         Width = 42
         Caption = 'Angle:'
@@ -981,7 +981,7 @@ object BSForm: TBSForm
       end
       object seYOffset: TSpinEdit
         Left = 50
-        Height = 22
+        Height = 24
         Top = 2
         Width = 50
         HelpType = htKeyword
@@ -993,7 +993,7 @@ object BSForm: TBSForm
       end
       object seYWidth: TSpinEdit
         Left = 146
-        Height = 22
+        Height = 24
         Top = 2
         Width = 50
         HelpType = htKeyword
@@ -1006,7 +1006,7 @@ object BSForm: TBSForm
       end
       object seYAngle: TSpinEdit
         Left = 242
-        Height = 22
+        Height = 24
         Top = 2
         Width = 50
         HelpType = htKeyword
@@ -1031,7 +1031,7 @@ object BSForm: TBSForm
       TabOrder = 2
       object cYProf: TLabel
         Left = 5
-        Height = 14
+        Height = 15
         Top = 3
         Width = 49
         Caption = 'Y Profile'
@@ -1168,21 +1168,24 @@ object BSForm: TBSForm
           Width = 100
         end>
       Items.LazData = {
-        D301000010000000FFFFFFFFFFFFFFFFFFFFFFFF00000000050000004669656C
-        64FFFFFFFFFFFFFFFFFFFFFFFF000000000C00000020202045646765284C2C52
-        29FFFFFFFFFFFFFFFFFFFFFFFF000000000900000020202043656E747265FFFF
-        FFFFFFFFFFFFFFFFFFFF000000000700000020202053697A65FFFFFFFFFFFFFF
-        FFFFFFFFFF000000000D00000050656E756D627261284C2C5229FFFFFFFFFFFF
-        FFFFFFFFFFFF000000000900000020202039302D313025FFFFFFFFFFFFFFFFFF
-        FFFFFF000000000900000020202038302D323025FFFFFFFFFFFFFFFFFFFFFFFF
-        000000000900000020202039302D353025FFFFFFFFFFFFFFFFFFFFFFFF000000
-        000800000053796D6D65747279FFFFFFFFFFFFFFFFFFFFFFFF00000000070000
-        0020202041726561FFFFFFFFFFFFFFFFFFFFFFFF000000000800000020202052
-        6174696FFFFFFFFFFFFFFFFFFFFFFFFF000000000A0000002020205065726365
-        6E74FFFFFFFFFFFFFFFFFFFFFFFF0000000008000000466C61746E657373FFFF
-        FFFFFFFFFFFFFFFFFFFF000000000700000020202044696666FFFFFFFFFFFFFF
-        FFFFFFFFFF0000000008000000202020526174696FFFFFFFFFFFFFFFFFFFFFFF
-        FF000000000A0000002020204D41582F434158
+        3102000013000000FFFFFFFFFFFFFFFFFFFFFFFF000000000A0000004669656C
+        642028636D29FFFFFFFFFFFFFFFFFFFFFFFF000000000C000000202020456467
+        65284C2C5229FFFFFFFFFFFFFFFFFFFFFFFF000000000900000020202043656E
+        747265FFFFFFFFFFFFFFFFFFFFFFFF000000000700000020202053697A65FFFF
+        FFFFFFFFFFFFFFFFFFFF000000001000000050656E756D627261284C2C522920
+        636DFFFFFFFFFFFFFFFFFFFFFFFF000000000900000020202039302D313025FF
+        FFFFFFFFFFFFFFFFFFFFFF000000000900000020202038302D323025FFFFFFFF
+        FFFFFFFFFFFFFFFF000000000900000020202039302D353025FFFFFFFFFFFFFF
+        FFFFFFFFFF000000000800000053796D6D65747279FFFFFFFFFFFFFFFFFFFFFF
+        FF000000000700000020202041726561FFFFFFFFFFFFFFFFFFFFFFFF00000000
+        08000000202020526174696FFFFFFFFFFFFFFFFFFFFFFFFF000000000A000000
+        20202050657263656E74FFFFFFFFFFFFFFFFFFFFFFFF0000000008000000466C
+        61746E657373FFFFFFFFFFFFFFFFFFFFFFFF0000000007000000202020446966
+        66FFFFFFFFFFFFFFFFFFFFFFFF0000000008000000202020526174696FFFFFFF
+        FFFFFFFFFFFFFFFFFF000000000A0000002020204D41582F434158FFFFFFFFFF
+        FFFFFFFFFFFFFF000000000A00000053746174697374696373FFFFFFFFFFFFFF
+        FFFFFFFFFF00000000070000002020204D65616EFFFFFFFFFFFFFFFFFFFFFFFF
+        0000000009000000202020537464446576
       }
       ReadOnly = True
       ScrollBars = ssAutoVertical
@@ -1202,7 +1205,7 @@ object BSForm: TBSForm
       TabOrder = 1
       object cResults: TLabel
         Left = 5
-        Height = 14
+        Height = 15
         Top = 3
         Width = 44
         Caption = 'Results'
@@ -1311,7 +1314,7 @@ object BSForm: TBSForm
   object StatusBar: TStatusBar
     Left = 0
     Height = 22
-    Top = 614
+    Top = 612
     Width = 602
     Panels = <>
     ParentShowHint = False

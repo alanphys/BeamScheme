@@ -6,8 +6,7 @@ object AboutForm: TAboutForm
   Caption = 'About'
   ClientHeight = 249
   ClientWidth = 426
-  DesignTimePPI = 95
-  LCLVersion = '1.8.0.5'
+  LCLVersion = '1.8.0.6'
   object PageControl: TPageControl
     Left = 0
     Height = 249
@@ -19,18 +18,18 @@ object AboutForm: TAboutForm
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'About'
-      ClientHeight = 219
-      ClientWidth = 422
+      ClientHeight = 221
+      ClientWidth = 418
       object mAbout: TMemo
         Left = 0
-        Height = 219
+        Height = 221
         Top = 0
-        Width = 422
+        Width = 418
         Align = alClient
         Lines.Strings = (
           'BeamScheme 2008-2018 copyright AC Chamberlain'
           ''
-          'Welcome to BeamScheme version 0.34'
+          'Welcome to BeamScheme version 0.41'
           ''
           'This software will assist you in extracting 1D profiles from 2D datasets and calculating various parameters on the profiles. BeamScheme can open various image and 2D array file formats such as SNC MapCheck, PTW 720, IBA Matrix and StarTrack, XiO, DICOM, jpg, etc.'
           ''
