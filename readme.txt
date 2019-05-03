@@ -1,4 +1,4 @@
-BeamScheme Readme file (c) 2008-2018 AC Chamberlain
+BeamScheme Readme file (c) 2008-2019 AC Chamberlain
 
 1) Licence
 Please read the file Licence.txt. This means that if as a result of using this
@@ -102,7 +102,8 @@ Version 0.3 released 20/7/2015
            Fix CAX for even no of detectors
 1/2/2018   Add mouse control for profiles
 2/2/2018   Fix off by 1 error profile limits
-Version 0.4 released 2/2/2018
 27/3/2018  Fix regional settings decimal separator
 3/4/2018   Add mean and standard deviation
            Fix profile increment
+30/4/2019  Fix DTrackbar if image max = maxlongint
+3/5/2019   Fix DICOM off by one and pointer conversion

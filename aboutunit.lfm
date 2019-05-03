@@ -1,35 +1,38 @@
 object AboutForm: TAboutForm
   Left = 282
-  Height = 249
+  Height = 246
   Top = 121
-  Width = 426
+  Width = 422
   Caption = 'About'
-  ClientHeight = 249
-  ClientWidth = 426
-  LCLVersion = '1.8.0.6'
+  ClientHeight = 246
+  ClientWidth = 422
+  DesignTimePPI = 95
+  LCLVersion = '1.9.0.0'
   object PageControl: TPageControl
     Left = 0
-    Height = 249
+    Height = 246
     Top = 0
-    Width = 426
+    Width = 422
     ActivePage = TabSheet1
     Align = alClient
+    ParentFont = False
     TabIndex = 0
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'About'
-      ClientHeight = 221
+      ClientHeight = 214
       ClientWidth = 418
+      ParentFont = False
       object mAbout: TMemo
         Left = 0
-        Height = 221
+        Height = 214
         Top = 0
         Width = 418
         Align = alClient
         Lines.Strings = (
-          'BeamScheme 2008-2018 copyright AC Chamberlain'
+          'BeamScheme 2008-2019 copyright AC Chamberlain'
           ''
-          'Welcome to BeamScheme version 0.41'
+          'Welcome to BeamScheme version 0.42'
           ''
           'This software will assist you in extracting 1D profiles from 2D datasets and calculating various parameters on the profiles. BeamScheme can open various image and 2D array file formats such as SNC MapCheck, PTW 720, IBA Matrix and StarTrack, XiO, DICOM, jpg, etc.'
           ''
@@ -37,19 +40,21 @@ object AboutForm: TAboutForm
           ''
           'BeamScheme is not intended to replace the commercial software available with 2D arrays, but to complement it.'
         )
+        ParentFont = False
         ScrollBars = ssAutoVertical
         TabOrder = 0
       end
     end
     object TabSheet2: TTabSheet
       Caption = 'Licence'
-      ClientHeight = 219
-      ClientWidth = 422
+      ClientHeight = 214
+      ClientWidth = 418
+      ParentFont = False
       object mLicence: TMemo
         Left = 0
-        Height = 219
+        Height = 214
         Top = 0
-        Width = 422
+        Width = 418
         Align = alClient
         Lines.Strings = (
           'Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:'
@@ -75,19 +80,21 @@ object AboutForm: TAboutForm
           ''
           'Yenzakahle Consulting CC, their subsidiaries and associated companies or practices make no representations or warranties, expressly or implied regarding the program and associated computer files forming the software.  No representations or warranties of the merchantablity or fitness for any particular purpose are made or that the use of the software will not infringe any patents, copyrights or trademarks.  The licensee agrees that neither Yenzakahle Consulting CC nor any of their employees, agents or contractors nor the authors, developers or programmers of the software shall be liable under any claim, charge, demand, whether in contract, tort or otherwise, for any and all loss, cost, charge, claim, demand, fee, expense or damage of any nature or kind arising out of, connected with, resulting from or sustained as a result of this agreement. In no event shall Yenzakahle Consulting CC, nor any of their employees, agents orcontractors nor the authors, developers or programmers of the software be liable for special, direct, indirect or consequential damages, losses, costs, charges, demands, fees or expenses of any nature or kind.'
         )
+        ParentFont = False
         ScrollBars = ssAutoVertical
         TabOrder = 0
       end
     end
     object TabSheet3: TTabSheet
       Caption = 'Credits'
-      ClientHeight = 219
-      ClientWidth = 422
+      ClientHeight = 214
+      ClientWidth = 418
+      ParentFont = False
       object mCredits: TMemo
         Left = 0
-        Height = 219
+        Height = 214
         Top = 0
-        Width = 422
+        Width = 418
         Align = alClient
         Lines.Strings = (
           'BeamScheme written and maintained by Alan Chamberlain'
@@ -102,6 +109,7 @@ object AboutForm: TAboutForm
           ''
           'Doug Gregor and Curtis Carpenter for DTrackbar'
         )
+        ParentFont = False
         ScrollBars = ssAutoVertical
         TabOrder = 0
       end

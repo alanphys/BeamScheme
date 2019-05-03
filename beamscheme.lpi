@@ -74,8 +74,7 @@
         <ComponentName Value="BSForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="1951"/>
+        <TopLine Value="1945"/>
         <CursorPos X="54" Y="48"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -810,8 +809,9 @@
         <ComponentName Value="AboutForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <CursorPos X="42" Y="14"/>
+        <CursorPos X="43" Y="17"/>
         <UsageCount Value="86"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
