@@ -1,62 +1,55 @@
 BeamScheme Readme file (c) 2008-2019 AC Chamberlain
 
-1) Licence
-Please read the file Licence.txt. This means that if as a result of using this
-program you fry your patients, trash your linac, nuke the cat, blow the city
-power in a ten block radius and generally cause global thermonuclear meltdown!
-Sorry, I did warn you!
+1) Introduction
+BeamScheme 2008-2019 copyright AC Chamberlain
 
-2) Installation
+Welcome to BeamScheme version 0.42
+
+This software will assist you in extracting 1D profiles from 2D datasets and calculating various parameters on the profiles. BeamScheme can open various image and 2D array file formats such as SNC MapCheck, PTW 720, IBA Matrix and StarTrack, XiO, DICOM, jpg, etc.
+
+Parameters such as field size, field centre, penumbra, flatness and symmetry are calculated. Profiles can be taken at any angle, offset or thickness. Profiles can be exported to a text file for further processing. Results can be printed or exported to PDF.
+
+BeamScheme is not intended to replace the commercial software available with 2D arrays, but to complement it.
+
+2) Licence
+Please read the file Licence.txt. This means that if as a result of using this program you fry your patients, trash your linac, nuke the cat, blow the city power in a ten block radius and generally cause global thermonuclear meltdown! Sorry, I did warn you!
+
+3) Installation
 It is not necessary to remove previous versions unless these were installed manually.
 
 Run the BSSetup.exe file.
 
-Alternatively extract the files manually and copy into a directory of your
-choosing.
+Alternatively extract the files manually and copy into a directory of your choosing.
 
-3) Use
-Run the program by double clicking the desktop icon, selecting the "BeamScheme"
-menu option or double clicking the BeamScheme.exe file in Windows explorer
+4) Use
+Run the program by double clicking the desktop icon, selecting the "BeamScheme" menu option or double clicking the BeamScheme.exe file in Windows explorer
 
-Open a file by clicking the Open button or selecting "File,Open". If you don't
-see any files make sure the correct file type is selected.
+Open a file by clicking the Open button or selecting "File,Open". If you don't see any files make sure the correct file type is selected.
 
 Use the Offset, Width and Angle boxes to manipulate the profiles.
 
-Windows can be maximised and restored by clicking the arrow in the top right
-hand corner of the window.
+Windows can be maximised and restored by clicking the arrow in the top right hand corner of the window.
 
-4) Notes on using 2D Array files
+5) Notes on using 2D Array files
 For correct field sizes the detector plane of the 2D array must be at 100cm SSD.
 
-There will be small differences between the flatness and symmetry reported by
-BeamScheme and your 2D Array. This is due to differences in the algorithms. The
-differences should not be more than 0.05%.
+There will be small differences between the flatness and symmetry reported by BeamScheme and your 2D Array. This is due to differences in the algorithms. The differences should not be more than 0.05%.
 
-5) Notes on using EPID images
-No correction for SSD is made. You will have to apply corrections yourselves at
-this stage.
+6) Notes on using EPID images
+No correction for SSD is made. You will have to apply corrections yourselves at this stage.
 
-I recommend that an EPID calibration be done before acquiring images to get the
-best image quality.
+I recommend that an EPID calibration be done before acquiring images to get the best image quality.
 
-If you have an integrated imaging mode, use this as it will give you a better
-image.
+If you have an integrated imaging mode, use this as it will give you a better image.
 
-DICOM images will usually need to be inverted (by clicking the Invert button)
-and then normalised (by clicking the normalise button).
+DICOM images will usually need to be inverted (by clicking the Invert button) and then normalised (by clicking the normalise button).
 
-6) Notes on normalising
-The program uses the normalised, corrected MapCheck data. No normalisation
-should be necessary for the MapCheck if it has been calibrated correctly.
+7) Notes on normalising
+The program uses the normalised, corrected MapCheck data. No normalisation should be necessary for the MapCheck if it has been calibrated correctly.
 
-Normalisation places the minimum of the image at 0 and the maximum at 100. If
-the image contains dead pixels or other strange artifacts it is possible for the
-normalisation to fail and give you strange results. This is not the fault of the
-program but of the image. See the previous comment about calibration. Normalisation
-now acts on the windowed data.
+Normalisation places the minimum of the image at 0 and the maximum at 100. If the image contains dead pixels or other strange artifacts it is possible for the normalisation to fail and give you strange results. This is not the fault of the program but of the image. See the previous comment about calibration. Normalisation now acts on the windowed data.
 
-7) History
+8) History
 22/07/2008 version 0.1
 3/09/2009 added DICOM unit
 22/8/2011 Fix field centre error,

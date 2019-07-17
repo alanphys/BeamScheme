@@ -1,0 +1,15 @@
+BeamScheme written and maintained by Alan Chamberlain
+
+BeamScheme is compiled on Lazarus and Free Pascal. We gratefully acknowledge the contributions of the Lazarus and Free Pascal teams.
+
+We also wish to acknowledge the following:
+
+Wolfgang Krug and Chris Rorden for the DICOM import routines
+
+Luís Rodrigues, Philippe Martinole, Alexander Klenin for TAChart
+
+Doug Gregor and Curtis Carpenter for DTrackbar
+
+PowerPDF package from Takeshi Kanno as ported by Stefan (Chtk) and Jesús Reyes Aguilar
+
+Lightweight Networking Library (lNet) written by Ales Katona and Micha Nelissen

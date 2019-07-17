@@ -1106,7 +1106,7 @@ DataOK := false;
 with OpenDialog do
    begin
    DefaultExt := '.dcm';
-   {$IFDEF win32}
+   {$IFDEF WINDOWS}
    Filter := 'DICOM Image|*.dcm|MapCheck Text Files|*.txt|PTW|*.mcc|IBA|*.opg|Windows bitmap|*.bmp|Tiff bitmap|*.tif|JPEG image|*.jpg|HIS image|*.his|All Files|*.*';
    {$ELSE}
    Filter := 'DICOM Image|*.dcm|MapCheck Text Files|*.txt|PTW|*.mcc|IBA|*.opg|Windows bitmap|*.bmp|Tiff bitmap|*.tif|JPEG image|*.jpg;*jpeg|HIS image|*.his|All Files|*';
