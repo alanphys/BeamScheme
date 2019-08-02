@@ -1,11 +1,11 @@
 object ResForm: TResForm
-  Left = 292
-  Height = 904
-  Top = 52
-  Width = 623
+  Left = 291
+  Height = 918
+  Top = 42
+  Width = 670
   Caption = 'BeamScheme Results'
-  ClientHeight = 884
-  ClientWidth = 623
+  ClientHeight = 896
+  ClientWidth = 670
   DesignTimePPI = 95
   Menu = MainMenu1
   OnCreate = FormCreate
@@ -14,7 +14,7 @@ object ResForm: TResForm
     Left = 0
     Height = 26
     Top = 0
-    Width = 623
+    Width = 670
     Caption = 'ToolBar1'
     Images = rfImageList
     TabOrder = 0
@@ -61,636 +61,236 @@ object ResForm: TResForm
       ShowHint = True
     end
   end
-  object ScrollBox1: TScrollBox
+  object pcPage: TPageControl
     Left = 0
-    Height = 858
+    Height = 870
     Top = 26
-    Width = 623
-    HorzScrollBar.Page = 608
-    VertScrollBar.Page = 842
+    Width = 670
+    ActivePage = TabSheet1
     Align = alClient
-    ClientHeight = 856
-    ClientWidth = 621
+    ParentFont = False
+    TabIndex = 0
     TabOrder = 1
-    object PRPage: TPRPage
-      Left = 0
-      Height = 842
-      Top = 0
-      Width = 608
-      MarginTop = 32
-      MarginLeft = 32
-      MarginRight = 32
-      MarginBottom = 32
-      object PRLayoutPanel1: TPRLayoutPanel
-        Left = 38
-        Height = 772
-        Top = 36
-        Width = 530
-        object PRRect1: TPRRect
+    object TabSheet1: TTabSheet
+      Caption = 'Page1'
+      ClientHeight = 838
+      ClientWidth = 666
+      object ScrollBox1: TScrollBox
+        Left = 0
+        Height = 838
+        Top = 0
+        Width = 666
+        HorzScrollBar.Page = 595
+        VertScrollBar.Page = 836
+        Align = alClient
+        ClientHeight = 836
+        ClientWidth = 651
+        TabOrder = 0
+        object PRPage1: TPRPage
           Left = 0
-          Height = 40
+          Height = 842
           Top = 0
-          Width = 530
-          LineWidth = 0
-          LineStyle = psSolid
-          FillColor = clCream
-          Radius = 0
-        end
-        object PRLabel1: TPRLabel
-          Left = 187
-          Height = 25
-          Top = 10
-          Width = 156
-          FontName = fnArial
-          FontSize = 18
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'BeamScheme v0.2'
-        end
-        object PRLabel3: TPRLabel
-          Left = 360
-          Height = 30
-          Top = 360
-          Width = 72
-          FontName = fnArial
-          FontSize = 16
-          FontBold = True
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'Y Profile'
-        end
-        object priXProf: TPRImage
-          Left = 0
-          Height = 260
-          Top = 50
-          Width = 260
-          SharedImage = True
-          Proportional = False
-        end
-        object priYProf: TPRImage
-          Left = 270
-          Height = 260
-          Top = 50
-          Width = 260
-          SharedImage = True
-          Proportional = False
-        end
-        object PRLabel4: TPRLabel
-          Left = 0
-          Height = 30
-          Top = 360
-          Width = 144
-          FontName = fnArial
-          FontSize = 16
-          FontBold = True
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'Beam Parameters'
-        end
-        object PRLabel5: TPRLabel
-          Left = 25
-          Height = 16
-          Top = 410
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'Edge (Left, Right)'
-        end
-        object PRLabel6: TPRLabel
-          Left = 25
-          Height = 16
-          Top = 430
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'Centre'
-        end
-        object PRLabel7: TPRLabel
-          Left = 25
-          Height = 16
-          Top = 450
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'Size'
-        end
-        object PRLabel8: TPRLabel
-          Left = 0
-          Height = 16
-          Top = 390
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'Field'
-        end
-        object PRLabel9: TPRLabel
-          Left = 0
-          Height = 16
-          Top = 470
-          Width = 150
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'Penumbra(Left,Right)'
-        end
-        object PRLabel10: TPRLabel
-          Left = 25
-          Height = 16
-          Top = 490
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = '90-10%'
-        end
-        object PRLabel11: TPRLabel
-          Left = 25
-          Height = 16
-          Top = 510
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = '80-20%'
-        end
-        object PRLabel12: TPRLabel
-          Left = 25
-          Height = 16
-          Top = 530
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = '90-50%'
-        end
-        object PRLabel13: TPRLabel
-          Left = 0
-          Height = 16
-          Top = 550
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'Symmetry'
-        end
-        object PRLabel14: TPRLabel
-          Left = 25
-          Height = 16
-          Top = 570
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'Area'
-        end
-        object PRLabel15: TPRLabel
-          Left = 25
-          Height = 16
-          Top = 590
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'Ratio (Left/Right)'
-        end
-        object PRLabel16: TPRLabel
-          Left = 25
-          Height = 16
-          Top = 610
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'Percent'
-        end
-        object PRLabel17: TPRLabel
-          Left = 0
-          Height = 16
-          Top = 630
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'Flatness'
-        end
-        object PRLabel18: TPRLabel
-          Left = 25
-          Height = 16
-          Top = 650
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'Difference'
-        end
-        object PRLabel19: TPRLabel
-          Left = 25
-          Height = 30
-          Top = 670
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'Ratio'
-        end
-        object PRLabel20: TPRLabel
-          Left = 25
-          Height = 30
-          Top = 690
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'MAX/CAX'
-        end
-        object prlXEdge: TPRLabel
-          Left = 175
-          Height = 20
-          Top = 410
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlXEdge'
-        end
-        object prlXCentre: TPRLabel
-          Left = 175
-          Height = 20
-          Top = 430
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlXCentre'
-        end
-        object prlXSize: TPRLabel
-          Left = 175
-          Height = 20
-          Top = 450
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlXSize'
-        end
-        object prlXPen90: TPRLabel
-          Left = 175
-          Height = 20
-          Top = 490
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlXPen90'
-        end
-        object prlXPen80: TPRLabel
-          Left = 175
-          Height = 20
-          Top = 510
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlXPen80'
-        end
-        object prlXPen50: TPRLabel
-          Left = 175
-          Height = 20
-          Top = 530
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlXPen50'
-        end
-        object prlXArea: TPRLabel
-          Left = 175
-          Height = 20
-          Top = 570
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlXArea'
-        end
-        object prlXSymR: TPRLabel
-          Left = 175
-          Height = 20
-          Top = 590
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlXSymR'
-        end
-        object prlXSymP: TPRLabel
-          Left = 175
-          Height = 20
-          Top = 610
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlXSymP'
-        end
-        object prlXFlatP: TPRLabel
-          Left = 175
-          Height = 20
-          Top = 650
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlXFlatP'
-        end
-        object prlXFlatR: TPRLabel
-          Left = 175
-          Height = 20
-          Top = 670
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlXFlatR'
-        end
-        object prlXMAX: TPRLabel
-          Left = 175
-          Height = 20
-          Top = 688
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlXMAX'
-        end
-        object prlYEdge: TPRLabel
-          Left = 360
-          Height = 20
-          Top = 410
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlYEdge'
-        end
-        object prlYCentre: TPRLabel
-          Left = 360
-          Height = 20
-          Top = 430
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlYCentre'
-        end
-        object prlYSize: TPRLabel
-          Left = 360
-          Height = 20
-          Top = 450
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlYSize'
-        end
-        object prlYPen90: TPRLabel
-          Left = 360
-          Height = 20
-          Top = 490
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlYPen90'
-        end
-        object prlYPen80: TPRLabel
-          Left = 360
-          Height = 20
-          Top = 510
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlYPen80'
-        end
-        object prlYPen50: TPRLabel
-          Left = 360
-          Height = 20
-          Top = 530
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlYPen50'
-        end
-        object prlYArea: TPRLabel
-          Left = 360
-          Height = 20
-          Top = 570
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlYArea'
-        end
-        object prlYSymR: TPRLabel
-          Left = 360
-          Height = 20
-          Top = 590
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlYSymR'
-        end
-        object prlYSymP: TPRLabel
-          Left = 360
-          Height = 20
-          Top = 610
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlYSymP'
-        end
-        object prlYFlatP: TPRLabel
-          Left = 360
-          Height = 20
-          Top = 650
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlYFlatP'
-        end
-        object prlYFlatR: TPRLabel
-          Left = 360
-          Height = 20
-          Top = 670
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlYFlatR'
-        end
-        object prlYMAX: TPRLabel
-          Left = 360
-          Height = 20
-          Top = 690
-          Width = 100
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlYMAX'
-        end
-        object PRLabel2: TPRLabel
-          Left = 180
-          Height = 30
-          Top = 360
-          Width = 69
-          FontName = fnArial
-          FontSize = 16
-          FontBold = True
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'X Profile'
-        end
-        object prlSource: TPRLabel
-          Left = 0
-          Height = 20
-          Top = 756
-          Width = 384
-          FontName = fnArial
-          FontSize = 10
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlSource'
-        end
-        object prlDate: TPRLabel
-          Left = 400
-          Height = 20
-          Top = 756
-          Width = 127
-          FontName = fnArial
-          FontSize = 10
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'prlDate'
-          Alignment = taRightJustify
-        end
-        object prlXOffset: TPRLabel
-          Left = 0
-          Height = 20
-          Top = 315
-          Width = 80
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'Offset:'
-        end
-        object prlXWidth: TPRLabel
-          Left = 90
-          Height = 20
-          Top = 315
-          Width = 80
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'Width:'
-          Alignment = taCenter
-        end
-        object prlXAngle: TPRLabel
-          Left = 180
-          Height = 20
-          Top = 315
-          Width = 80
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'Angle:'
-          Alignment = taRightJustify
-        end
-        object prlYOffset: TPRLabel
-          Left = 270
-          Height = 20
-          Top = 315
-          Width = 80
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'Offset:'
-        end
-        object prlYWidth: TPRLabel
-          Left = 360
-          Height = 20
-          Top = 315
-          Width = 80
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'Width:'
-          Alignment = taCenter
-        end
-        object prlYAngle: TPRLabel
-          Left = 450
-          Height = 20
-          Top = 315
-          Width = 80
-          FontName = fnArial
-          FontSize = 12
-          CharSpace = 0
-          WordSpace = 0
-          Caption = 'Angle'
-          Alignment = taRightJustify
+          Width = 595
+          MarginTop = 32
+          MarginLeft = 32
+          MarginRight = 32
+          MarginBottom = 32
+          object prLPPage1: TPRLayoutPanel
+            Left = 32
+            Height = 778
+            Top = 32
+            Width = 584
+            object PRRect1: TPRRect
+              Left = 1
+              Height = 40
+              Top = 0
+              Width = 531
+              LineWidth = 0
+              LineStyle = psSolid
+              FillColor = clCream
+              Radius = 0
+            end
+            object prlTitle1: TPRLabel
+              Left = 183
+              Height = 25
+              Top = 10
+              Width = 165
+              FontName = fnArial
+              FontSize = 18
+              CharSpace = 0
+              WordSpace = 0
+              Caption = 'BeamScheme v0.44'
+            end
+            object prlYProf1: TPRLabel
+              Left = 432
+              Height = 30
+              Top = 370
+              Width = 100
+              FontName = fnArial
+              FontSize = 16
+              FontBold = True
+              CharSpace = 0
+              WordSpace = 0
+              Caption = 'Y Profile'
+              Alignment = taRightJustify
+            end
+            object priXProf: TPRImage
+              Left = 1
+              Height = 260
+              Top = 70
+              Width = 260
+              SharedImage = True
+              Proportional = False
+            end
+            object priYProf: TPRImage
+              Left = 272
+              Height = 260
+              Top = 70
+              Width = 260
+              SharedImage = True
+              Proportional = False
+            end
+            object prlBeamP1: TPRLabel
+              Left = 0
+              Height = 30
+              Top = 370
+              Width = 144
+              FontName = fnArial
+              FontSize = 16
+              FontBold = True
+              CharSpace = 0
+              WordSpace = 0
+              Caption = 'Beam Parameters'
+            end
+            object prlXProf1: TPRLabel
+              Left = 161
+              Height = 30
+              Top = 370
+              Width = 100
+              FontName = fnArial
+              FontSize = 16
+              FontBold = True
+              CharSpace = 0
+              WordSpace = 0
+              Caption = 'X Profile'
+              Alignment = taRightJustify
+            end
+            object prlSource: TPRLabel
+              Left = 1
+              Height = 20
+              Top = 48
+              Width = 531
+              FontName = fnArial
+              FontSize = 10
+              CharSpace = 0
+              WordSpace = 0
+              Caption = 'prlSource'
+            end
+            object prlDate1: TPRLabel
+              Left = 405
+              Height = 20
+              Top = 756
+              Width = 127
+              FontName = fnArial
+              FontSize = 10
+              CharSpace = 0
+              WordSpace = 0
+              Caption = 'prlDate1'
+              Alignment = taRightJustify
+            end
+            object prlXOffset: TPRLabel
+              Left = 0
+              Height = 20
+              Top = 335
+              Width = 80
+              FontName = fnArial
+              FontSize = 12
+              CharSpace = 0
+              WordSpace = 0
+              Caption = 'Offset:'
+            end
+            object prlXWidth: TPRLabel
+              Left = 90
+              Height = 20
+              Top = 335
+              Width = 80
+              FontName = fnArial
+              FontSize = 12
+              CharSpace = 0
+              WordSpace = 0
+              Caption = 'Width:'
+              Alignment = taCenter
+            end
+            object prlXAngle: TPRLabel
+              Left = 181
+              Height = 20
+              Top = 335
+              Width = 80
+              FontName = fnArial
+              FontSize = 12
+              CharSpace = 0
+              WordSpace = 0
+              Caption = 'Angle:'
+              Alignment = taRightJustify
+            end
+            object prlYOffset: TPRLabel
+              Left = 272
+              Height = 20
+              Top = 335
+              Width = 80
+              FontName = fnArial
+              FontSize = 12
+              CharSpace = 0
+              WordSpace = 0
+              Caption = 'Offset:'
+            end
+            object prlYWidth: TPRLabel
+              Left = 362
+              Height = 20
+              Top = 335
+              Width = 80
+              FontName = fnArial
+              FontSize = 12
+              CharSpace = 0
+              WordSpace = 0
+              Caption = 'Width:'
+              Alignment = taCenter
+            end
+            object prlYAngle: TPRLabel
+              Left = 452
+              Height = 20
+              Top = 335
+              Width = 80
+              FontName = fnArial
+              FontSize = 12
+              CharSpace = 0
+              WordSpace = 0
+              Caption = 'Angle'
+              Alignment = taRightJustify
+            end
+            object prlCopyR1: TPRLabel
+              Left = 1
+              Height = 20
+              Top = 756
+              Width = 251
+              FontName = fnArial
+              FontSize = 12
+              CharSpace = 0
+              WordSpace = 0
+              Caption = '(c) Yenzakahle Medical Physics Services Inc'
+            end
+            object prlPageNo1: TPRLabel
+              Left = 309
+              Height = 20
+              Top = 756
+              Width = 99
+              FontName = fnArial
+              FontSize = 12
+              CharSpace = 0
+              WordSpace = 0
+              Caption = 'Page 1'
+            end
+          end
         end
       end
     end

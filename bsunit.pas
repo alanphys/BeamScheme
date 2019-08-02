@@ -1,51 +1,58 @@
 unit bsunit;
 {Revision History
  Version 0.2 released 1/8/2011
- 22/8/2011 Fix field centre error,
-           Fix Y resolution error for MapCheck 2
+ 22/8/2011  Fix field centre error,
+            Fix Y resolution error for MapCheck 2
  28/09/2011 removed MultiDoc
-           added invert
-           added normalise
-           added windowing
-           fixed profile display
-           fixed symmetry calculation
-           cleaned up printout
- 15/2/2012 Fix CAX normalisation error,
- 2/4/2013  Add read for XiO Dose plane file
- 20/6/2014 Removed redundant DICOM read code causing memory bug
- 24/6/2014 Fixed XiO read offset by 1
-           Fixed MapCheck read if dose cal file not present
-           Included Min/Max as part of beam class
-           Fixed panel maximise to form area
- 21/5/2015 Combine open dialog and DICOM dialog
- 20/7/2015 Add messaging system
+            added invert
+            added normalise
+            added windowing
+            fixed profile display
+            fixed symmetry calculation
+            cleaned up printout
+ 15/2/2012  Fix CAX normalisation error,
+ 2/4/2013   Add read for XiO Dose plane file
+ 20/6/2014  Removed redundant DICOM read code causing memory bug
+ 24/6/2014  Fixed XiO read offset by 1
+            Fixed MapCheck read if dose cal file not present
+            Included Min/Max as part of beam class
+            Fixed panel maximise to form area
+ 21/5/2015  Combine open dialog and DICOM dialog
+ 20/7/2015  Add messaging system
  Version 0.3 released 20/7/2015
- 28/6/2016 Support PTW 729 mcc
- 26/8/2016 Add normalise to max
- 29/9/2016 Fix PTW 729 memory error
+ 28/6/2016  Support PTW 729 mcc
+ 26/8/2016  Add normalise to max
+ 29/9/2016  Fix PTW 729 memory error
  21/10/2016 Add PowerPDF for output
  24/10/2016 Fix Profile event misfire
- 15/8/2017 Fix image integer conversion
+ 15/8/2017  Fix image integer conversion
  13/10/2017 Support IBA Matrix and StartTrack opg
  16/10/2017 Fix Diff divide by zero error
             Fix profile offset limit error
- 7/12/2017 Fix even number of detectors offset
+ 7/12/2017  Fix even number of detectors offset
  15/12/2017 Support Brainlab iPlan Dose plane format
             Add text file format identification
- 8/1/2018 Add help system
-          Fix windowing error on normalise to CAX
- 26/1/2018 Fix panel maximise under QT5
-           Fix window level control size under max/min
- 30/1/2018 Fix area symmetry off by 1
-           Fix CAX for even no of detectors
-           Fix image autoscale
- 1/2/2018 Add mouse control for profiles
- 2/2/2018 Fix off by 1 error profile limits
- 27/3/2018 Fix regional settings decimal separator
- 3/4/2018 Add mean and standard deviation
-          Fix profile increment
- 30/4/2019 Fix DTrackbar if image max = maxlongint
- 3/5/2019 Fix DICOM off by one and pointer conversion}
+ 8/1/2018   Add help system
+            Fix windowing error on normalise to CAX
+ 26/1/2018  Fix panel maximise under QT5
+            Fix window level control size under max/min
+ 30/1/2018  Fix area symmetry off by 1
+            Fix CAX for even no of detectors
+            Fix image autoscale
+ 1/2/2018   Add mouse control for profiles
+ 2/2/2018   Fix off by 1 error profile limits
+ Version 0.4 released 2/2/2018
+ 27/3/2018  Fix regional settings decimal separator
+ 3/4/2018   Add mean and standard deviation
+            Fix profile increment
+ 30/4/2019  Fix DTrackbar if image max = maxlongint
+ 3/5/2019   Fix DICOM off by one and pointer conversion
+ 17/7/2019  Update about unit
+ 18/7/2019  Update status bar
+ 23/7/2019  Add expression parser
+ 30/7/2019  Add multipage output
+ 31/7/2019  Fix profile export dirs
+ 1/8/2019   Add expression editor}
 
 
 {$mode objfpc}{$H+}
@@ -55,10 +62,13 @@ interface
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, Menus,
   ExtCtrls, Buttons, TAGraph, TASeries, TATools, StdCtrls, Graphtype,
-  IntfGraphics, Spin, ComCtrls, LazHelpHTML, Tracker2, lNetComponents,
+  IntfGraphics, Spin, ComCtrls, LazHelpHTML, Grids, Tracker2, lNetComponents,
   lwebserver, FPImage;
 
 const pi = 3.14159265359;
+      FaintRed:    TColor = $7979ff;
+      FaintYellow: TColor = $cffcff;
+      FaintGreen:  TColor = $e4ffd3;
 
 type
 
@@ -85,179 +95,196 @@ type
     end;
      
   TBeamParams = record
-     FSize,
-     FCentre,
-     ASym,
-     PSym,
-     Flat,
-     RFlat,
-     RCAX,
-     LEdge,
-     REdge,
-     L10,
-     R10,
-     L20,
-     R20,
-     L80,
-     R80,
-     L90,
-     R90,
-     PL80,
-     PR80,
-     PL90,
-     PR90,
-     PL50,
-     PR50,
-     Mean80,
-     Std80:      double;
+     ALeft,                    {area under profile left of CAX}
+     Aright,                   {area under profile right of CAX}
+     ADiff,                    {Absolute difference of points equidistant from CAX}
+     RDiff,                    {Relative ratio of points equidistant from CAX}
+     CMax,                     {Maximum value}
+     CMin,                     {Minimum value}
+     RCAX,                     {Central axis value}
+     LEdge,                    {Position of left edge}
+     REdge,                    {Position of right edge}
+     L10,                      {10% of CAX value left of CAX}
+     R10,                      {10% of CAX value right of CAX}
+     L20,                      {20% of CAX value left of CAX}
+     R20,                      {20% of CAX value right of CAX}
+     L80,                      {80% of CAX value left of CAX}
+     R80,                      {80% of CAX value right of CAX}
+     L90,                      {90% of CAX value left of CAX}
+     R90,                      {90% of CAX value right of CAX}
+     PSum,                     {Sum of profile values}
+     PSSqr,                    {Squared sum of profile values}
+     NP        :double;        {Number of points in 80 of profile}
     end;
 
   { TBSForm }
 
   TBSForm = class(TForm)
-    ChartToolsetY: TChartToolset;
-    ChartToolsetX: TChartToolset;
-    ChartToolsetXDataPointHintTool: TDataPointHintTool;
-    ChartToolsetYDataPointHintTool: TDataPointHintTool;
-     cXProfile: TChart;
-     cXprof: TLabel;
-     HTMLBrowserHelpViewer: THTMLBrowserHelpViewer;
-     HTMLHelpDatabase: THTMLHelpDatabase;
-     HelpServer: TLHTTPServerComponent;
-     miContents: TMenuItem;
-     miAbout: TMenuItem;
-     miHelp: TMenuItem;
-     miExportY: TMenuItem;
-     miExportX: TMenuItem;
-     miExport: TMenuItem;
-     SaveDialog: TSaveDialog;
-					sbMaxNorm: TSpeedButton;
-					sbCentre: TSpeedButton;
-					StatusBar: TStatusBar;
-     StatusMessages: TStringList;
-     YProfile: TLineSeries;
-     XProfile: TLineSeries;
-     cYProf: TLabel;
-     cResults: TLabel;
-     cYProfile: TChart;
-     DTrackBar: TDTrackBar;
-     iBeam: TImage;
-     Label1: TLabel;
-     Label2: TLabel;
-     Label3: TLabel;
-     Label4: TLabel;
-     Label5: TLabel;
-     Label6: TLabel;
-     cImage: TLabel;
-     lMin: TLabel;
-     Label8: TLabel;
-     lvResults: TListView;
-     MainMenu1: TMainMenu;
-     miRestore: TMenuItem;
-     miResults: TMenuItem;
-     miYProfile: TMenuItem;
-     miXProfile: TMenuItem;
-     miImage: TMenuItem;
-     Panel1: TPanel;
-     Panel4: TPanel;
-     Panel5: TPanel;
-     Panel6: TPanel;
-     Panel7: TPanel;
-     pMaxMin: TPanel;
-     pResults: TPanel;
-     pYProfile: TPanel;
-     Panel2: TPanel;
-     pBeam: TPanel;
-     pXProfile: TPanel;
-     Panel3: TPanel;
-     sbExit: TSpeedButton;
-     sbXMax: TSpeedButton;
-     sbYMax: TSpeedButton;
-     sbInvert: TSpeedButton;
-     sbIMin: TSpeedButton;
-     sbOpen: TSpeedButton;
-     sbPrint: TSpeedButton;
-     sbRMax: TSpeedButton;
-     sbYMin: TSpeedButton;
-     sbXMin: TSpeedButton;
-     sbRMin: TSpeedButton;
-     seXAngle: TSpinEdit;
-     seXOffset: TSpinEdit;
-     seXWidth: TSpinEdit;
-     seYAngle: TSpinEdit;
-     seYOffset: TSpinEdit;
-     seYWidth: TSpinEdit;
-     sbIMax: TSpeedButton;
-     sbNorm: TSpeedButton;
-     Window: TMenuItem;
-     miPrint: TMenuItem;
-     miExit: TMenuItem;
-     miOpen: TMenuItem;
-     miFile: TMenuItem;
-     OpenDialog: TOpenDialog;
-     procedure BSError(sWarning:string);
-     procedure BSMessage(sMess:string);
-     procedure ClearStatus;
-     procedure ChartToolsetXDataPointHintToolHint(ATool: TDataPointHintTool;
-        const APoint: TPoint; var AHint: String);
-     procedure ChartToolsetYDataPointHintToolHint(ATool: TDataPointHintTool;
-        const APoint: TPoint; var AHint: String);
-     procedure DTrackBarChange(Sender: TObject);
-     procedure DTrackBarClick(Sender: TObject);
-     procedure FormCreate(Sender: TObject);
-     function FormHelp(Command: Word; Data: PtrInt; var CallHelp: Boolean): Boolean;
-     function DICOMOpen(sFileName:string):boolean;
-     procedure FormResize(Sender: TObject);
-     procedure iBeamClick(Sender: TObject);
-     function TextOpen(sFileName:string):boolean;
-     function MapCheckOpen(sFileName:string):boolean;
-     function IBAOpen(sFileName:string):boolean;
-     function PTWOpen(sFileName:string):boolean;
-     procedure sbCentreClick(Sender: TObject);
-     procedure sbMaxNormClick(Sender: TObject);
-     function XioOpen(sFileName:string):boolean;
-     function BrainLabOpen(sFileName:string):boolean;
-     function BMPOpen(sFileName:string):boolean;
-     function HISOpen(sFileName:string):boolean;
-     procedure miExitClick(Sender: TObject);
-     procedure miExportXClick(Sender: TObject);
-     procedure miExportYClick(Sender: TObject);
-     procedure miOpenClick(Sender: TObject);
-     procedure miPDFPrint(Sender: TObject);
-     procedure miRestoreClick(Sender: TObject);
-     procedure miAboutClick(Sender: TObject);
-     procedure miContentsClick(Sender: TObject);
-     procedure sbIMinClick(Sender: TObject);
-     procedure sbInvertClick(Sender: TObject);
-     procedure sbNormClick(Sender: TObject);
-     procedure sbRMaxClick(Sender: TObject);
-     procedure sbRMinClick(Sender: TObject);
-     procedure sbXMaxClick(Sender: TObject);
-     procedure sbXMinClick(Sender: TObject);
-     procedure sbYMaxClick(Sender: TObject);
-     procedure sbYMinClick(Sender: TObject);
-     procedure seYAngleChange(Sender: TObject);
-     procedure seXAngleChange(Sender: TObject);
-     procedure ShowXResults(BeamParams:TBeamParams);
-     procedure ShowYResults(BeamParams:TBeamParams);
-     procedure sbIMaxClick(Sender: TObject);
+   bbSaveP: TBitBtn;
+   bbExitP: TBitBtn;
+   bbAddL: TBitBtn;
+   bbDelL: TBitBtn;
+   ChartToolsetY: TChartToolset;
+   ChartToolsetX: TChartToolset;
+   ChartToolsetXDataPointHintTool: TDataPointHintTool;
+   ChartToolsetYDataPointHintTool: TDataPointHintTool;
+   cbProtocol: TComboBox;
+   cXProfile: TChart;
+   cXprof: TLabel;
+   HTMLBrowserHelpViewer: THTMLBrowserHelpViewer;
+   HTMLHelpDatabase: THTMLHelpDatabase;
+   HelpServer: TLHTTPServerComponent;
+   Label7: TLabel;
+   miProtocol: TMenuItem;
+   miSaveP: TMenuItem;
+   miEditP: TMenuItem;
+   miContents: TMenuItem;
+   miAbout: TMenuItem;
+   miHelp: TMenuItem;
+   miExportY: TMenuItem;
+   miExportX: TMenuItem;
+   miExport: TMenuItem;
+   Panel8: TPanel;
+   SaveDialog: TSaveDialog;
+   sbMaxNorm: TSpeedButton;
+   sbCentre: TSpeedButton;
+   StatusBar: TStatusBar;
+   StatusMessages: TStringList;
+   sgResults: TStringGrid;
+   YProfile: TLineSeries;
+   XProfile: TLineSeries;
+   cYProf: TLabel;
+   cResults: TLabel;
+   cYProfile: TChart;
+   DTrackBar: TDTrackBar;
+   iBeam: TImage;
+   Label1: TLabel;
+   Label2: TLabel;
+   Label3: TLabel;
+   Label4: TLabel;
+   Label5: TLabel;
+   Label6: TLabel;
+   cImage: TLabel;
+   lMin: TLabel;
+   Label8: TLabel;
+   MainMenu1: TMainMenu;
+   miRestore: TMenuItem;
+   miResults: TMenuItem;
+   miYProfile: TMenuItem;
+   miXProfile: TMenuItem;
+   miImage: TMenuItem;
+   Panel1: TPanel;
+   Panel4: TPanel;
+   Panel5: TPanel;
+   Panel6: TPanel;
+   Panel7: TPanel;
+   pMaxMin: TPanel;
+   pResults: TPanel;
+   pYProfile: TPanel;
+   Panel2: TPanel;
+   pBeam: TPanel;
+   pXProfile: TPanel;
+   Panel3: TPanel;
+   sbExit: TSpeedButton;
+   sbXMax: TSpeedButton;
+   sbYMax: TSpeedButton;
+   sbInvert: TSpeedButton;
+   sbIMin: TSpeedButton;
+   sbOpen: TSpeedButton;
+   sbPrint: TSpeedButton;
+   sbRMax: TSpeedButton;
+   sbYMin: TSpeedButton;
+   sbXMin: TSpeedButton;
+   sbRMin: TSpeedButton;
+   seXAngle: TSpinEdit;
+   seXOffset: TSpinEdit;
+   seXWidth: TSpinEdit;
+   seYAngle: TSpinEdit;
+   seYOffset: TSpinEdit;
+   seYWidth: TSpinEdit;
+   sbIMax: TSpeedButton;
+   sbNorm: TSpeedButton;
+   Window: TMenuItem;
+   miPrint: TMenuItem;
+   miExit: TMenuItem;
+   miOpen: TMenuItem;
+   miFile: TMenuItem;
+   OpenDialog: TOpenDialog;
+   procedure bbAddLClick(Sender: TObject);
+   procedure bbDelLClick(Sender: TObject);
+   procedure bbExitPClick(Sender: TObject);
+   procedure bbSavePClick(Sender: TObject);
+   procedure cbProtocolChange(Sender: TObject);
+   procedure StatusBarDrawPanel(SBar: TStatusBar;Panel: TStatusPanel; const Rect: TRect);
+   procedure BSError(sError:string);
+   procedure BSWarning(sWarning:string);
+   procedure BSMessage(sMess:string);
+   procedure ClearStatus;
+   procedure ChartToolsetXDataPointHintToolHint(ATool: TDataPointHintTool;
+      const APoint: TPoint; var AHint: String);
+   procedure ChartToolsetYDataPointHintToolHint(ATool: TDataPointHintTool;
+      const APoint: TPoint; var AHint: String);
+   procedure DTrackBarChange(Sender: TObject);
+   procedure DTrackBarClick(Sender: TObject);
+   procedure BuildProtocolList;
+   procedure LoadProtocol;
+   procedure FormCreate(Sender: TObject);
+   function FormHelp(Command: Word; Data: PtrInt; var CallHelp: Boolean): Boolean;
+   function DICOMOpen(sFileName:string):boolean;
+   procedure FormResize(Sender: TObject);
+   procedure iBeamClick(Sender: TObject);
+   procedure miEditPClick(Sender: TObject);
+   function TextOpen(sFileName:string):boolean;
+   function MapCheckOpen(sFileName:string):boolean;
+   function IBAOpen(sFileName:string):boolean;
+   function PTWOpen(sFileName:string):boolean;
+   procedure sbCentreClick(Sender: TObject);
+   procedure sbMaxNormClick(Sender: TObject);
+   function XioOpen(sFileName:string):boolean;
+   function BrainLabOpen(sFileName:string):boolean;
+   function BMPOpen(sFileName:string):boolean;
+   function HISOpen(sFileName:string):boolean;
+   procedure miExitClick(Sender: TObject);
+   procedure miExportXClick(Sender: TObject);
+   procedure miExportYClick(Sender: TObject);
+   procedure miOpenClick(Sender: TObject);
+   procedure miPDFPrint(Sender: TObject);
+   procedure miRestoreClick(Sender: TObject);
+   procedure miAboutClick(Sender: TObject);
+   procedure miContentsClick(Sender: TObject);
+   procedure sbIMinClick(Sender: TObject);
+   procedure sbInvertClick(Sender: TObject);
+   procedure sbNormClick(Sender: TObject);
+   procedure sbRMaxClick(Sender: TObject);
+   procedure sbRMinClick(Sender: TObject);
+   procedure sbXMaxClick(Sender: TObject);
+   procedure sbXMinClick(Sender: TObject);
+   procedure sbYMaxClick(Sender: TObject);
+   procedure sbYMinClick(Sender: TObject);
+   procedure seYAngleChange(Sender: TObject);
+   procedure seXAngleChange(Sender: TObject);
+   procedure ShowXResults(BeamParams:TBeamParams);
+   procedure ShowYResults(BeamParams:TBeamParams);
+   procedure sbIMaxClick(Sender: TObject);
  private
     { private declarations }
-  public
+ public
     { public declarations }
-     FileHandler: TFileHandler;
-     CGIHandler: TCGIHandler;
-     PHPCGIHandler: TPHPFastCGIHandler;
-  end;
+   FileHandler: TFileHandler;
+   CGIHandler: TCGIHandler;
+   PHPCGIHandler: TPHPFastCGIHandler;
+   end;
 
 var
-    BSForm:      TBSForm;
-    Beam:        TBeam;
+    BSForm       :TBSForm;
+    Beam         :TBeam;
     XPArr,
-    YPArr:       TPArr;
+    YPArr        :TPArr;
     XBParams,
-    YBParams:    TBeamParams;
-    Safe:        boolean;
+    YBParams     :TBeamParams;
+    sProtPath    :string;
+    Safe,
+    Editing      :boolean;
 
 procedure DisplayBeam;
 procedure ShowProfile(ThebitMap:Tbitmap; Wdth:double;
@@ -270,7 +297,8 @@ procedure CalcParams(PArr:TPArr; var BeamParams:TBeamParams);
 
 implementation
 
-uses DICOM, define_types, types, math, StrUtils, helpintfs, resunit, aboutunit;
+uses DICOM, define_types, types, math, StrUtils, helpintfs, resunit, aboutunit,
+     LazFileUtils, Parser10;
 
 const AllChars = [#0..#255] - DigitChars - ['.'];
 
@@ -700,6 +728,7 @@ var I,
     ARight,
     ASum,
     ASSqr,
+    RSym,
     Diff,
     Res:   double;
 
@@ -728,7 +757,9 @@ with BeamParams do
    ALeft := 0;
    ARight := 0;
    Diff := 0;
-   PSym := 0;
+   RSym := 0;
+   ADiff := 0;
+   RDiff := 0;
    Res := 0;
 
    {get field size}
@@ -823,10 +854,12 @@ with BeamParams do
                      PArr[PosP80-1].Y,trunc(I*Res*0.8)); }
                   if PArr[PosP80].Y > CMax then CMax := PArr[PosP80].Y;
                   if PArr[PosP80].Y < CMin then CMin := PArr[PosP80].Y;
-                  if PArr[PosP80].Y > 0 then Diff:= PArr[NegP80].Y/PArr[PosP80].Y
-                     else Diff := 1;
-                  if (Diff < 1.0) and (Diff <> 0) then Diff := 1/(Diff);
-                  if PSym < Diff then PSym := Diff;
+                  if PArr[PosP80].Y > 0 then RSym:= PArr[NegP80].Y/PArr[PosP80].Y
+                     else RSym := 1;
+                  if (RSym < 1.0) and (RSym <> 0) then RSym := 1/RSym;
+                  if RDiff < RSym then RDiff := RSym;
+                  Diff := PArr[NegP80].Y - PArr[PosP80].Y;
+                  if ADiff < Diff then ADiff := Diff;
                   ASum := ASum + PArr[PosP80].Y;
                   ASSqr := ASSqr + sqr(PArr[PosP80].Y);
                   Inc(N);
@@ -863,27 +896,9 @@ with BeamParams do
          NNegP80 := StartNeg - Trunc(I*0.8);
          NPosP80 := StartPos + Trunc(I*0.8);
          end;
-      Fsize := REdge - LEdge;
-      FCentre := (REdge + LEdge)/2;
-      PL90 := abs(L90 - L10);
-      PR90 := abs(R90 - R10);
-      PL80 := abs(L80 - L20);
-      PR80 := abs(R80 - R20);
-      PL50 := abs(L90 - LEdge);
-      PR50 := abs(R90 - REdge);
-      if (Aleft + ARight) > 0 then
-         ASym := abs(ALeft - ARight)/(ALeft + ARight)*100
-        else
-         ASym := 0; ;
-      if (CMax + CMin) > 0 then
-         Flat := (CMax - CMin)/(CMax + CMin)*100 else Flat := 0;
-      if CMin > 0 then RFlat := CMax/CMin*100 else RFlat := 0;
-      if RCAX > 0 then RCAX := CMax*100/RCAX;
-      if N > 0 then
-         begin
-         Mean80 := ASum/N;
-         Std80 := sqrt((ASSqr - sqr(ASum)/N)/(N-1))
-         end;
+      NP := N;
+      PSum := ASum;
+      PSSqr := ASSqr;
       end;
    end;
 end;
@@ -891,20 +906,40 @@ end;
 
 { TBSForm }
 
-procedure TBSForm.BSError(sWarning:string);
+procedure TBSForm.StatusBarDrawPanel(SBar: TStatusBar;Panel: TStatusPanel;
+   const Rect: TRect);
 begin
-StatusBar.SimpleText := sWarning;
-StatusBar.Color := clRed;
+with SBar.Canvas do
+   begin
+   Brush.Color := StatusBar.Color;
+   FillRect(Rect);
+   TextRect(Rect,2 + Rect.Left, 1 + Rect.Top,Panel.Text) ;
+   end;
+end;
+
+
+procedure TBSForm.BSError(sError:string);
+begin
+StatusBar.SimpleText := sError;
+StatusBar.Color := FaintRed;
 StatusMessages.Add(StatusBar.SimpleText);
 StatusBar.Hint := StatusMessages.Text;
 end;
 
 
+procedure TBSForm.BSWarning(sWarning:string);
+begin
+StatusBar.SimpleText := sWarning;
+StatusBar.Color := FaintYellow;
+StatusMessages.Add(StatusBar.SimpleText);
+StatusBar.Hint := StatusMessages.Text;
+end;
+
 
 procedure TBSForm.BSMessage(sMess:string);
 begin
 StatusBar.SimpleText := sMess;
-StatusBar.Color := clYellow;
+StatusBar.Color := FaintGreen;
 StatusMessages.Add(StatusBar.SimpleText);
 StatusBar.Hint := StatusMessages.Text;
 end;
@@ -926,12 +961,16 @@ end;
 procedure TBSForm.miExportXClick(Sender: TObject);
 var Outfile:   textfile;
     I:         integer;
-    sExePath:  string;
 
 begin
-sExePath := ExtractFilePath(Application.ExeName);
-SetCurrentDir(sExePath);
-SaveDialog.InitialDir := sExePath;
+{$ifdef WINDOWS}
+SaveDialog.Filter := 'Text files|*.txt|All files|*.*';
+{$else}
+SaveDialog.Filter := 'Text files|*.txt|All files|*';
+{$endif}
+SaveDialog.InitialDir := OpenDialog.InitialDir;
+SaveDialog.DefaultExt := '.txt';
+SaveDialog.FileName := ExtractFileNameOnly(OpenDialog.FileName);
 if XPArr <> nil then
    if SaveDialog.Execute then
       begin
@@ -948,12 +987,16 @@ end;
 procedure TBSForm.miExportYClick(Sender: TObject);
 var Outfile:   textfile;
     I:         integer;
-    sExePath:  string;
 
 begin
-sExePath := ExtractFilePath(Application.ExeName);
-SetCurrentDir(sExePath);
-SaveDialog.InitialDir := sExePath;
+{$ifdef WINDOWS}
+SaveDialog.Filter := 'Text files|*.txt|All files|*.*';
+{$else}
+SaveDialog.Filter := 'Text files|*.txt|All files|*';
+{$endif}
+SaveDialog.InitialDir := OpenDialog.InitialDir;
+SaveDialog.DefaultExt := '.txt';
+SaveDialog.FileName := ExtractFileNameOnly(OpenDialog.FileName);
 if YPArr <> nil then
    if SaveDialog.Execute then
       begin
@@ -967,9 +1010,173 @@ if YPArr <> nil then
 end;
 
 
+procedure TBSForm.bbSavePClick(Sender: TObject);
+var I          :integer;
+    ParamName,                 {parameter name}
+    ProtName,                  {protocol name}
+    ProtPath   :string;        {protocol file path}
+
+begin
+ClearStatus;
+ProtName := cbProtocol.Text;
+if ProtName <> '' then
+   begin
+   {$ifdef WINDOWS}
+   ProtPath := GetAppConfigDir(true);
+   SaveDialog.Filter := 'Comma delimited files|*.csv|All files|*.*';
+   {$else}
+   ProtPath := GetAppConfigDir(false);
+   SaveDialog.Filter := 'Comma delimited files|*.csv|All files|*';
+   {$endif}
+   if not DirectoryExists(ProtPath) then CreateDir(ProtPath);
+   SaveDialog.DefaultExt := '.csv';
+   SaveDialog.FileName := AppendPathDelim(ProtPath) + DelSpace(ProtName) + '.csv';
+
+   for I:=1 to sgResults.Rowcount-1 do
+      begin
+      sgResults.Cells[2,I] := '';
+      sgResults.Cells[3,I] := '';
+      end;
+
+   if SaveDialog.Execute then
+      try;
+         sgResults.SaveToCSVFile(SaveDialog.FileName,',',false);
+      except
+         on E:Exception do
+            BSError('Could not save protocol.');
+      end;
+
+   bbSaveP.Enabled := false;
+   bbSaveP.Visible := false;
+   bbAddL.Enabled := false;
+   bbAddL.Visible := false;
+   bbDelL.Enabled := false;
+   bbDelL.Visible := false;
+   bbExitP.Enabled := false;
+   bbExitP.Visible := false;
+   sgResults.Columns.Items[1].Visible := false;
+   sgResults.Columns.Items[2].Visible := true;
+   sgResults.Columns.Items[3].Visible := true;
+   sgResults.Options := sgResults.Options - [goEditing];
+   BuildProtocolList;
+   if cbProtocol.Items.IndexOf(ProtName) >= 0 then
+         cbProtocol.ItemIndex := cbProtocol.Items.IndexOf(ProtName);
+   LoadProtocol;
+   seXAngleChange(Self);
+   seYAngleChange(Self);
+   end
+  else
+   BSWarning('Please define a protocol name.');
+Editing := false;
+end;
+
+
+procedure TBSForm.cbProtocolChange(Sender: TObject);
+begin
+LoadProtocol;
+seXAngleChange(Self);
+seYAngleChange(Self);
+end;
+
+
+procedure TBSForm.bbExitPClick(Sender: TObject);
+begin
+ClearStatus;
+bbSaveP.Enabled := false;
+bbSaveP.Visible := false;
+bbAddL.Enabled := false;
+bbAddL.Visible := false;
+bbDelL.Enabled := false;
+bbDelL.Visible := false;
+bbExitP.Enabled := false;
+bbExitP.Visible := false;
+sgResults.Columns.Items[1].Visible := false;
+sgResults.Columns.Items[2].Visible := true;
+sgResults.Columns.Items[3].Visible := true;
+sgResults.Options := sgResults.Options - [goEditing];
+LoadProtocol;                  {reload to wipe changes}
+seXAngleChange(Self);
+seYAngleChange(Self);
+Editing := false;
+end;
+
+
+procedure TBSForm.bbAddLClick(Sender: TObject);
+begin
+if sgResults.Row >= 0 then sgResults.InsertRowWithValues(sgResults.Row,['','','','']);
+end;
+
+
+procedure TBSForm.bbDelLClick(Sender: TObject);
+begin
+if sgResults.Row >= 0 then sgResults.DeleteRow(sgResults.Row);
+end;
+
+
+procedure TBSForm.BuildProtocolList;
+var sExePath,
+    sSearchPath,
+    FileName   :string;
+    SearchRec  :TSearchRec;
+
+begin
+{look for parameter definition files and make list}
+sExePath := ExtractFilePath(Application.ExeName);
+sProtPath := AppendPathDelim(sExePath) + 'Protocols';
+sSearchPath := AppendPathDelim(sProtPath) + '*.csv';
+cbProtocol.Clear;
+if FindFirst(sSearchPath,0,SearchRec) = 0 then
+   begin
+      repeat
+      FileName := ExtractFileNameOnly(SearchRec.Name);
+      cbProtocol.Items.Add(Filename);
+      until FindNext(Searchrec) <> 0;
+   cbProtocol.ItemIndex := 0;
+   end
+  else
+   begin
+   {$ifdef WINDOWS}
+   sProtPath := GetAppConfigDir(true);
+   {$else}
+   sProtPath := GetAppConfigDir(false);
+   {$endif}
+   sSearchPath := AppendPathDelim(sProtPath) + '*.csv';
+   if FindFirst(sSearchPath,0,SearchRec) = 0 then
+      begin
+         repeat
+         FileName := ExtractFileNameOnly(SearchRec.Name);
+         cbProtocol.Items.Add(Filename);
+         until FindNext(Searchrec) <> 0;
+      cbProtocol.ItemIndex := 0;
+      end
+     else BSError('No protocol definition files found. Please create a file.');
+   end;
+end;
+
+
+procedure TBSForm.LoadProtocol;
+var FileName   :string;
+begin
+if (cbProtocol.Items.Count > 0) and not Editing then
+   begin
+   FileName := AppendPathDelim(sProtPath) + cbProtocol.Items[cbProtocol.ItemIndex] + '.csv';
+   try
+      sgResults.LoadFromCSVFile(FileName,',',false);
+   except
+      on E:Exception do
+         BSError('Could not load protocol file');
+      end;
+   sgResults.Columns.Items[1].Width := 190;
+   end;
+end;
+
+
 procedure TBSForm.FormCreate(Sender: TObject);
 var I          :integer;
-    sExePath:   string;
+    sExePath,
+    sSearchPath,
+    FileName   :string;
+    SearchRec  :TSearchRec;
 
 begin
 Beam := TBeam.Create;
@@ -1016,12 +1223,9 @@ XPBR := Point(0,0);
 XPBL := Point(0,0);
 YPW := 0;
 XPW := 0;
-lvResults.GridLines := false;
-for I:=0 to lvResults.Items.Count - 1 do
-   begin
-   lvResults.Items[I].SubItems.Add('');
-   lvResults.Items[I].SubItems.Add('');
-   end;
+
+BuildProtocolList;
+LoadProtocol;
 
 if not HelpServer.Listen(3880) then
    begin
@@ -1029,6 +1233,7 @@ if not HelpServer.Listen(3880) then
    end;
 
 Safe := true;
+Editing := false;
 end;
 
 
@@ -2029,6 +2234,24 @@ seYOffset.Value := R*cos(Theta - Phi);
 end;
 
 
+procedure TBSForm.miEditPClick(Sender: TObject);
+begin
+Editing := true;
+bbSaveP.Enabled := true;
+bbSaveP.Visible := true;
+bbAddL.Enabled := true;
+bbAddL.Visible := true;
+bbDelL.Enabled := true;
+bbDelL.Visible := true;
+bbExitP.Enabled := true;
+bbExitP.Visible := true;
+sgResults.Columns.Items[1].Visible := true;
+sgResults.Columns.Items[2].Visible := false;
+sgResults.Columns.Items[3].Visible := false;
+sgResults.Options := sgResults.Options + [goEditing];
+end;
+
+
 procedure TBSForm.miPDFPrint(Sender: TObject);
 begin
 ResForm := TResForm.Create(Self);
@@ -2162,7 +2385,6 @@ end;
 procedure TBSForm.sbCentreClick(Sender: TObject);
 {resamples the data using bi-linear interpolation}
 var I,J,
-    SI,SJ,                     {x and y shift}
     NI,NJ,                     {new x and y coords}
     MaxI,MaxJ  :integer;
     ShiftData  :TBeamData;
@@ -2182,8 +2404,8 @@ YPBR := Point(0,0);
 YPBL := Point(0,0);
 MaxI := Beam.Cols - 3;
 MaxJ := Beam.Rows - 1;
-SX := XBParams.FCentre/Beam.XRes;
-SY := YBParams.FCentre/Beam.YRes;
+with XBParams do SX := (LEdge + REdge)/(2*Beam.XRes);
+with YBParams do SY := (LEdge + REdge)/(2*Beam.YRes);
 SetLength(ShiftData,Beam.Rows);
 
 for J:= 0 to MaxJ do
@@ -2410,92 +2632,102 @@ end;
 
 procedure TBSForm.ShowXResults(BeamParams:TBeamParams);
 var I          :integer;
+    Parser     :TParser;
+    sExpr      :string;        {expression to calculate}
 
 begin
-I := 1;
+Parser := TParser.Create(BSForm);
 with BeamParams do
    begin
-   lvResults.Items[I].SubItems[0] := '(' + FloatToStrF(LEdge,ffFixed,4,2) +',' +
-      FloatToStrF(REdge,ffFixed,4,2) + ')';
-   Inc(I);
-   lvResults.Items[I].SubItems[0] := FloatToStrF(FCentre,ffFixed,4,2);
-   Inc(I);
-   lvResults.Items[I].SubItems[0] := FloatToStrF(FSize,ffFixed,4,2);
-   Inc(I);
-   Inc(I);
-   lvResults.Items[I].SubItems[0] := '(' + FloatToStrF(PL90,ffFixed,4,2) +',' +
-      FloatToStrF(PR90,ffFixed,4,2) + ')';
-   Inc(I);
-   lvResults.Items[I].SubItems[0] := '(' + FloatToStrF(PL80,ffFixed,4,2) +',' +
-      FloatToStrF(PR80,ffFixed,4,2) + ')';
-   Inc(I);
-   lvResults.Items[I].SubItems[0] := '(' + FloatToStrF(PL50,ffFixed,4,2) +',' +
-      FloatToStrF(PR50,ffFixed,4,2) + ')';
-   Inc(I);
-   Inc(I);
-   lvResults.Items[I].SubItems[0] := FloatToStrf(ASym,ffFixed,3,2) + ' %';
-   Inc(I);
-   lvResults.Items[I].SubItems[0] := FloatToStrf(PSym,ffFixed,4,3);
-   Inc(I);
-   lvResults.Items[I].SubItems[0] := FloatToStrf((PSym - 1)*100,ffFixed,3,2) + ' %';
-   Inc(I);
-   Inc(I);
-   lvResults.Items[I].SubItems[0] := FloatToStrf(Flat,ffFixed,3,2) + ' %';
-   Inc(I);
-   lvResults.Items[I].SubItems[0] := FloatToStrf(RFlat,ffFixed,3,2) + ' %';
-   Inc(I);
-   lvResults.Items[I].SubItems[0] := FloatToStrf(RCAX,ffFixed,3,2) + ' %';
-   Inc(I);
-   Inc(I);
-   lvResults.Items[I].SubItems[0] := FloatToStrF(Mean80,ffFixed,5,1);
-   Inc(I);
-   lvResults.Items[I].SubItems[0] := FloatToStrF(Std80,ffFixed,5,2);
+   {Transfer parameters to parser}
+   Parser.Variable['ALeft'] := ALeft;
+   Parser.Variable['ARight'] := ARight;
+   Parser.Variable['RDiff'] := RDiff;
+   Parser.Variable['ADiff'] := ADiff;
+   Parser.Variable['PMax'] := CMax;
+   Parser.Variable['PMin'] := CMin;
+   Parser.Variable['RCAX'] := RCAX;
+   Parser.Variable['LEdge'] := LEdge;
+   Parser.Variable['REdge'] := REdge;
+   Parser.Variable['L10'] := L10;
+   Parser.Variable['R10'] := R10;
+   Parser.Variable['L20'] := L20;
+   Parser.Variable['R20'] := R20;
+   Parser.Variable['L80'] := L80;
+   Parser.Variable['R80'] := R80;
+   Parser.Variable['L90'] := L90;
+   Parser.Variable['R90'] := R90;
+   Parser.Variable['N'] := NP;
+   Parser.Variable['PSum'] := PSum;
+   Parser.Variable['PSSqr'] := PSSqr;
+
+   {calc values and write to string grid}
+   for I:=1 to sgResults.RowCount-1 do
+      begin
+      sExpr := sgResults.Cells[1,I];
+      if sExpr <> '' then
+         begin
+            try
+            Parser.Expression:= sExpr;
+            sgResults.Cells[2,I] := FloatToStrF(Parser.Value,ffFixed,4,2);
+            except
+               on E:Exception do
+                  BSError('Could not evaluation expression, ' + sExpr);
+            end;
+         end
+        else sgResults.Cells[2,I] := '';
+      end;
    end;
 end;
 
 
 procedure TBSForm.ShowYResults(BeamParams:TBeamParams);
 var I          :integer;
+    Parser     :TParser;
+    sExpr      :string;        {expression to calculate}
 
 begin
-I := 1;
+Parser := TParser.Create(BSForm);
 with BeamParams do
    begin
-   lvResults.Items[I].SubItems[1] := '(' + FloatToStrF(LEdge,ffFixed,4,2) +',' +
-      FloatToStrF(REdge,ffFixed,4,2) + ')';
-   Inc(I);
-   lvResults.Items[I].SubItems[1] := FloatToStrF(FCentre,ffFixed,4,2);
-   Inc(I);
-   lvResults.Items[I].SubItems[1] := FloatToStrF(FSize,ffFixed,4,2);
-   Inc(I);
-   Inc(I);
-   lvResults.Items[I].SubItems[1] := '(' + FloatToStrF(PL90,ffFixed,4,2) +',' +
-      FloatToStrF(PR90,ffFixed,4,2) + ')';
-   Inc(I);
-   lvResults.Items[I].SubItems[1] := '(' + FloatToStrF(PL80,ffFixed,4,2) +',' +
-      FloatToStrF(PR80,ffFixed,4,2) + ')';
-   Inc(I);
-   lvResults.Items[I].SubItems[1] := '(' + FloatToStrF(PL50,ffFixed,4,2) +',' +
-      FloatToStrF(PR50,ffFixed,4,2) + ')';
-   Inc(I);
-   Inc(I);
-   lvResults.Items[I].SubItems[1] := FloatToStrf(ASym,ffFixed,3,2) + ' %';
-   Inc(I);
-   lvResults.Items[I].SubItems[1] := FloatToStrf(PSym,ffFixed,4,3);
-   Inc(I);
-   lvResults.Items[I].SubItems[1] := FloatToStrf((PSym - 1)*100,ffFixed,3,2) + ' %';
-   Inc(I);
-   Inc(I);
-   lvResults.Items[I].SubItems[1] := FloatToStrf(Flat,ffFixed,3,2) + ' %';
-   Inc(I);
-   lvResults.Items[I].SubItems[1] := FloatToStrf(RFlat,ffFixed,3,2) + ' %';
-   Inc(I);
-   lvResults.Items[I].SubItems[1] := FloatToStrf(RCAX,ffFixed,3,2) + ' %';
-   Inc(I);
-   Inc(I);
-   lvResults.Items[I].SubItems[1] := FloatToStrF(Mean80,ffFixed,5,1);
-   Inc(I);
-   lvResults.Items[I].SubItems[1] := FloatToStrF(Std80,ffFixed,5,2);
+   {Transfer parameters to parser}
+   Parser.Variable['ALeft'] := ALeft;
+   Parser.Variable['ARight'] := ARight;
+   Parser.Variable['RDiff'] := RDiff;
+   Parser.Variable['ADiff'] := ADiff;
+   Parser.Variable['PMax'] := CMax;
+   Parser.Variable['PMin'] := CMin;
+   Parser.Variable['RCAX'] := RCAX;
+   Parser.Variable['LEdge'] := LEdge;
+   Parser.Variable['REdge'] := REdge;
+   Parser.Variable['L10'] := L10;
+   Parser.Variable['R10'] := R10;
+   Parser.Variable['L20'] := L20;
+   Parser.Variable['R20'] := R20;
+   Parser.Variable['L80'] := L80;
+   Parser.Variable['R80'] := R80;
+   Parser.Variable['L90'] := L90;
+   Parser.Variable['R90'] := R90;
+   Parser.Variable['N'] := NP;
+   Parser.Variable['PSum'] := PSum;
+   Parser.Variable['PSSqr'] := PSSqr;
+
+   {calc values and write to string grid}
+   for I:=1 to sgResults.RowCount-1 do
+      begin
+      sExpr := sgResults.Cells[1,I];
+      if sExpr <> '' then
+         begin
+            try
+            Parser.Expression:= sExpr;
+            sgResults.Cells[3,I] := FloatToStrF(Parser.Value,ffFixed,4,2);
+            except
+               on E:Exception do
+                  BSError('Could not evaluation expression, ' + sExpr);
+            end;
+         end
+        else sgResults.Cells[3,I] := '';
+      end;
    end;
 end;
 

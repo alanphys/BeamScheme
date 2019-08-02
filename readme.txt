@@ -1,9 +1,7 @@
 BeamScheme Readme file (c) 2008-2019 AC Chamberlain
 
 1) Introduction
-BeamScheme 2008-2019 copyright AC Chamberlain
-
-Welcome to BeamScheme version 0.42
+Welcome to BeamScheme version 0.43
 
 This software will assist you in extracting 1D profiles from 2D datasets and calculating various parameters on the profiles. BeamScheme can open various image and 2D array file formats such as SNC MapCheck, PTW 720, IBA Matrix and StarTrack, XiO, DICOM, jpg, etc.
 
@@ -12,7 +10,7 @@ Parameters such as field size, field centre, penumbra, flatness and symmetry are
 BeamScheme is not intended to replace the commercial software available with 2D arrays, but to complement it.
 
 2) Licence
-Please read the file Licence.txt. This means that if as a result of using this program you fry your patients, trash your linac, nuke the cat, blow the city power in a ten block radius and generally cause global thermonuclear meltdown! Sorry, I did warn you!
+Please read the file Licence.txt. This means that if as a result of using this program you fry your patients, trash your linac, nuke the cat, blow the city power in a ten block radius and generally cause global thermonuclear meltdown! Sorry, you were warned!
 
 3) Installation
 It is not necessary to remove previous versions unless these were installed manually.
@@ -49,18 +47,21 @@ The program uses the normalised, corrected MapCheck data. No normalisation shoul
 
 Normalisation places the minimum of the image at 0 and the maximum at 100. If the image contains dead pixels or other strange artifacts it is possible for the normalisation to fail and give you strange results. This is not the fault of the program but of the image. See the previous comment about calibration. Normalisation now acts on the windowed data.
 
-8) History
+8) What's new
+Added user definable parameter and parameter sets. To support this multi-page pdf and print output had to be added as well as an expression editor. This is an interim release for testing.
+
+9) History
 22/07/2008 version 0.1
-3/09/2009 added DICOM unit
-22/8/2011 Fix field centre error,
-          Fix Y resolution error for MapCheck 2
+3/09/2009  added DICOM unit
+22/8/2011  Fix field centre error,
+           Fix Y resolution error for MapCheck 2
 28/09/2011 removed MultiDoc
-added invert
-added normalise
-added windowing
-fixed profile display
-fixed symmetry calculation
-cleaned up printout 
+           added invert
+           added normalise
+           added windowing
+           fixed profile display
+           fixed symmetry calculation
+           cleaned up printout 
 Version 0.2 released 1/8/2011
 22/8/2011  Fix field centre error,
            Fix Y resolution error for MapCheck 2
@@ -95,8 +96,15 @@ Version 0.3 released 20/7/2015
            Fix CAX for even no of detectors
 1/2/2018   Add mouse control for profiles
 2/2/2018   Fix off by 1 error profile limits
+Version 0.4 released 2/2/2018
 27/3/2018  Fix regional settings decimal separator
 3/4/2018   Add mean and standard deviation
            Fix profile increment
 30/4/2019  Fix DTrackbar if image max = maxlongint
 3/5/2019   Fix DICOM off by one and pointer conversion
+17/7/2019  Update about unit
+18/7/2019  Update status bar
+23/7/2019  Add expression parser
+30/7/2019  Add multipage output
+31/7/2019  Fix profile export dirs
+1/8/2019   Add expression editor

@@ -10,7 +10,7 @@ uses
   Forms
   { you can add units after this }, bsunit, TAChartLazarusPkg, tachartprint,
   Printer4Lazarus, dicom, define_types, dtrackbar, pack_powerpdf, lnetvisual,
-  resunit, aboutunit;
+  resunit, aboutunit, Parser10;
 
 {$R *.res}
 
