@@ -1,0 +1,8 @@
+Centre,(REdge+LEdge)/2,,
+"Field width (cm)",abs(REdge-LEdge),,
+Penumbra(80-20),,,
+"      Left (cm)",abs(L80-L20),,
+"      Right (cm)",abs(R80-R20),,
+Symmetry(%),200*abs(ALeft-ARight)/(ALeft+ARight),,
+"Flatness (%)",100*abs(PMax-PMin)/(PMax+PMin),,
+"Deviation (%)",100*Pmax/RCAX,,

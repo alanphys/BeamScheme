@@ -80,7 +80,7 @@ object ResForm: TResForm
         Height = 838
         Top = 0
         Width = 666
-        HorzScrollBar.Page = 595
+        HorzScrollBar.Page = 608
         VertScrollBar.Page = 836
         Align = alClient
         ClientHeight = 836
@@ -426,6 +426,7 @@ object ResForm: TResForm
     Title = 'Save PDF as'
     DefaultExt = '.pdf'
     Filter = 'PDF files|*.pdf|All files|*'
+    Options = [ofOverwritePrompt, ofEnableSizing, ofViewDetail]
     left = 560
     top = 232
   end

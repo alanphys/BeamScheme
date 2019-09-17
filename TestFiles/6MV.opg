@@ -10,8 +10,8 @@ Radiation Type:     Photons
 Energy:             6.00 Unknown
 SSD:                739.0 mm
 SID:                1000.0 mm
-Field Size Cr:      20.0 mm
-Field Size In:      20.0 mm
+Field Size Cr:      150.0 mm
+Field Size In:      150.0 mm
 Data Type:          Counts
 Data Factor:        1.000
 Data Unit:          cnt

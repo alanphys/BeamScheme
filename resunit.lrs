@@ -22,7 +22,7 @@ LazarusResources.Add('TResForm','FORMDATA',[
   +#8'TabOrder'#2#1#0#9'TTabSheet'#9'TabSheet1'#7'Caption'#6#5'Page1'#12'Client'
   +'Height'#3'F'#3#11'ClientWidth'#3#154#2#0#10'TScrollBox'#10'ScrollBox1'#4'Le'
   +'ft'#2#0#6'Height'#3'F'#3#3'Top'#2#0#5'Width'#3#154#2#18'HorzScrollBar.Page'
-  +#3'S'#2#18'VertScrollBar.Page'#3'D'#3#5'Align'#7#8'alClient'#12'ClientHeight'
+  +#3'`'#2#18'VertScrollBar.Page'#3'D'#3#5'Align'#7#8'alClient'#12'ClientHeight'
   +#3'D'#3#11'ClientWidth'#3#139#2#8'TabOrder'#2#0#0#7'TPRPage'#7'PRPage1'#4'Le'
   +'ft'#2#0#6'Height'#3'J'#3#3'Top'#2#0#5'Width'#3'S'#2#9'MarginTop'#2' '#10'Ma'
   +'rginLeft'#2' '#11'MarginRight'#2' '#12'MarginBottom'#2' '#0#14'TPRLayoutPan'
@@ -234,7 +234,8 @@ LazarusResources.Add('TResForm','FORMDATA',[
   +#12'CreationDate'#5#0'Hasl'#162#166#166#14'@'#7'ModDate'#5#0#0#0#0#0#0#0#0#0
   +#0#11'UseOutlines'#8#16'ViewerPreference'#11#0#4'left'#3'0'#2#3'top'#3#168#0
   +#0#0#11'TSaveDialog'#12'rfSaveDialog'#5'Title'#6#11'Save PDF as'#10'DefaultE'
-  +'xt'#6#4'.pdf'#6'Filter'#6#27'PDF files|*.pdf|All files|*'#4'left'#3'0'#2#3
-  +'top'#3#232#0#0#0#12'TPrintDialog'#11'PrintDialog'#4'left'#3'0'#2#3'top'#3' '
+  +'xt'#6#4'.pdf'#6'Filter'#6#27'PDF files|*.pdf|All files|*'#7'Options'#11#17
+  +'ofOverwritePrompt'#14'ofEnableSizing'#12'ofViewDetail'#0#4'left'#3'0'#2#3't'
+  +'op'#3#232#0#0#0#12'TPrintDialog'#11'PrintDialog'#4'left'#3'0'#2#3'top'#3' '
   +#1#0#0#0
 ]);

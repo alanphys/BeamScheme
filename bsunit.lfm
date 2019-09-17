@@ -1288,10 +1288,11 @@ object BSForm: TBSForm
         Left = 64
         Height = 25
         Top = 2
-        Width = 99
+        Width = 128
         ItemHeight = 17
         OnEditingDone = cbProtocolChange
         ParentFont = False
+        Sorted = True
         TabOrder = 0
       end
       object bbSaveP: TBitBtn
@@ -1569,6 +1570,13 @@ object BSForm: TBSForm
       end
       object miSaveP: TMenuItem
         Caption = '&Save'
+        Enabled = False
+        OnClick = bbSavePClick
+      end
+      object miQuitEdit: TMenuItem
+        Caption = '&Quit Edit'
+        Enabled = False
+        OnClick = bbExitPClick
       end
     end
     object miPrint: TMenuItem

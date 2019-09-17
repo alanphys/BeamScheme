@@ -52,7 +52,13 @@ unit bsunit;
  23/7/2019  Add expression parser
  30/7/2019  Add multipage output
  31/7/2019  Fix profile export dirs
- 1/8/2019   Add expression editor}
+ 1/8/2019   Add expression editor
+ 14/8/2019  Remove auto normalisation of profile values.
+            Fix previous image and profile display on open image cancel
+ 11/9/2019  Fix prompt for overwrite results
+            Fix protocol list unsorted on reload
+            Add Quit Edit menu item
+ 16/9/2019  Fix Y axis swapped for IBA files}
 
 
 {$mode objfpc}{$H+}
@@ -135,6 +141,7 @@ type
    HTMLHelpDatabase: THTMLHelpDatabase;
    HelpServer: TLHTTPServerComponent;
    Label7: TLabel;
+   miQuitEdit: TMenuItem;
    miProtocol: TMenuItem;
    miSaveP: TMenuItem;
    miEditP: TMenuItem;
@@ -776,15 +783,23 @@ with BeamParams do
         else
          CMax := (PArr[HLPArr].Y + PArr[HLPArr - 1].Y)/2;
       CMin := CMax;
-      for I:=0 to LPArr do
+      {for I:=0 to LPArr do
          if PArr[I].Y < CMin
-            then CMin := PArr[I].Y;
+            then CMin := PArr[I].Y;}
       RCAX := CMax;
-      HMax := (CMax-CMin)*0.5 + CMin;
+
+      {Leave it to the user to normalise values. Most arrays are already normalised}
+      {HMax := (CMax-CMin)*0.5 + CMin;
       M90 := (CMax-CMin)*0.9 + CMin;
       M80 := (CMax-CMin)*0.8 + CMin;
       M20 := (CMax-CMin)*0.2 + CMin;
-      M10 := (CMax-CMin)*0.1 + CMin;
+      M10 := (CMax-CMin)*0.1 + CMin;}
+
+      HMax := CMax*0.5;
+      M90 := CMax*0.9;
+      M80 := CMax*0.8;
+      M20 := CMax*0.2;
+      M10 := CMax*0.1;
       I := 0;
       if not odd(LPArr) then
          begin                        {symmetric around central detector}
@@ -808,7 +823,6 @@ with BeamParams do
       NPosP80 := StartPos;
       NegP80 := 0;
       PosP80 := 0;
-      CMin := CMax;
       if LPArr > 2 then Res := PArr[HLPArr + 1].X - PArr[HLPArr].X;
       while (I <= HLPArr) and not((PArr[NegP].Y = 0) and (PArr[NegP].X = 0)
          and (PArr[PosP].Y = 0) and (PArr[PosP].X = 0)) do
@@ -858,7 +872,7 @@ with BeamParams do
                      else RSym := 1;
                   if (RSym < 1.0) and (RSym <> 0) then RSym := 1/RSym;
                   if RDiff < RSym then RDiff := RSym;
-                  Diff := PArr[NegP80].Y - PArr[PosP80].Y;
+                  Diff := abs(PArr[NegP80].Y - PArr[PosP80].Y);
                   if ADiff < Diff then ADiff := Diff;
                   ASum := ASum + PArr[PosP80].Y;
                   ASSqr := ASSqr + sqr(PArr[PosP80].Y);
@@ -1048,6 +1062,9 @@ if ProtName <> '' then
 
    bbSaveP.Enabled := false;
    bbSaveP.Visible := false;
+   miSaveP.Enabled := false;
+   miEditP.Enabled := true;
+   miQuitEdit.Enabled := false;
    bbAddL.Enabled := false;
    bbAddL.Visible := false;
    bbDelL.Enabled := false;
@@ -1073,6 +1090,7 @@ end;
 
 procedure TBSForm.cbProtocolChange(Sender: TObject);
 begin
+ClearStatus;
 LoadProtocol;
 seXAngleChange(Self);
 seYAngleChange(Self);
@@ -1084,6 +1102,9 @@ begin
 ClearStatus;
 bbSaveP.Enabled := false;
 bbSaveP.Visible := false;
+miSaveP.Enabled := false;
+miEditP.Enabled := true;
+miQuitEdit.Enabled := false;
 bbAddL.Enabled := false;
 bbAddL.Visible := false;
 bbDelL.Enabled := false;
@@ -1117,6 +1138,7 @@ procedure TBSForm.BuildProtocolList;
 var sExePath,
     sSearchPath,
     FileName   :string;
+    ProtList   :TStringList;
     SearchRec  :TSearchRec;
 
 begin
@@ -1125,12 +1147,15 @@ sExePath := ExtractFilePath(Application.ExeName);
 sProtPath := AppendPathDelim(sExePath) + 'Protocols';
 sSearchPath := AppendPathDelim(sProtPath) + '*.csv';
 cbProtocol.Clear;
+ProtList := TStringList.Create;
 if FindFirst(sSearchPath,0,SearchRec) = 0 then
    begin
       repeat
       FileName := ExtractFileNameOnly(SearchRec.Name);
-      cbProtocol.Items.Add(Filename);
+      ProtList.Add(Filename);
       until FindNext(Searchrec) <> 0;
+   ProtList.Sort;
+   cbProtocol.Items.Assign(ProtList);
    cbProtocol.ItemIndex := 0;
    end
   else
@@ -1145,8 +1170,10 @@ if FindFirst(sSearchPath,0,SearchRec) = 0 then
       begin
          repeat
          FileName := ExtractFileNameOnly(SearchRec.Name);
-         cbProtocol.Items.Add(Filename);
+         ProtList.Add(Filename);
          until FindNext(Searchrec) <> 0;
+      ProtList.Sort;
+      cbProtocol.Items.Assign(ProtList);
       cbProtocol.ItemIndex := 0;
       end
      else BSError('No protocol definition files found. Please create a file.');
@@ -1287,9 +1314,10 @@ end;
 
 
 procedure TBSForm.miOpenClick(Sender: TObject);
-var Dummy,
-    sExePath:  string;
-    DataOK:    boolean;
+var I          :integer;
+    Dummy,
+    sExePath   :string;
+    DataOK     :boolean;
 
 begin
 Safe := false;
@@ -1304,6 +1332,15 @@ YPTR := Point(0,0);
 YPTL := Point(0,0);
 YPBR := Point(0,0);
 YPBL := Point(0,0);
+iBeam.Picture.Clear;
+XProfile.Clear;
+YProfile.Clear;
+for I:=1 to sgResults.Rowcount-1 do
+   begin
+   sgResults.Cells[2,I] := '';
+   sgResults.Cells[3,I] := '';
+   end;
+
 {sExePath := ExtractFilePath(Application.ExeName);
 SetCurrentDir(sExePath);}
 DataOK := false;
@@ -1528,7 +1565,7 @@ if Dummy = '<opimrtascii>' then {file is IBA}
       for K:=1 to NumSets do
          begin
          if K = 1 then SetLength(Beam.Data,Beam.Rows);
-         for I := 0 to Beam.Rows - 1 do
+         for I := Beam.Rows - 1 downto 0 do
             begin
             if K = 1 then SetLength(Beam.Data[I],Beam.Cols);
             for J := 1 to Beam.Cols - 1 do
@@ -2239,6 +2276,9 @@ begin
 Editing := true;
 bbSaveP.Enabled := true;
 bbSaveP.Visible := true;
+miSaveP.Enabled := true;
+miEditP.Enabled := false;
+miQuitEdit.Enabled := true;
 bbAddL.Enabled := true;
 bbAddL.Visible := true;
 bbDelL.Enabled := true;

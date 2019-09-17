@@ -9,6 +9,8 @@ Parameters such as field size, field centre, penumbra, flatness and symmetry are
 
 BeamScheme is not intended to replace the commercial software available with 2D arrays, but to complement it.
 
+BeamScheme now supports user definable parameters and parameter sets. To support this multi-page pdf and print output had to be added as well as an expression editor. This is an interim release for testing.
+
 2) Licence
 Please read the file Licence.txt. This means that if as a result of using this program you fry your patients, trash your linac, nuke the cat, blow the city power in a ten block radius and generally cause global thermonuclear meltdown! Sorry, you were warned!
 
@@ -47,8 +49,22 @@ The program uses the normalised, corrected MapCheck data. No normalisation shoul
 
 Normalisation places the minimum of the image at 0 and the maximum at 100. If the image contains dead pixels or other strange artifacts it is possible for the normalisation to fail and give you strange results. This is not the fault of the program but of the image. See the previous comment about calibration. Normalisation now acts on the windowed data.
 
-8) What's new
-Added user definable parameter and parameter sets. To support this multi-page pdf and print output had to be added as well as an expression editor. This is an interim release for testing.
+8) Release notes
+These detail new or changed functionality in BeamScheme. Please see the History for bug fixes.
+
+Latest release
+Parameters are no longer auto normalised. Eg. the field edge or 50% value was calculated on the 50% value between the maximum and minimum of the profile. Now it is calculated on 50% of the maximum of the profile only. The user must explictly normalise the data if the normalised value is required. This is to bring BeamScheme in line with other programs.
+
+Added an expression parser. This allows different parameter sets to be defined. The user can also define parameter sets. Expression editing has been included. Output has been updated to provide for mulitpage output.
+
+Version 0.42
+Added new About unit detailing readme, licence and credits.
+
+Version 0.41
+Added Average and Standard Deviation parameters over the flattened region of the profiles
+
+Version 0.40
+Profiles can now be positioned by clicking on the image with the mouse.
 
 9) History
 22/07/2008 version 0.1
