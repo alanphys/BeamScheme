@@ -124,3 +124,12 @@ Version 0.4 released 2/2/2018
 30/7/2019  Add multipage output
 31/7/2019  Fix profile export dirs
 1/8/2019   Add expression editor
+14/8/2019  Remove auto normalisation of profile values.
+           Fix previous image and profile display on open image cancel
+11/9/2019  Fix prompt for overwrite results
+           Fix protocol list unsorted on reload
+           Add Quit Edit menu item
+16/9/2019  Fix Y axis swapped for IBA files
+10/10/2019 Change BitButtons to SpeedButtons on protocol edit toolbar
+           Fix cancel on protocol save
+           Fix edit flag on protocol edit exit

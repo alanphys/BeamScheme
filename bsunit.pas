@@ -58,7 +58,10 @@ unit bsunit;
  11/9/2019  Fix prompt for overwrite results
             Fix protocol list unsorted on reload
             Add Quit Edit menu item
- 16/9/2019  Fix Y axis swapped for IBA files}
+ 16/9/2019  Fix Y axis swapped for IBA files
+ 10/10/2019 Change BitButtons to SpeedButtons on protocol edit toolbar
+            Fix cancel on protocol save
+            Fix edit flag on protocol edit exit}
 
 
 {$mode objfpc}{$H+}
@@ -126,10 +129,6 @@ type
   { TBSForm }
 
   TBSForm = class(TForm)
-   bbSaveP: TBitBtn;
-   bbExitP: TBitBtn;
-   bbAddL: TBitBtn;
-   bbDelL: TBitBtn;
    ChartToolsetY: TChartToolset;
    ChartToolsetX: TChartToolset;
    ChartToolsetXDataPointHintTool: TDataPointHintTool;
@@ -155,6 +154,10 @@ type
    SaveDialog: TSaveDialog;
    sbMaxNorm: TSpeedButton;
    sbCentre: TSpeedButton;
+   sbSaveP: TSpeedButton;
+   sbAddP: TSpeedButton;
+   sbDelP: TSpeedButton;
+   sbExitP: TSpeedButton;
    StatusBar: TStatusBar;
    StatusMessages: TStringList;
    sgResults: TStringGrid;
@@ -1053,38 +1056,39 @@ if ProtName <> '' then
       end;
 
    if SaveDialog.Execute then
+      begin
       try;
          sgResults.SaveToCSVFile(SaveDialog.FileName,',',false);
       except
          on E:Exception do
             BSError('Could not save protocol.');
       end;
-
-   bbSaveP.Enabled := false;
-   bbSaveP.Visible := false;
-   miSaveP.Enabled := false;
-   miEditP.Enabled := true;
-   miQuitEdit.Enabled := false;
-   bbAddL.Enabled := false;
-   bbAddL.Visible := false;
-   bbDelL.Enabled := false;
-   bbDelL.Visible := false;
-   bbExitP.Enabled := false;
-   bbExitP.Visible := false;
-   sgResults.Columns.Items[1].Visible := false;
-   sgResults.Columns.Items[2].Visible := true;
-   sgResults.Columns.Items[3].Visible := true;
-   sgResults.Options := sgResults.Options - [goEditing];
-   BuildProtocolList;
-   if cbProtocol.Items.IndexOf(ProtName) >= 0 then
-         cbProtocol.ItemIndex := cbProtocol.Items.IndexOf(ProtName);
-   LoadProtocol;
-   seXAngleChange(Self);
-   seYAngleChange(Self);
+      sbSaveP.Enabled := false;
+      sbSaveP.Visible := false;
+      miSaveP.Enabled := false;
+      miEditP.Enabled := true;
+      miQuitEdit.Enabled := false;
+      sbAddP.Enabled := false;
+      sbAddP.Visible := false;
+      sbDelP.Enabled := false;
+      sbDelP.Visible := false;
+      sbExitP.Enabled := false;
+      sbExitP.Visible := false;
+      sgResults.Columns.Items[1].Visible := false;
+      sgResults.Columns.Items[2].Visible := true;
+      sgResults.Columns.Items[3].Visible := true;
+      sgResults.Options := sgResults.Options - [goEditing];
+      BuildProtocolList;
+      if cbProtocol.Items.IndexOf(ProtName) >= 0 then
+            cbProtocol.ItemIndex := cbProtocol.Items.IndexOf(ProtName);
+      LoadProtocol;
+      seXAngleChange(Self);
+      seYAngleChange(Self);
+      Editing := false;
+      end;
    end
   else
    BSWarning('Please define a protocol name.');
-Editing := false;
 end;
 
 
@@ -1100,25 +1104,25 @@ end;
 procedure TBSForm.bbExitPClick(Sender: TObject);
 begin
 ClearStatus;
-bbSaveP.Enabled := false;
-bbSaveP.Visible := false;
+sbSaveP.Enabled := false;
+sbSaveP.Visible := false;
 miSaveP.Enabled := false;
 miEditP.Enabled := true;
 miQuitEdit.Enabled := false;
-bbAddL.Enabled := false;
-bbAddL.Visible := false;
-bbDelL.Enabled := false;
-bbDelL.Visible := false;
-bbExitP.Enabled := false;
-bbExitP.Visible := false;
+sbAddP.Enabled := false;
+sbAddP.Visible := false;
+sbDelP.Enabled := false;
+sbDelP.Visible := false;
+sbExitP.Enabled := false;
+sbExitP.Visible := false;
 sgResults.Columns.Items[1].Visible := false;
 sgResults.Columns.Items[2].Visible := true;
 sgResults.Columns.Items[3].Visible := true;
 sgResults.Options := sgResults.Options - [goEditing];
+Editing := false;
 LoadProtocol;                  {reload to wipe changes}
 seXAngleChange(Self);
 seYAngleChange(Self);
-Editing := false;
 end;
 
 
@@ -2274,17 +2278,17 @@ end;
 procedure TBSForm.miEditPClick(Sender: TObject);
 begin
 Editing := true;
-bbSaveP.Enabled := true;
-bbSaveP.Visible := true;
+sbSaveP.Enabled := true;
+sbSaveP.Visible := true;
 miSaveP.Enabled := true;
 miEditP.Enabled := false;
 miQuitEdit.Enabled := true;
-bbAddL.Enabled := true;
-bbAddL.Visible := true;
-bbDelL.Enabled := true;
-bbDelL.Visible := true;
-bbExitP.Enabled := true;
-bbExitP.Visible := true;
+sbAddP.Enabled := true;
+sbAddP.Visible := true;
+sbDelP.Enabled := true;
+sbDelP.Visible := true;
+sbExitP.Enabled := true;
+sbExitP.Visible := true;
 sgResults.Columns.Items[1].Visible := true;
 sgResults.Columns.Items[2].Visible := false;
 sgResults.Columns.Items[3].Visible := false;
