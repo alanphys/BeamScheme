@@ -1,5 +1,6 @@
-Centre,(REdge+LEdge)/2,,
-"Field size (cm)",abs(REdge-LEdge),,
+Field,,,
+"     Centre (cm)",(REdge+LEdge)/2,,
+"     Size (cm)",abs(REdge-LEdge),,
 Penumbra(80-20),,,
 "      Left (cm)",abs(L80-L20),,
 "      Right (cm)",abs(R80-R20),,

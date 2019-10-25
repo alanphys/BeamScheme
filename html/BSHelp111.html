@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Field Edge &#8212; BeamScheme 0.40-alpha documentation</title>
+    <title>Field Edge &#8212; BeamScheme 0.50-beta documentation</title>
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.40-alpha',
+        VERSION:     '0.50-beta',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="BSHelp11.html" title="Parameters"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.40-alpha documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.50-beta documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="BSHelp9.html" >Algorithms</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="BSHelp11.html" accesskey="U">Parameters</a> &#187;</li> 
       </ul>
@@ -53,13 +53,14 @@
             
   <div class="section" id="field-edge">
 <span id="index-0"></span><h1>Field Edge<a class="headerlink" href="#field-edge" title="Permalink to this headline">¶</a></h1>
-<p>The field edges are defined at the first point from the centre of the profile where the profile reaches a value of:</p>
+<p>The field edges are defined at the first point from the centre of the profile where the profile reaches the 50% value, i.e.:</p>
 <div class="math">
-\[\cfrac {max-min} {2} + min\]</div>
-<p>Where <em>max</em> is the value of the profile on the central axis (CAX) and <em>min</em> is the image or array minimum. If the detector is zeroed to background then <em>min</em> = 0 and we get <span class="math">\(\cfrac {max} {2}\)</span> or the 50% value.</p>
-<p>The algorithm searches symmetrically out from the profile centre on both sides of the profile to these points. The value reported is the linear distance from the profile centre to the field edge. The left and right field edge of the profile is given.</p>
+\[\cfrac {CAX} {2}\]</div>
+<p>Where <em>CAX</em> is the value of the profile on the central axis (CAX).</p>
+<p>Since version 0.5 BeamScheme no longer does automatic grounding of the profile, i.e. reducing the minimum to zero. This means that if you want the grounded field size you must <em>explicitly</em> normalise or window the image.</p>
+<p>The algorithm searches symmetrically out from the profile centre on both sides of the profile to these points. If the 50% value lies between measured points the field edge is interpolated. The value reported is the linear distance from the profile centre to the field edge. The left and right field edge of the profile is given.</p>
+<p><img alt="Note" src="_images/Note.png" /> Profiles are no longer grounded automatically. This can lead to differences in results from previous version.</p>
 <p><img alt="Note" src="_images/Note.png" /> Noisy data can lead to a reduced field edge value being reported.</p>
-<p><img alt="Note" src="_images/Note.png" /> The <em>max</em> and <em>min</em> are affected by the set window levels.</p>
 </div>
 
 
@@ -107,13 +108,13 @@
         <li class="right" >
           <a href="BSHelp11.html" title="Parameters"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.40-alpha documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.50-beta documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="BSHelp9.html" >Algorithms</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="BSHelp11.html" >Parameters</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018, AC Chamberlain.
+        &#169; Copyright 2019, AC Chamberlain.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
   </body>

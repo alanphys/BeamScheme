@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Area Symmetry &#8212; BeamScheme 0.40-alpha documentation</title>
+    <title>Area Symmetry &#8212; BeamScheme 0.50-beta documentation</title>
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.40-alpha',
+        VERSION:     '0.50-beta',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -24,7 +24,7 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Ratio Symmetry" href="BSHelp118.html" />
+    <link rel="next" title="Maximum Dose Ratio" href="BSHelp118.html" />
     <link rel="prev" title="Penumbra 90%-50%" href="BSHelp116.html" /> 
   </head>
   <body>
@@ -35,12 +35,12 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="BSHelp118.html" title="Ratio Symmetry"
+          <a href="BSHelp118.html" title="Maximum Dose Ratio"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="BSHelp116.html" title="Penumbra 90%-50%"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.40-alpha documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.50-beta documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="BSHelp9.html" >Algorithms</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="BSHelp11.html" accesskey="U">Parameters</a> &#187;</li> 
       </ul>
@@ -53,11 +53,12 @@
             
   <div class="section" id="area-symmetry">
 <span id="index-0"></span><h1>Area Symmetry<a class="headerlink" href="#area-symmetry" title="Permalink to this headline">¶</a></h1>
-<p>The area symmetry is the normalised difference between the right and left areas under the profile up to the field edges:</p>
+<p>The area symmetry is the normalised difference between the right and left areas under the profile up to the <a class="reference internal" href="BSHelp111.html#field-edge"><span class="std std-ref">field edges</span></a>:</p>
 <div class="math">
-\[\cfrac {RA-LA} {RA + LA} * 100\]</div>
-<p>Where <em>RA</em> and <em>LA</em> are the area under the profile from the profile or detector centre to the right and left field edges respectively.</p>
+\[100 \cdot \cfrac {RA-LA} {RA + LA}\]</div>
+<p>Where <em>RA</em> and <em>LA</em> are the area under the profile from the profile or detector centre to the right and left <a class="reference internal" href="BSHelp111.html#field-edge"><span class="std std-ref">Field Edge</span></a> respectively.</p>
 <p><img alt="Note" src="_images/Note.png" /> The area symmetry is affected by the field centre. If the field is slightly offset you can use the “Centre field” tool <img alt="CentreField" src="_images/centre.png" /> to correct any offset.</p>
+<p><img alt="Note" src="_images/Note.png" /> Some programs use a mulitplicative factor of 200.</p>
 </div>
 
 
@@ -71,7 +72,7 @@
                         title="previous chapter">Penumbra 90%-50%</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="BSHelp118.html"
-                        title="next chapter">Ratio Symmetry</a></p>
+                        title="next chapter">Maximum Dose Ratio</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -100,18 +101,18 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="BSHelp118.html" title="Ratio Symmetry"
+          <a href="BSHelp118.html" title="Maximum Dose Ratio"
              >next</a> |</li>
         <li class="right" >
           <a href="BSHelp116.html" title="Penumbra 90%-50%"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.40-alpha documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.50-beta documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="BSHelp9.html" >Algorithms</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="BSHelp11.html" >Parameters</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018, AC Chamberlain.
+        &#169; Copyright 2019, AC Chamberlain.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
   </body>

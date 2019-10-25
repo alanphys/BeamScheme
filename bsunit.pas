@@ -61,7 +61,10 @@ unit bsunit;
  16/9/2019  Fix Y axis swapped for IBA files
  10/10/2019 Change BitButtons to SpeedButtons on protocol edit toolbar
             Fix cancel on protocol save
-            Fix edit flag on protocol edit exit}
+            Fix edit flag on protocol edit exit
+            Correct result window title on edit
+ 23/10/2019 Updated help
+            Fix click on empty Image pane crash}
 
 
 {$mode objfpc}{$H+}
@@ -1074,6 +1077,7 @@ if ProtName <> '' then
       sbDelP.Visible := false;
       sbExitP.Enabled := false;
       sbExitP.Visible := false;
+      CResults.Caption := 'Results';
       sgResults.Columns.Items[1].Visible := false;
       sgResults.Columns.Items[2].Visible := true;
       sgResults.Columns.Items[3].Visible := true;
@@ -1115,6 +1119,7 @@ sbDelP.Enabled := false;
 sbDelP.Visible := false;
 sbExitP.Enabled := false;
 sbExitP.Visible := false;
+cResults.Caption := 'Results';
 sgResults.Columns.Items[1].Visible := false;
 sgResults.Columns.Items[2].Visible := true;
 sgResults.Columns.Items[3].Visible := true;
@@ -2248,30 +2253,33 @@ var MouseXY:   TPoint;
     AR:        double;         {Aspect ratio}
 
 begin
-MouseXY := iBeam.ScreenToControl(Mouse.CursorPos);
-BMPH := iBeam.Picture.Bitmap.Height;
-BMPW := iBeam.Picture.Bitmap.Width;
-AR := BMPW/BMPH;
+if iBeam.Picture.Bitmap <> nil then
+   begin
+   MouseXY := iBeam.ScreenToControl(Mouse.CursorPos);
+   BMPH := iBeam.Picture.Bitmap.Height;
+   BMPW := iBeam.Picture.Bitmap.Width;
+   AR := BMPW/BMPH;
 
-if AR >= 1 then
-   begin
-   PY := (Beam.Rows div 2) - MouseXY.Y*(Beam.Rows/iBeam.Height)*AR;
-   PX := MouseXY.X*((Beam.Cols - 2)/iBeam.Width) - ((Beam.Cols -2) div 2);
-   end
-  else
-   begin
-   PY := (Beam.Rows div 2) - MouseXY.Y*(Beam.Rows/iBeam.Height);
-   PX := MouseXY.X*((Beam.Cols - 2)/iBeam.Width)/AR - ((Beam.Cols -2) div 2);
+   if AR >= 1 then
+      begin
+      PY := (Beam.Rows div 2) - MouseXY.Y*(Beam.Rows/iBeam.Height)*AR;
+      PX := MouseXY.X*((Beam.Cols - 2)/iBeam.Width) - ((Beam.Cols -2) div 2);
+      end
+     else
+      begin
+      PY := (Beam.Rows div 2) - MouseXY.Y*(Beam.Rows/iBeam.Height);
+      PX := MouseXY.X*((Beam.Cols - 2)/iBeam.Width)/AR - ((Beam.Cols -2) div 2);
+      end;
+
+   R := sqrt(PX*PX + PY*PY);
+   Theta := arctan2(PX,PY);
+
+   Phi := seXAngle.Value*2*PI/360;
+   seXOffset.Value := R*cos(Theta - Phi);
+
+   Phi := seYAngle.Value*2*PI/360;
+   seYOffset.Value := R*cos(Theta - Phi);
    end;
-
-R := sqrt(PX*PX + PY*PY);
-Theta := arctan2(PX,PY);
-
-Phi := seXAngle.Value*2*PI/360;
-seXOffset.Value := R*cos(Theta - Phi);
-
-Phi := seYAngle.Value*2*PI/360;
-seYOffset.Value := R*cos(Theta - Phi);
 end;
 
 
@@ -2289,6 +2297,7 @@ sbDelP.Enabled := true;
 sbDelP.Visible := true;
 sbExitP.Enabled := true;
 sbExitP.Visible := true;
+cResults.Caption := 'Edit protocol';
 sgResults.Columns.Items[1].Visible := true;
 sgResults.Columns.Items[2].Visible := false;
 sgResults.Columns.Items[3].Visible := false;

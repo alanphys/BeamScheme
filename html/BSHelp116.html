@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Penumbra 90%-50% &#8212; BeamScheme 0.40-alpha documentation</title>
+    <title>Penumbra 90%-50% &#8212; BeamScheme 0.50-beta documentation</title>
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.40-alpha',
+        VERSION:     '0.50-beta',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="BSHelp115.html" title="Penumbra 80%-20%"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.40-alpha documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.50-beta documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="BSHelp9.html" >Algorithms</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="BSHelp11.html" accesskey="U">Parameters</a> &#187;</li> 
       </ul>
@@ -57,12 +57,13 @@
 <div class="math">
 \[Penumbra(90-50) = abs(d(P_{50\%}) - d(P_{90\%}))\]</div>
 <div class="math">
-\[P_{50\%} = (max - min)*0.5 + min\]</div>
+\[P_{50\%} = CAX*0.5\]</div>
 <div class="math">
-\[P_{90\%} = (max - min)*0.9 + min\]</div>
-<p>Where d(P<sub>50%</sub>) and d(P<sub>90%</sub>) are the linear distances to the 50% and 90% profile values respectively as defined above. If the detector is zeroed to background then <em>min</em> = 0 and we have the 50% and 90% profile values respectively. The algorithm searches symmetrically out from the profile centre on both sides of the profile to these points. The left and right field penumbra of the profile is given.</p>
+\[P_{90\%} = CAX*0.9\]</div>
+<p>Where d(P<sub>50%</sub>) and d(P<sub>90%</sub>) are the linear distances to the 50% and 90% profile values respectively as defined above. The algorithm searches symmetrically out from the profile centre on both sides of the profile to these points. The left and right field penumbra of the profile is given.</p>
+<p>Since version 0.5 BeamScheme no longer does automatic grounding of the profile, i.e. reducing the minimum to zero. This means that if you want the grounded field size you must <em>explicitly</em> normalise or window the image.</p>
+<p><img alt="Note" src="_images/Note.png" /> Profiles are no longer grounded automatically. This can lead to differences in results from previous version.</p>
 <p><img alt="Note" src="_images/Note.png" /> Noisy data can lead to an inaccurate penumbra value being reported.</p>
-<p><img alt="Note" src="_images/Note.png" /> The <em>max</em> and <em>min</em> are affected by the set window levels.</p>
 </div>
 
 
@@ -110,13 +111,13 @@
         <li class="right" >
           <a href="BSHelp115.html" title="Penumbra 80%-20%"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.40-alpha documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.50-beta documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="BSHelp9.html" >Algorithms</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="BSHelp11.html" >Parameters</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018, AC Chamberlain.
+        &#169; Copyright 2019, AC Chamberlain.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
   </body>

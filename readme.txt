@@ -1,7 +1,7 @@
 BeamScheme Readme file (c) 2008-2019 AC Chamberlain
 
 1) Introduction
-Welcome to BeamScheme version 0.43
+Welcome to BeamScheme version 0.50
 
 This software will assist you in extracting 1D profiles from 2D datasets and calculating various parameters on the profiles. BeamScheme can open various image and 2D array file formats such as SNC MapCheck, PTW 720, IBA Matrix and StarTrack, XiO, DICOM, jpg, etc.
 
@@ -53,6 +53,10 @@ Normalisation places the minimum of the image at 0 and the maximum at 100. If th
 These detail new or changed functionality in BeamScheme. Please see the History for bug fixes.
 
 Latest release
+
+Version 0.50
+Help has been updated
+
 Parameters are no longer auto normalised. Eg. the field edge or 50% value was calculated on the 50% value between the maximum and minimum of the profile. Now it is calculated on 50% of the maximum of the profile only. The user must explictly normalise the data if the normalised value is required. This is to bring BeamScheme in line with other programs.
 
 Added an expression parser. This allows different parameter sets to be defined. The user can also define parameter sets. Expression editing has been included. Output has been updated to provide for mulitpage output.
@@ -133,3 +137,6 @@ Version 0.4 released 2/2/2018
 10/10/2019 Change BitButtons to SpeedButtons on protocol edit toolbar
            Fix cancel on protocol save
            Fix edit flag on protocol edit exit
+           Correct result window title on edit
+23/10/2019 Updated help
+           Fix click on empty Image pane crash}

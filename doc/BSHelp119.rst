@@ -9,4 +9,4 @@ Percent symmetry is the ratio symmetry expressed as a percentage:
 
 .. math:: (RS - 1) * 100)
    
-where *RS* is the ratio symmetry.
+where *RS* is the :ref:`Maximum Dose Ratio`.

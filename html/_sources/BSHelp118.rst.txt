@@ -1,13 +1,13 @@
 
 .. index:: 
-   single: Symmetry; Ratio
+   single: Symmetry; Maximum dose ratio
 
-Ratio Symmetry
-==============
+Maximum Dose Ratio
+==================
 
-Ratio symmetry is the maximum ratio between the left and right profile values at the same distance from the profile or detector centre:
+the maximum dose ratio symmetry (also called the point difference quotient) is the maximum ratio between the left and right profile values at the same distance from the profile or detector centre:
 
-.. math:: max(\cfrac {P(dL)} {P(dR)} , \cfrac {P(dR)} {P(dL)} )
+.. math:: 100 \cdot maximum \left [\cfrac {P(dL)} {P(dR)} , \cfrac {P(dR)} {P(dL)} \right ]
    
 for *dR* = -*dL* from 0 to 80% of the field size
 

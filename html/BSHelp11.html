@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Parameters &#8212; BeamScheme 0.40-alpha documentation</title>
+    <title>Parameters &#8212; BeamScheme 0.50-beta documentation</title>
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.40-alpha',
+        VERSION:     '0.50-beta',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="BSHelp10.html" title="Diagonal/Skew Profiles"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.40-alpha documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.50-beta documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="BSHelp9.html" accesskey="U">Algorithms</a> &#187;</li> 
       </ul>
     </div>  
@@ -53,7 +53,7 @@
   <div class="section" id="parameters">
 <span id="index-0"></span><h1>Parameters<a class="headerlink" href="#parameters" title="Permalink to this headline">¶</a></h1>
 <p>All parameters are calculated relative to the central axis (CAX) value unless otherwise specified. The CAX is defined as half the profile or detector width or height. Where there is an even number of detectors or pixels and these straddle the CAX the average of the two detectors or pixels is taken.</p>
-<p>The following parameters are calculated:</p>
+<p>The following parameters may be calculated:</p>
 <div class="section" id="field-parameters">
 <h2>Field Parameters<a class="headerlink" href="#field-parameters" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
@@ -79,8 +79,9 @@
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="BSHelp117.html">Area Symmetry</a></li>
-<li class="toctree-l1"><a class="reference internal" href="BSHelp118.html">Ratio Symmetry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BSHelp118.html">Maximum Dose Ratio</a></li>
 <li class="toctree-l1"><a class="reference internal" href="BSHelp119.html">Percent Symmetry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BSHelp1117.html">Point Difference</a></li>
 </ul>
 </div>
 </div>
@@ -88,9 +89,20 @@
 <h2>Flatness Parameters<a class="headerlink" href="#flatness-parameters" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="BSHelp1110.html">Difference Flatness</a></li>
-<li class="toctree-l1"><a class="reference internal" href="BSHelp1111.html">Ratio Flatness</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BSHelp1110.html">Dose Difference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BSHelp1111.html">Dose Ratio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BSHelp1113.html">Mean Value</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BSHelp1114.html">Flatness L90/L50</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BSHelp1116.html">Flatness L80/L50</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="deviation-parameters">
+<h2>Deviation Parameters<a class="headerlink" href="#deviation-parameters" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="BSHelp1112.html">MAX/CAX</a></li>
+<li class="toctree-l1"><a class="reference internal" href="BSHelp1115.html">Maximum Variation</a></li>
 </ul>
 </div>
 </div>
@@ -109,6 +121,7 @@
 <li><a class="reference internal" href="#penumbra-parameters">Penumbra Parameters</a></li>
 <li><a class="reference internal" href="#symmetry-parameters">Symmetry Parameters</a></li>
 <li><a class="reference internal" href="#flatness-parameters">Flatness Parameters</a></li>
+<li><a class="reference internal" href="#deviation-parameters">Deviation Parameters</a></li>
 </ul>
 </li>
 </ul>
@@ -152,12 +165,12 @@
         <li class="right" >
           <a href="BSHelp10.html" title="Diagonal/Skew Profiles"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.40-alpha documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.50-beta documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="BSHelp9.html" >Algorithms</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018, AC Chamberlain.
+        &#169; Copyright 2019, AC Chamberlain.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
   </body>

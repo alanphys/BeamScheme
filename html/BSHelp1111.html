@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Ratio Flatness &#8212; BeamScheme 0.40-alpha documentation</title>
+    <title>Dose Ratio &#8212; BeamScheme 0.50-beta documentation</title>
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.40-alpha',
+        VERSION:     '0.50-beta',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -24,8 +24,8 @@
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="MAX/CAX" href="BSHelp1112.html" />
-    <link rel="prev" title="Difference Flatness" href="BSHelp1110.html" /> 
+    <link rel="next" title="Mean Value" href="BSHelp1113.html" />
+    <link rel="prev" title="Dose Difference" href="BSHelp1110.html" /> 
   </head>
   <body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -35,12 +35,12 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="BSHelp1112.html" title="MAX/CAX"
+          <a href="BSHelp1113.html" title="Mean Value"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="BSHelp1110.html" title="Difference Flatness"
+          <a href="BSHelp1110.html" title="Dose Difference"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.40-alpha documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.50-beta documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="BSHelp9.html" >Algorithms</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="BSHelp11.html" accesskey="U">Parameters</a> &#187;</li> 
       </ul>
@@ -51,13 +51,13 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="ratio-flatness">
-<span id="index-0"></span><h1>Ratio Flatness<a class="headerlink" href="#ratio-flatness" title="Permalink to this headline">¶</a></h1>
-<p>Ratio flatness is the ratio of the maximum profile value to the minimum profile value expressed as a percent taken over 80% of the field size:</p>
+  <div class="section" id="dose-ratio">
+<span id="index-0"></span><h1>Dose Ratio<a class="headerlink" href="#dose-ratio" title="Permalink to this headline">¶</a></h1>
+<p>Dose ratio flatness is the ratio of the maximum profile value to the minimum profile value expressed as a percent taken over 80% of the field size:</p>
 <div class="math">
-\[\cfrac {max} {min} * 100\]</div>
+\[100 \cdot \cfrac {max} {min}\]</div>
 <p>Where <em>max</em> and <em>min</em> are the profile maximum and minimum respectively.</p>
-<p><img alt="Note" src="_images/Note.png" /> The <em>max</em> and <em>min</em> are affected by the set window levels.</p>
+<p><img alt="Note" src="_images/Note.png" /> The <em>max</em> and <em>min</em> may be affected by the set window levels.</p>
 </div>
 
 
@@ -68,10 +68,10 @@
         <div class="sphinxsidebarwrapper">
   <h4>Previous topic</h4>
   <p class="topless"><a href="BSHelp1110.html"
-                        title="previous chapter">Difference Flatness</a></p>
+                        title="previous chapter">Dose Difference</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="BSHelp1112.html"
-                        title="next chapter">MAX/CAX</a></p>
+  <p class="topless"><a href="BSHelp1113.html"
+                        title="next chapter">Mean Value</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -100,18 +100,18 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="BSHelp1112.html" title="MAX/CAX"
+          <a href="BSHelp1113.html" title="Mean Value"
              >next</a> |</li>
         <li class="right" >
-          <a href="BSHelp1110.html" title="Difference Flatness"
+          <a href="BSHelp1110.html" title="Dose Difference"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.40-alpha documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.50-beta documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="BSHelp9.html" >Algorithms</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="BSHelp11.html" >Parameters</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018, AC Chamberlain.
+        &#169; Copyright 2019, AC Chamberlain.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
   </body>

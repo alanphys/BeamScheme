@@ -1,16 +1,16 @@
 
 .. index:: 
-   single: Flatness; Ratio
+   single: Flatness; Dose ratio
 
-Ratio Flatness
-==============
+Dose Ratio
+==========
 
-Ratio flatness is the ratio of the maximum profile value to the minimum profile value expressed as a percent taken over 80% of the field size:
+Dose ratio flatness is the ratio of the maximum profile value to the minimum profile value expressed as a percent taken over 80% of the field size:
 
-.. math:: \cfrac {max} {min} * 100
+.. math:: 100 \cdot \cfrac {max} {min}
    
 Where *max* and *min* are the profile maximum and minimum respectively.
 
-|Note| The *max* and *min* are affected by the set window levels.
+|Note| The *max* and *min* may be affected by the set window levels.
 
 .. |Note| image:: _static/Note.png

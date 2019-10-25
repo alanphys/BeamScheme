@@ -65,7 +65,7 @@
         <Filename Value="beamscheme.lpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="32" Y="23"/>
+        <CursorPos Y="22"/>
         <UsageCount Value="200"/>
       </Unit0>
       <Unit1>
@@ -75,8 +75,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="31"/>
-        <CursorPos X="21" Y="37"/>
+        <TopLine Value="37"/>
+        <CursorPos X="48" Y="67"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -556,7 +556,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="67"/>
+        <TopLine Value="66"/>
         <CursorPos Y="315"/>
         <UsageCount Value="204"/>
         <Loaded Value="True"/>
@@ -986,67 +986,67 @@
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="860" Column="54" TopLine="833"/>
+        <Caret Line="225" Column="44" TopLine="210"/>
       </Position1>
       <Position2>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="39" Column="16" TopLine="16"/>
+        <Caret Line="2253" TopLine="2245"/>
       </Position2>
       <Position3>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="1020" TopLine="1013"/>
+        <Caret Line="1060" Column="27" TopLine="1040"/>
       </Position3>
       <Position4>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="785" Column="7" TopLine="764"/>
+        <Caret Line="54" TopLine="18"/>
       </Position4>
       <Position5>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="225" Column="44" TopLine="210"/>
+        <Caret Line="1323" Column="23" TopLine="1287"/>
       </Position5>
       <Position6>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="2253" TopLine="2245"/>
+        <Caret Line="1030" Column="66" TopLine="1022"/>
       </Position6>
       <Position7>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="1060" Column="27" TopLine="1040"/>
+        <Caret Line="1307" Column="17" TopLine="1303"/>
       </Position7>
       <Position8>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="54" TopLine="18"/>
+        <Caret Line="801" Column="44" TopLine="787"/>
       </Position8>
       <Position9>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="1323" Column="23" TopLine="1287"/>
+        <Caret Line="58" Column="45" TopLine="43"/>
       </Position9>
       <Position10>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="1030" Column="66" TopLine="1022"/>
+        <Caret Line="1164" Column="29" TopLine="1139"/>
       </Position10>
       <Position11>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="1307" Column="17" TopLine="1303"/>
+        <Caret Line="1149" Column="21" TopLine="1133"/>
       </Position11>
       <Position12>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="801" Column="44" TopLine="787"/>
+        <Caret Line="1160" Column="88" TopLine="1134"/>
       </Position12>
       <Position13>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="58" Column="45" TopLine="43"/>
+        <Caret Line="529" Column="10" TopLine="506"/>
       </Position13>
       <Position14>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="1164" Column="29" TopLine="1139"/>
+        <Caret Line="528" Column="10" TopLine="505"/>
       </Position14>
       <Position15>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="1149" Column="21" TopLine="1133"/>
+        <Caret Line="529" Column="10" TopLine="506"/>
       </Position15>
       <Position16>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="1160" Column="88" TopLine="1134"/>
+        <Caret Line="528" Column="10" TopLine="505"/>
       </Position16>
       <Position17>
         <Filename Value="bsunit.pas"/>
@@ -1070,39 +1070,39 @@
       </Position21>
       <Position22>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="528" Column="10" TopLine="505"/>
+        <Caret Line="1113" Column="2" TopLine="1108"/>
       </Position22>
       <Position23>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="529" Column="10" TopLine="506"/>
+        <Caret Line="1071" Column="10" TopLine="1050"/>
       </Position23>
       <Position24>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="528" Column="10" TopLine="505"/>
+        <Caret Line="1111" Column="7" TopLine="1089"/>
       </Position24>
       <Position25>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="529" Column="10" TopLine="506"/>
+        <Caret Line="62" Column="71" TopLine="31"/>
       </Position25>
       <Position26>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="1113" Column="2" TopLine="1108"/>
+        <Caret Line="1065" Column="32" TopLine="1054"/>
       </Position26>
       <Position27>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="1071" Column="10" TopLine="1050"/>
+        <Caret Line="65" Column="48" TopLine="43"/>
       </Position27>
       <Position28>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="1111" Column="7" TopLine="1089"/>
+        <Caret Line="2293" Column="36" TopLine="2273"/>
       </Position28>
       <Position29>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="62" Column="71" TopLine="31"/>
+        <Caret Line="1120" Column="23" TopLine="1091"/>
       </Position29>
       <Position30>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="1065" Column="32" TopLine="1054"/>
+        <Caret Line="66" Column="25" TopLine="34"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>

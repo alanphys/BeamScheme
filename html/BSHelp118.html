@@ -5,13 +5,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Ratio Symmetry &#8212; BeamScheme 0.40-alpha documentation</title>
+    <title>Maximum Dose Ratio &#8212; BeamScheme 0.50-beta documentation</title>
     <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    './',
-        VERSION:     '0.40-alpha',
+        VERSION:     '0.50-beta',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true,
@@ -40,7 +40,7 @@
         <li class="right" >
           <a href="BSHelp117.html" title="Area Symmetry"
              accesskey="P">previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.40-alpha documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.50-beta documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="BSHelp9.html" >Algorithms</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="BSHelp11.html" accesskey="U">Parameters</a> &#187;</li> 
       </ul>
@@ -51,11 +51,11 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="ratio-symmetry">
-<span id="index-0"></span><h1>Ratio Symmetry<a class="headerlink" href="#ratio-symmetry" title="Permalink to this headline">¶</a></h1>
-<p>Ratio symmetry is the maximum ratio between the left and right profile values at the same distance from the profile or detector centre:</p>
+  <div class="section" id="maximum-dose-ratio">
+<span id="index-0"></span><h1>Maximum Dose Ratio<a class="headerlink" href="#maximum-dose-ratio" title="Permalink to this headline">¶</a></h1>
+<p>the maximum dose ratio symmetry (also called the point difference quotient) is the maximum ratio between the left and right profile values at the same distance from the profile or detector centre:</p>
 <div class="math">
-\[max(\cfrac {P(dL)} {P(dR)} , \cfrac {P(dR)} {P(dL)} )\]</div>
+\[100 \cdot maximum \left [\cfrac {P(dL)} {P(dR)} , \cfrac {P(dR)} {P(dL)} \right ]\]</div>
 <p>for <em>dR</em> = -<em>dL</em> from 0 to 80% of the field size</p>
 <p><img alt="Note" src="_images/Note.png" /> The ratio symmetry is affected by the field centre. If the field is slightly offset you can use the “Centre field” tool <img alt="CentreField" src="_images/centre.png" /> to correct any offset.</p>
 </div>
@@ -105,13 +105,13 @@
         <li class="right" >
           <a href="BSHelp117.html" title="Area Symmetry"
              >previous</a> |</li>
-        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.40-alpha documentation</a> &#187;</li>
+        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.50-beta documentation</a> &#187;</li>
           <li class="nav-item nav-item-1"><a href="BSHelp9.html" >Algorithms</a> &#187;</li>
           <li class="nav-item nav-item-2"><a href="BSHelp11.html" >Parameters</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2018, AC Chamberlain.
+        &#169; Copyright 2019, AC Chamberlain.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
     </div>
   </body>

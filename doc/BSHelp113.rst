@@ -5,7 +5,7 @@
 Field Size
 ==========
 
-The field size (*FS*) is defined as the distance from the left field edge to the right field edge:
+The field size (*FS*) is defined as the distance from the left :ref:`Field Edge` to the right :ref:`Field Edge`:
 
 .. math:: FS = d(RE) - d(LE)
 

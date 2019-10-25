@@ -1,0 +1,124 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Flatness L80/L50 &#8212; BeamScheme 0.50-beta documentation</title>
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.50-beta',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true,
+        SOURCELINK_SUFFIX: '.txt'
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="MAX/CAX" href="BSHelp1112.html" />
+    <link rel="prev" title="Flatness L90/L50" href="BSHelp1114.html" /> 
+  </head>
+  <body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="BSHelp1112.html" title="MAX/CAX"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="BSHelp1114.html" title="Flatness L90/L50"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.50-beta documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="BSHelp9.html" >Algorithms</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="BSHelp11.html" accesskey="U">Parameters</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="flatness-l80-l50">
+<span id="index-0"></span><h1>Flatness L80/L50<a class="headerlink" href="#flatness-l80-l50" title="Permalink to this headline">¶</a></h1>
+<p>The 80%/50% isodose ratio is defined as the ratio of the distance to the first point on the profile at 80% of the CAX value to the first point that reaches 50% of the CAX value or field edge. :</p>
+<div class="math">
+\[L80/L50 = maximum \left[\cfrac {dl(P_{80\%})} {dl(P_{50\%})},\cfrac {dr(P_{80\%})} {dr(P_{50\%})} \right ]\]</div>
+<div class="math">
+\[P_{50\%} = CAX*0.5\]</div>
+<div class="math">
+\[P_{80\%} = CAX*0.8\]</div>
+<p>Where dl(P<sub>50%</sub>) and dl(P<sub>80%</sub>) are the linear distances to the 50% and 80% profile values respectively on the left side of the profile as defined above, and dr(P<sub>50%</sub>) and dr(P<sub>80%</sub>) are the linear distances to the 50% and 80% profile values respectively on the right side of the profile as defined above. The algorithm searches symmetrically out from the profile centre on both sides of the profile to these points. The maximum ratio between the left and right sides is taken.</p>
+<p>Since version 0.5 BeamScheme no longer does automatic grounding of the profile, i.e. reducing the minimum to zero. This means that if you want the grounded field size you must <em>explicitly</em> normalise or window the image.</p>
+<p><img alt="Note" src="_images/Note.png" /> Profiles are no longer grounded automatically. This can lead to differences in results from previous version.</p>
+<p><img alt="Note" src="_images/Note.png" /> Noisy data can lead to an inaccurate penumbra value being reported.</p>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="BSHelp1114.html"
+                        title="previous chapter">Flatness L90/L50</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="BSHelp1112.html"
+                        title="next chapter">MAX/CAX</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/BSHelp1116.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <div><input type="text" name="q" /></div>
+      <div><input type="submit" value="Go" /></div>
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="BSHelp1112.html" title="MAX/CAX"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="BSHelp1114.html" title="Flatness L90/L50"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.50-beta documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="BSHelp9.html" >Algorithms</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="BSHelp11.html" >Parameters</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, AC Chamberlain.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.6.5.
+    </div>
+  </body>
+</html>
