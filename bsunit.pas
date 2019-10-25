@@ -64,7 +64,8 @@ unit bsunit;
             Fix edit flag on protocol edit exit
             Correct result window title on edit
  23/10/2019 Updated help
-            Fix click on empty Image pane crash}
+            Fix click on empty Image pane crash
+ 25/10/2019 Fix user protocol path}
 
 
 {$mode objfpc}{$H+}
@@ -1174,6 +1175,7 @@ if FindFirst(sSearchPath,0,SearchRec) = 0 then
    {$else}
    sProtPath := GetAppConfigDir(false);
    {$endif}
+   sProtPath := AppendPathDelim(sProtPath) + 'Protocols';
    sSearchPath := AppendPathDelim(sProtPath) + '*.csv';
    if FindFirst(sSearchPath,0,SearchRec) = 0 then
       begin
@@ -2253,7 +2255,7 @@ var MouseXY:   TPoint;
     AR:        double;         {Aspect ratio}
 
 begin
-if iBeam.Picture.Bitmap <> nil then
+if iBeam.Picture.Bitmap.Height > 0 then
    begin
    MouseXY := iBeam.ScreenToControl(Mouse.CursorPos);
    BMPH := iBeam.Picture.Bitmap.Height;
