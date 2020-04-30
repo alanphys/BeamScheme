@@ -139,4 +139,5 @@ Version 0.4 released 2/2/2018
            Fix edit flag on protocol edit exit
            Correct result window title on edit
 23/10/2019 Updated help
-           Fix click on empty Image pane crash}
+           Fix click on empty Image pane crash
+16/4/2020  Fix various memory leaks

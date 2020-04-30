@@ -10,9 +10,10 @@ object BSForm: TBSForm
   ClientWidth = 602
   DesignTimePPI = 95
   Menu = MainMenu1
+  OnClose = FormClose
   OnCreate = FormCreate
   OnResize = FormResize
-  LCLVersion = '1.9.0.0'
+  LCLVersion = '2.0.6.0'
   object pBeam: TPanel
     Left = 0
     Height = 306
@@ -868,17 +869,21 @@ object BSForm: TBSForm
       HelpKeyword = 'HTML/BSHelp81.html'
       AxisList = <      
         item
+          Marks.LabelBrush.Style = bsClear
           Minors = <>
           Title.Distance = 0
           Title.LabelFont.Orientation = 900
           Title.Visible = True
           Title.Caption = 'Dose'
+          Title.LabelBrush.Style = bsClear
         end      
         item
           Alignment = calBottom
+          Marks.LabelBrush.Style = bsClear
           Minors = <>
           Title.Visible = True
           Title.Caption = 'Distance (cm)'
+          Title.LabelBrush.Style = bsClear
         end>
       BackColor = clWhite
       Foot.Brush.Color = clBtnFace
@@ -914,17 +919,21 @@ object BSForm: TBSForm
       HelpKeyword = 'HTML/BSHelp81.html'
       AxisList = <      
         item
+          Marks.LabelBrush.Style = bsClear
           Minors = <>
           Title.Distance = 0
           Title.LabelFont.Orientation = 900
           Title.Visible = True
           Title.Caption = 'Dose'
+          Title.LabelBrush.Style = bsClear
         end      
         item
           Alignment = calBottom
+          Marks.LabelBrush.Style = bsClear
           Minors = <>
           Title.Visible = True
           Title.Caption = 'Distance (cm)'
+          Title.LabelBrush.Style = bsClear
         end>
       BackColor = clWhite
       Foot.Brush.Color = clBtnFace

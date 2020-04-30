@@ -65,7 +65,8 @@ unit bsunit;
             Correct result window title on edit
  23/10/2019 Updated help
             Fix click on empty Image pane crash
- 25/10/2019 Fix user protocol path}
+ 25/10/2019 Fix user protocol path
+ 16/4/2020  Fix various memory leaks}
 
 
 {$mode objfpc}{$H+}
@@ -229,6 +230,7 @@ type
    procedure bbExitPClick(Sender: TObject);
    procedure bbSavePClick(Sender: TObject);
    procedure cbProtocolChange(Sender: TObject);
+   procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
    procedure StatusBarDrawPanel(SBar: TStatusBar;Panel: TStatusPanel; const Rect: TRect);
    procedure BSError(sError:string);
    procedure BSWarning(sWarning:string);
@@ -304,7 +306,7 @@ procedure DisplayBeam;
 procedure ShowProfile(ThebitMap:Tbitmap; Wdth:double;
    TopLeft,TopRight,BottomRight,BottomLeft:TPoint);
 procedure DrawProfile(TheBitmap:TBitmap;Beam:TBeam ;Angle,Offset,Width:double;
-   Profile:TSerie; var PArr:TPArr; var TopLeft,TopRight,BottomLeft,BottomRight:TPoint;
+   Profile:TLineSeries; var PArr:TPArr; var TopLeft,TopRight,BottomLeft,BottomRight:TPoint;
    var PrevW:double);
 procedure CalcParams(PArr:TPArr; var BeamParams:TBeamParams);
 
@@ -417,7 +419,7 @@ end;
 
 
 procedure DrawProfile(TheBitmap:TBitmap; Beam:TBeam; Angle,Offset,Width:double;
-   Profile:TSerie; var PArr:TPArr; var TopLeft,TopRight,BottomLeft,BottomRight:TPoint;
+   Profile:TLineSeries; var PArr:TPArr; var TopLeft,TopRight,BottomLeft,BottomRight:TPoint;
    var PrevW:double);
 {Draw a profile on the bitmap at any angle}
 var I,J,K,L,
@@ -1106,6 +1108,16 @@ seYAngleChange(Self);
 end;
 
 
+procedure TBSForm.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+begin
+FileHandler.Free;
+CGIHandler.Free;
+PHPCGIHandler.Free;
+StatusMessages.Free;
+Beam.Free
+end;
+
+
 procedure TBSForm.bbExitPClick(Sender: TObject);
 begin
 ClearStatus;
@@ -1179,7 +1191,7 @@ if FindFirst(sSearchPath,0,SearchRec) = 0 then
    sSearchPath := AppendPathDelim(sProtPath) + '*.csv';
    if FindFirst(sSearchPath,0,SearchRec) = 0 then
       begin
-         repeat
+        repeat
          FileName := ExtractFileNameOnly(SearchRec.Name);
          ProtList.Add(Filename);
          until FindNext(Searchrec) <> 0;
@@ -1189,6 +1201,8 @@ if FindFirst(sSearchPath,0,SearchRec) = 0 then
       end
      else BSError('No protocol definition files found. Please create a file.');
    end;
+   Findclose(SearchRec);
+ProtList.Free;
 end;
 
 

@@ -1,10 +1,13 @@
 # files to ignore
+*.bak
 *.ppu
 *.o
+*.or
 *.a
 *.compiled
 *.gitignore
 *.directory
+*.trc
 
 # directories to ignore
 backup/

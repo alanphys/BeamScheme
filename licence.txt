@@ -1,4 +1,4 @@
-BeamScheme copyright 2008-2019 AC Chamberlain. All rights reserved.
+BeamScheme copyright 2008-2020 AC Chamberlain. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
@@ -12,7 +12,7 @@ Redistribution and use in source and binary forms, with or without modification,
 
    5. Installation, copying or use of this program indicates acceptance of these licence conditions.
 
-Yenzakahle Consulting CC, their subsidiaries and associated companies or practices make no representations or warranties, expressly or implied regarding the program and associated computer files forming the software.  No representations or warranties of the merchantablity or fitness for any particular purpose are made or that the use of the software will not infringe any patents, copyrights or trademarks.  The licensee agrees that neither Yenzakahle Consulting CC nor any of their employees, agents or contractors nor the authors, developers or programmers of the software shall be liable under any claim, charge, demand, whether in contract, tort or otherwise, for any and all loss, cost, charge, claim, demand, fee, expense or damage of any nature or kind arising out of, connected with, resulting from or sustained as a result of this agreement. In no event shall Yenzakahle Consulting CC, nor any of their employees, agents or contractors nor the authors, developers or programmers of the software be liable for special, direct, indirect or consequential damages, losses, costs, charges, demands, fees or expenses of any nature or kind. 
+Yenzakahle Medical Physics Inc, their subsidiaries and associated companies or practices make no representations or warranties, expressly or implied regarding the program and associated computer files forming the software.  No representations or warranties of the merchantablity or fitness for any particular purpose are made or that the use of the software will not infringe any patents, copyrights or trademarks.  The licensee agrees that neither Yenzakahle Medical Physics Inc nor any of their employees, agents or contractors nor the authors, developers or programmers of the software shall be liable under any claim, charge, demand, whether in contract, tort or otherwise, for any and all loss, cost, charge, claim, demand, fee, expense or damage of any nature or kind arising out of, connected with, resulting from or sustained as a result of this agreement. In no event shall Yenzakahle Medical Physics Inc, nor any of their employees, agents or contractors nor the authors, developers or programmers of the software be liable for special, direct, indirect or consequential damages, losses, costs, charges, demands, fees or expenses of any nature or kind. 
 
 -------------------------------------------
 ezDICOM (DICOM import routines)
