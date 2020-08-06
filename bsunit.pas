@@ -66,7 +66,10 @@ unit bsunit;
  23/10/2019 Updated help
             Fix click on empty Image pane crash
  25/10/2019 Fix user protocol path
- 16/4/2020  Fix various memory leaks}
+ 16/4/2020  Fix various memory leaks
+ 6/8/2020   use Form2PDf for printing PDF
+            fix SaveDialog titles
+            remove results unit and PowerPDF}
 
 
 {$mode objfpc}{$H+}
@@ -163,6 +166,7 @@ type
    sbAddP: TSpeedButton;
    sbDelP: TSpeedButton;
    sbExitP: TSpeedButton;
+   sbPDF: TSpeedButton;
    StatusBar: TStatusBar;
    StatusMessages: TStringList;
    sgResults: TStringGrid;
@@ -206,7 +210,6 @@ type
    sbInvert: TSpeedButton;
    sbIMin: TSpeedButton;
    sbOpen: TSpeedButton;
-   sbPrint: TSpeedButton;
    sbRMax: TSpeedButton;
    sbYMin: TSpeedButton;
    sbXMin: TSpeedButton;
@@ -231,6 +234,7 @@ type
    procedure bbSavePClick(Sender: TObject);
    procedure cbProtocolChange(Sender: TObject);
    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+   procedure sbPDFClick(Sender: TObject);
    procedure StatusBarDrawPanel(SBar: TStatusBar;Panel: TStatusPanel; const Rect: TRect);
    procedure BSError(sError:string);
    procedure BSWarning(sWarning:string);
@@ -264,7 +268,6 @@ type
    procedure miExportXClick(Sender: TObject);
    procedure miExportYClick(Sender: TObject);
    procedure miOpenClick(Sender: TObject);
-   procedure miPDFPrint(Sender: TObject);
    procedure miRestoreClick(Sender: TObject);
    procedure miAboutClick(Sender: TObject);
    procedure miContentsClick(Sender: TObject);
@@ -313,8 +316,8 @@ procedure CalcParams(PArr:TPArr; var BeamParams:TBeamParams);
 
 implementation
 
-uses DICOM, define_types, types, math, StrUtils, helpintfs, resunit, aboutunit,
-     LazFileUtils, Parser10;
+uses DICOM, define_types, types, math, StrUtils, helpintfs, aboutunit,
+     LazFileUtils, Parser10, form2pdf;
 
 const AllChars = [#0..#255] - DigitChars - ['.'];
 
@@ -986,6 +989,7 @@ var Outfile:   textfile;
     I:         integer;
 
 begin
+SaveDialog.Title := 'Export profile as';
 {$ifdef WINDOWS}
 SaveDialog.Filter := 'Text files|*.txt|All files|*.*';
 {$else}
@@ -1012,6 +1016,7 @@ var Outfile:   textfile;
     I:         integer;
 
 begin
+SaveDialog.Title := 'Export profile as';
 {$ifdef WINDOWS}
 SaveDialog.Filter := 'Text files|*.txt|All files|*.*';
 {$else}
@@ -1044,6 +1049,7 @@ ClearStatus;
 ProtName := cbProtocol.Text;
 if ProtName <> '' then
    begin
+   SaveDialog.Title := 'Save parameters';
    {$ifdef WINDOWS}
    ProtPath := GetAppConfigDir(true);
    SaveDialog.Filter := 'Comma delimited files|*.csv|All files|*.*';
@@ -1115,6 +1121,21 @@ CGIHandler.Free;
 PHPCGIHandler.Free;
 StatusMessages.Free;
 Beam.Free
+end;
+
+
+procedure TBSForm.sbPDFClick(Sender: TObject);
+begin
+SaveDialog.Title := 'Save PDF as';
+{$ifdef WINDOWS}
+SaveDialog.Filter := 'PDF files|*.pdf|All files|*.*';
+{$else}
+SaveDialog.Filter := 'PDF files|*.pdf|All files|*';
+{$endif}
+SaveDialog.InitialDir := OpenDialog.InitialDir;
+SaveDialog.DefaultExt := '.pdf';
+SaveDialog.FileName := ExtractFileNameOnly(OpenDialog.FileName) + '.pdf';
+if SaveDialog.Execute then FormToPDF(BSForm,SaveDialog.FileName);
 end;
 
 
@@ -2318,14 +2339,6 @@ sgResults.Columns.Items[1].Visible := true;
 sgResults.Columns.Items[2].Visible := false;
 sgResults.Columns.Items[3].Visible := false;
 sgResults.Options := sgResults.Options + [goEditing];
-end;
-
-
-procedure TBSForm.miPDFPrint(Sender: TObject);
-begin
-ResForm := TResForm.Create(Self);
-ResForm.ShowModal;
-ResForm.Free;
 end;
 
 

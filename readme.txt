@@ -1,4 +1,4 @@
-BeamScheme Readme file (c) 2008-2019 AC Chamberlain
+BeamScheme Readme file (c) 2008-2020 AC Chamberlain
 
 1) Introduction
 Welcome to BeamScheme version 0.50
@@ -53,6 +53,8 @@ Normalisation places the minimum of the image at 0 and the maximum at 100. If th
 These detail new or changed functionality in BeamScheme. Please see the History for bug fixes.
 
 Latest release
+Version 0.51
+BeamScheme now uses Form2PDF to render results to PDF. This has several advantages, the image is printed with the results, considerably less mouse clicks are required to save results and the results are printed as the form itself. The hard copy functionality has been removed. The PDF can, of course, still be printed by any PDF viewer.
 
 Version 0.50
 Help has been updated
@@ -141,3 +143,6 @@ Version 0.4 released 2/2/2018
 23/10/2019 Updated help
            Fix click on empty Image pane crash
 16/4/2020  Fix various memory leaks
+6/8/2020   use Form2PDf for printing PDF
+           fix SaveDialog titles
+           remove results unit and PowerPDF
