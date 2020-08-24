@@ -61,7 +61,7 @@
       <Unit0>
         <Filename Value="beamscheme.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="1"/>
         <CursorPos X="3" Y="2"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -73,8 +73,13 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
+<<<<<<< HEAD
         <TopLine Value="41"/>
         <CursorPos X="55" Y="73"/>
+=======
+        <TopLine Value="887"/>
+        <CursorPos X="14" Y="771"/>
+>>>>>>> 0959951... add records for inflection point
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -805,7 +810,7 @@
         <ComponentName Value="AboutForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="40"/>
         <CursorPos X="29" Y="70"/>
         <UsageCount Value="173"/>
@@ -977,15 +982,20 @@
       </Unit129>
       <Unit130>
         <Filename Value="form2pdf.pas"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="68"/>
         <CursorPos X="81" Y="848"/>
+<<<<<<< HEAD
         <UsageCount Value="14"/>
         <Loaded Value="True"/>
+=======
+        <UsageCount Value="13"/>
+>>>>>>> 0959951... add records for inflection point
       </Unit130>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="22" HistoryIndex="21">
       <Position1>
+<<<<<<< HEAD
         <Filename Value="form2pdf.pas"/>
         <Caret Line="847" TopLine="822"/>
       </Position1>
@@ -1105,6 +1115,95 @@
         <Filename Value="bsunit.pas"/>
         <Caret Line="2250" Column="48" TopLine="2231"/>
       </Position30>
+=======
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="2331" Column="71" TopLine="2318"/>
+      </Position1>
+      <Position2>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="2330" Column="71" TopLine="2317"/>
+      </Position2>
+      <Position3>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="14" Column="17"/>
+      </Position3>
+      <Position4>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="159" Column="27" TopLine="127"/>
+      </Position4>
+      <Position5>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="1018" TopLine="998"/>
+      </Position5>
+      <Position6>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="1019" Column="11" TopLine="998"/>
+      </Position6>
+      <Position7>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="1021" Column="11" TopLine="998"/>
+      </Position7>
+      <Position8>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="1023" Column="11" TopLine="998"/>
+      </Position8>
+      <Position9>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="1024" Column="11" TopLine="998"/>
+      </Position9>
+      <Position10>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="1025" Column="11" TopLine="998"/>
+      </Position10>
+      <Position11>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="1027" Column="17" TopLine="998"/>
+      </Position11>
+      <Position12>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="1029" Column="36" TopLine="998"/>
+      </Position12>
+      <Position13>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="1102" Column="42" TopLine="1075"/>
+      </Position13>
+      <Position14>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="1127" Column="33" TopLine="1127"/>
+      </Position14>
+      <Position15>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="1129" Column="11" TopLine="1121"/>
+      </Position15>
+      <Position16>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="1131" Column="11" TopLine="1121"/>
+      </Position16>
+      <Position17>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="1133" Column="11" TopLine="1121"/>
+      </Position17>
+      <Position18>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="1134" Column="11" TopLine="1121"/>
+      </Position18>
+      <Position19>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="1135" Column="11" TopLine="1121"/>
+      </Position19>
+      <Position20>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="1136" Column="55" TopLine="1121"/>
+      </Position20>
+      <Position21>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="147" Column="23" TopLine="140"/>
+      </Position21>
+      <Position22>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="271" TopLine="248"/>
+      </Position22>
+>>>>>>> 0959951... add records for inflection point
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

@@ -120,8 +120,10 @@ type
      CMax,                     {Maximum value}
      CMin,                     {Minimum value}
      RCAX,                     {Central axis value}
-     LEdge,                    {Position of left edge}
-     REdge,                    {Position of right edge}
+     LEdge,                    {Position of left edge 50%}
+     REdge,                    {Position of right edge 50%}
+     LInf,                     {Position of left inflection point}
+     RInf,                     {Position of right inflection point}
      L10,                      {10% of CAX value left of CAX}
      R10,                      {10% of CAX value right of CAX}
      L20,                      {20% of CAX value left of CAX}
@@ -766,6 +768,8 @@ with BeamParams do
    {initialise parameters}
    LEdge := 0;
    REdge := 0;
+   LInf := 0;
+   RInf := 0;
    L10 := 0;
    R10 := 0;
    L20 := 0;
