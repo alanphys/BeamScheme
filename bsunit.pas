@@ -69,7 +69,8 @@ unit bsunit;
  16/4/2020  Fix various memory leaks
  6/8/2020   use Form2PDf for printing PDF
             fix SaveDialog titles
-            remove results unit and PowerPDF}
+            remove results unit and PowerPDF
+ 24/8/2020  add get correct resolution for tiff images}
 
 
 {$mode objfpc}{$H+}
@@ -2226,12 +2227,13 @@ end;
 
 
 function TBSForm.BMPOpen(sFileName:string):boolean;
-var I,J:       integer;
+var I,J        :integer;
     Value,
-    Res:       double;
+    Res        :double;
     SrcIntfImage:TLazIntfImage;
-    lRawImage:  TRawImage;
-    Curcolor:   TFPColor;
+    lRawImage  :TRawImage;
+    Curcolor   :TFPColor;
+    sRes       :string;
 
 begin
 Res := 2.54/300;               {assume image scanned at 300 dpi}
@@ -2244,6 +2246,13 @@ SrcIntfImage.SetRawImage(lRawImage);
 SrcIntfImage.LoadFromFile(sFileName);
 Beam.Cols := SrcIntfImage.Width + 2;
 Beam.Rows := SrcIntfImage.Height;
+if SrcIntfImage.ExtraCount>0 then
+   try
+   sRes := SrcIntfImage.Extra['TiffXResolution'];
+   Res := 2.54/StrToFloat(Copy2Symb(sRes,'/'));      {assume res is in dpi}
+   except
+   BSWarning('Image resolution not found, defaulting to 300 dpi');
+   end;
 Beam.Max := 0;
 Beam.Min := 1.7E308;
 if (Beam.Rows > 0) and (Beam.Cols > 0) then
