@@ -13,8 +13,8 @@ uses
   , SysUtils              //delete SysUtils if not using heaptrc
   {$ENDIF}
   { you can add units after this }, bsunit, TAChartLazarusPkg, tachartprint,
-  Printer4Lazarus, dicom, define_types, dtrackbar, pack_powerpdf, lnetvisual,
-  aboutunit, Parser10;
+  dicom, define_types, dtrackbar, lnetvisual,
+  aboutunit;
 
 {$R *.res}
 

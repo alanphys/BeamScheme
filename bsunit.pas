@@ -70,7 +70,12 @@ unit bsunit;
  6/8/2020   use Form2PDf for printing PDF
             fix SaveDialog titles
             remove results unit and PowerPDF
- 24/8/2020  add get correct resolution for tiff images}
+ 24/8/2020  add get correct resolution for tiff images
+ 18/9/2020  fix range check error in calcparams
+            add inflection points
+            neaten filename display
+ 22/9/2020  support raw text file
+ 29/9/2020  shift maths routines to unit mathsfuncs}
 
 
 {$mode objfpc}{$H+}
@@ -267,6 +272,7 @@ type
    function BrainLabOpen(sFileName:string):boolean;
    function BMPOpen(sFileName:string):boolean;
    function HISOpen(sFileName:string):boolean;
+   function RAWOpen(sFileName:string):boolean;
    procedure miExitClick(Sender: TObject);
    procedure miExportXClick(Sender: TObject);
    procedure miExportYClick(Sender: TObject);
@@ -320,7 +326,7 @@ procedure CalcParams(PArr:TPArr; var BeamParams:TBeamParams);
 implementation
 
 uses DICOM, define_types, types, math, StrUtils, helpintfs, aboutunit,
-     LazFileUtils, Parser10, form2pdf;
+     LazFileUtils, Parser10, form2pdf, mathsfuncs;
 
 const AllChars = [#0..#255] - DigitChars - ['.'];
 
@@ -451,80 +457,6 @@ var I,J,K,L,
     Stop:      TPoint;
     DLine:     TRect;
     OverLimit: Boolean;
-
-function Limit(A,B,C,Phi0,R0,MidX,MidY:double):TPoint;
-{Calculates intersection of profile in polar coords with array limits in cartesian coords}
-var X,Y        :integer;
-begin
-X := Round((C*sin(Phi0) - B*R0)/(A*sin(Phi0) - B*cos(Phi0)) + MidX + 0.1);
-Y := Round((C*cos(Phi0) - A*R0)/(B*cos(Phi0) - A*sin(Phi0)) + MidY + 0.1);
-Result.X := X;
-Result.Y := Y;
-end;
-
-
-function LimitL(Angle,Phi,TanA,Offset,MidX,MidY:double; LowerX,LowerY,UpperX,UpperY:integer):TRect;
-{Determines the intersect of the line in Polar Coordinates with the bounding rectangle}
-var TL,                        {top left of line}
-    BR:        TPoint;         {bottom right of line}
-
-begin
-if (Angle > -TanA) and (Angle <= TanA) then {Profile is X profile}
-   begin
-   {Start with left axis}
-   TL := Limit(1,0,-MidX,Phi,Offset,MidX,MidY);
-   if TL.Y < LowerY then
-      begin {must intersect top axis}
-      TL := Limit(0,1,-MidY,Phi,Offset,MidX,MidY);
-      end
-     else
-      if TL.Y >= UpperY then
-         begin {must intersect bottom axis}
-         TL := Limit(0,1,MidY,Phi,Offset,MidX,MidY);
-         end;
-
-   {Now do right axis}
-   BR := Limit(1,0,MidX,Phi,Offset,MidX,MidY);
-   if BR.Y < LowerY then
-      begin {must intersect top axis}
-      BR := Limit(0,1,-MidY,Phi,Offset,MidX,MidY);
-      end
-     else
-      if BR.Y >= UpperY then
-         begin {must intersect bottom axis}
-         BR := Limit(0,1,MidY,Phi,Offset,MidX,MidY);
-         end;
-   end
-  else
-   begin {profile is y profile}
-   {Start with top axis}
-   TL := Limit(0,1,-MidY,Phi,Offset,MidX,MidY);
-   if TL.X < LowerX then
-      begin {must intersect left axis}
-      TL := Limit(1,0,-MidX,Phi,Offset,MidX,MidY);
-      end
-     else
-      if TL.X >= UpperX then
-         begin {must intersect right axis}
-         TL := Limit(1,0,MidX,Phi,Offset,MidX,MidY);
-         end;
-
-   {Now do bottom axis}
-   BR := Limit(0,1,MidY,Phi,Offset,MidX,MidY);
-   if BR.X < LowerX then
-      begin {must intersect left axis}
-      BR := Limit(1,0,-MidX,Phi,Offset,MidX,MidY);
-      end
-     else
-      if BR.X >= UpperX then
-         begin {must intersect right axis}
-         BR := Limit(1,0,MidX,Phi,Offset,MidX,MidY);
-         end;
-   end;
-Result.TopLeft := TL;
-Result.BottomRight := BR;
-end;
-
 
 begin
 {clear previous profile if it exists}
@@ -717,15 +649,6 @@ for K := 0 to length(PArr) - 1 do with PArr[K] do
 end;
 
 
-function LReg(X1,X2,Y1,Y2,X:double):double;
-var m,c:       double;
-begin
-if X1 <> X2 then m := (Y2 - Y1)/(X2 - X1) else m := 1E6;
-c := (Y1 + Y2 - m*(X1 + X2))/2;
-LReg := X*m + c;
-end;
-
-
 procedure CalcParams(PArr:TPArr;var BeamParams:TBeamParams);
 var I,
     N,
@@ -748,19 +671,15 @@ var I,
     M10,
     ALeft,
     ARight,
+    LSlope,
+    RSlope,
+    LSlopeN,
+    RSlopeN,
     ASum,
     ASSqr,
     RSym,
     Diff,
     Res:   double;
-
-function ILReg(X1,X2,Y1,Y2,Y:double):double;
-var m,c:       double;
-begin
-if X1 <> X2 then m := (Y2 - Y1)/(X2 - X1) else m := 1E6;
-c := (Y1 + Y2 - m*(X1 + X2))/2;
-if m <> 0 then ILReg := (Y - c)/m else ILREG := 1E6;
-end;
 
 begin
 with BeamParams do
@@ -780,6 +699,10 @@ with BeamParams do
    R80 := 0;
    ALeft := 0;
    ARight := 0;
+   LSlope := 0;
+   RSlope := 0;
+   LSlopeN := 0;
+   RSlopeN := 0;
    Diff := 0;
    RSym := 0;
    ADiff := 0;
@@ -841,9 +764,23 @@ with BeamParams do
       NegP80 := 0;
       PosP80 := 0;
       if LPArr > 2 then Res := PArr[HLPArr + 1].X - PArr[HLPArr].X;
-      while (I <= HLPArr) and not((PArr[NegP].Y = 0) and (PArr[NegP].X = 0)
+      while (I < HLPArr) and not((PArr[NegP].Y = 0) and (PArr[NegP].X = 0)
          and (PArr[PosP].Y = 0) and (PArr[PosP].X = 0)) do
          begin
+         {get left inflection point}
+         LSlopeN := abs((PArr[NegP].Y - PArr[NegP+1].Y)/(PArr[NegP].X - PArr[NegP+1].X));
+         if LSlopeN > LSlope then
+            begin
+            LSlope := LSlopeN;
+            LInf := (PArr[NegP].X + PArr[NegP+1].X)/2;   {assume inflection point is in middle}
+            end;
+         RSlopeN := abs((PArr[PosP].Y - PArr[PosP-1].Y)/(PArr[PosP].X - PArr[PosP-1].X));
+         {get right inflection point}
+         if RSlopeN > RSlope then
+            begin
+            RSlope := RSlopeN;
+            RInf := (PArr[PosP].X + PArr[PosP-1].X)/2;   {assume inflection point is in middle}
+            end;
          if LEdge = 0 then
             begin
             if PArr[NegP].Y <= HMax then
@@ -1009,8 +946,8 @@ if XPArr <> nil then
       AssignFile(Outfile,SaveDialog.FileName);
       Rewrite(Outfile);
       for I := 0 to length(XPArr) - 1 do
-         {writeln(Outfile,XPArr[I].X:5:2,',',XPArr[I].Y:1:1);}
-         writeln(Outfile,XPArr[I].X,',',XPArr[I].Y);
+         writeln(Outfile,XPArr[I].X:5:2,',',XPArr[I].Y:5:1);
+         {writeln(Outfile,XPArr[I].X,',',XPArr[I].Y);}
       CloseFile(Outfile);
       end;
 end;
@@ -1036,8 +973,8 @@ if YPArr <> nil then
       AssignFile(Outfile,SaveDialog.FileName);
       Rewrite(Outfile);
       for I := 0 to length(YPArr) - 1 do
-         {writeln(Outfile,YPArr[I].X:5:2,',',YPArr[I].Y:1:1); }
-         writeln(Outfile,YPArr[I].X,',',YPArr[I].Y);
+         writeln(Outfile,YPArr[I].X:5:2,',',YPArr[I].Y:5:1);
+         {writeln(Outfile,YPArr[I].X,',',YPArr[I].Y);}
       CloseFile(Outfile);
       end;
 end;
@@ -1402,7 +1339,7 @@ with OpenDialog do
    {$IFDEF WINDOWS}
    Filter := 'DICOM Image|*.dcm|MapCheck Text Files|*.txt|PTW|*.mcc|IBA|*.opg|Windows bitmap|*.bmp|Tiff bitmap|*.tif|JPEG image|*.jpg|HIS image|*.his|All Files|*.*';
    {$ELSE}
-   Filter := 'DICOM Image|*.dcm|MapCheck Text Files|*.txt|PTW|*.mcc|IBA|*.opg|Windows bitmap|*.bmp|Tiff bitmap|*.tif|JPEG image|*.jpg;*jpeg|HIS image|*.his|All Files|*';
+   Filter := 'DICOM Image|*.dcm|MapCheck, XIO, RAW Text Files|*.txt|PTW|*.mcc|IBA|*.opg|Windows bitmap|*.bmp|Tiff bitmap|*.tif|JPEG image|*.jpg;*jpeg|HIS image|*.his|All Files|*';
    {$ENDIF}
    Title := 'Open file';
    InitialDir := sExePath;
@@ -1466,7 +1403,12 @@ if OpenDialog.Execute then
       DisplayBeam;
       seXAngleChange(Self);
       seYAngleChange(Self);
-      cImage.Caption := OpenDialog.FileName;
+      Dummy := OpenDialog.FileName;
+      I := cImage.Canvas.TextWidth(Dummy);
+      if I >= cImage.Width then
+         Dummy := leftStr(Dummy, round(Length(Dummy)*cImage.Width/(2*I) - 1)) + '...'
+            + RightStr(Dummy, round(Length(Dummy)*cImage.Width/(2*I) - 1));
+      cImage.Caption := Dummy;
       ClearStatus
       end
      else
@@ -1494,6 +1436,8 @@ if LeftStr(Dummy,8) = '0001108e' then
    Result := XiOOpen(sFileName);
 if LeftStr(Dummy,8) = 'BrainLAB' then
    Result := BrainLabOpen(sFileName);
+if Length(Dummy) > 4 then                   {assume image is matrix of text values}
+   Result := RAWOpen(sFileName);
 end;
 
 function TBSForm.MapCheckOpen(sFileName:string):boolean;
@@ -2109,6 +2053,60 @@ CloseFile(Infile);
 end;
 
 
+function TBSForm.RAWOpen(sFileName:string):boolean;
+var I,J:       integer;
+    Dummy,
+    sValue:    string;
+    Value:     double;
+    Infile:    textfile;
+
+begin
+Result := true;
+   try
+   AssignFile(Infile, sFileName);
+   Reset(Infile);
+
+   Beam.Max := 0;
+   Beam.Min := 1.7E308;
+   I := 0;
+   while not eof(Infile) and Result do
+      begin
+      SetLength(Beam.Data,I+1);
+      readln(Infile,Dummy);
+      Dummy := Tab2Space(Dummy,1);
+      J := 0;
+      while Dummy <> '' do
+         begin
+         SetLength(Beam.Data[I],J+2);
+         sValue := Copy2SpaceDel(Dummy);
+            try
+            Value := RobustStrToFloat(sValue);
+            except
+            Result := false;
+            end;
+         Beam.Data[I,J+1] := Value;
+         if Value > Beam.Max then Beam.Max := Value;
+         if Value < Beam.Min then Beam.Min := Value;
+         inc(J);
+         end;
+      inc(I);
+      end;
+   if Result then
+      begin
+      Beam.Rows := I;
+      Beam.Cols := J + 2;
+      Beam.XRes := 0.0334;                      {assume this is from film scanned at 76 dpi}
+      Beam.YRes := 0.0334;
+      end
+     else
+      BSError('Could not read RAW text file');
+   Result := true;
+   finally
+   CloseFile(Infile);
+   end;
+end;
+
+
 function TBSForm.BrainLabOpen(sFileName:string):boolean;
 var I,J,K,
     NumSets:   integer;
@@ -2541,6 +2539,7 @@ pBeam.BringToFront;
 sbIMax.Enabled := False;
 sbIMax.Visible := False;
 sbIMin.Left := pBeam.Width - 30;
+cImage.Width := pBeam.Width - 32;
 sbIMin.Enabled := True;
 sbIMin.Visible := True;
 lMin.Top := pMaxMin.Height - 20;
@@ -2560,6 +2559,7 @@ sbIMax.Left := pBeam.Width - 30;
 sbIMax.Enabled := true;
 sbIMax.Visible := true;
 sbIMin.Left := pBeam.Width - 30;
+cImage.Width := pBeam.Width - 32;
 sbIMin.Enabled := false;
 sbIMin.Visible := false;
 pMaxMin.Height := pBeam.Height - 49;
@@ -2744,6 +2744,8 @@ with BeamParams do
    Parser.Variable['RCAX'] := RCAX;
    Parser.Variable['LEdge'] := LEdge;
    Parser.Variable['REdge'] := REdge;
+   Parser.Variable['LInf'] := LInf;
+   Parser.Variable['RInf'] := RInf;
    Parser.Variable['L10'] := L10;
    Parser.Variable['R10'] := R10;
    Parser.Variable['L20'] := L20;
@@ -2795,6 +2797,8 @@ with BeamParams do
    Parser.Variable['RCAX'] := RCAX;
    Parser.Variable['LEdge'] := LEdge;
    Parser.Variable['REdge'] := REdge;
+   Parser.Variable['LInf'] := LInf;
+   Parser.Variable['RInf'] := RInf;
    Parser.Variable['L10'] := L10;
    Parser.Variable['R10'] := R10;
    Parser.Variable['L20'] := L20;

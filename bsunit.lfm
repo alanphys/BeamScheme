@@ -517,7 +517,8 @@ object BSForm: TBSForm
         Left = 5
         Height = 15
         Top = 3
-        Width = 77
+        Width = 78
+        AutoSize = False
         Caption = 'Image Name'
         Font.Height = -12
         ParentColor = False
