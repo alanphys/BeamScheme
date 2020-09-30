@@ -75,7 +75,10 @@ unit bsunit;
             add inflection points
             neaten filename display
  22/9/2020  support raw text file
- 29/9/2020  shift maths routines to unit mathsfuncs}
+ 29/9/2020  shift maths routines to unit mathsfuncs
+ 30/9/2020  shift types and constants to unit bstypes
+            use Hill function non linear regression to determine inflection points
+            add copy profiles to clipboard}
 
 
 {$mode objfpc}{$H+}
@@ -84,67 +87,14 @@ interface
 
 uses
   Classes, SysUtils, LResources, Forms, Controls, Graphics, Dialogs, Menus,
-  ExtCtrls, Buttons, TAGraph, TASeries, TATools, StdCtrls, Graphtype,
+  ExtCtrls, Buttons, TAGraph, TASeries, TATools, StdCtrls, Graphtype, Clipbrd,
   IntfGraphics, Spin, ComCtrls, LazHelpHTML, Grids, Tracker2, lNetComponents,
-  lwebserver, FPImage;
-
-const pi = 3.14159265359;
-      FaintRed:    TColor = $7979ff;
-      FaintYellow: TColor = $cffcff;
-      FaintGreen:  TColor = $e4ffd3;
-
-type
-
-  TBeamData = array of array of double;
-  
-  TProfilePoint = record
-     X:        double;
-     y:        double;
-    end;
-    
-  TPArr = array of TProfilePoint;
-  
-  TBeam = class
-     Width,           {detector size in X direction}
-     Height,          {detector size in Y direction}
-     XRes,
-     YRes,
-     Min,
-     Max:      double;
-     Cols,
-     Rows:     integer;
-     Data:     TBeamData;
-     constructor create;
-    end;
-     
-  TBeamParams = record
-     ALeft,                    {area under profile left of CAX}
-     Aright,                   {area under profile right of CAX}
-     ADiff,                    {Absolute difference of points equidistant from CAX}
-     RDiff,                    {Relative ratio of points equidistant from CAX}
-     CMax,                     {Maximum value}
-     CMin,                     {Minimum value}
-     RCAX,                     {Central axis value}
-     LEdge,                    {Position of left edge 50%}
-     REdge,                    {Position of right edge 50%}
-     LInf,                     {Position of left inflection point}
-     RInf,                     {Position of right inflection point}
-     L10,                      {10% of CAX value left of CAX}
-     R10,                      {10% of CAX value right of CAX}
-     L20,                      {20% of CAX value left of CAX}
-     R20,                      {20% of CAX value right of CAX}
-     L80,                      {80% of CAX value left of CAX}
-     R80,                      {80% of CAX value right of CAX}
-     L90,                      {90% of CAX value left of CAX}
-     R90,                      {90% of CAX value right of CAX}
-     PSum,                     {Sum of profile values}
-     PSSqr,                    {Squared sum of profile values}
-     NP        :double;        {Number of points in 80 of profile}
-    end;
+  lwebserver, FPImage, bstypes;
 
   { TBSForm }
 
-  TBSForm = class(TForm)
+type
+   TBSForm = class(TForm)
    ChartToolsetY: TChartToolset;
    ChartToolsetX: TChartToolset;
    ChartToolsetXDataPointHintTool: TDataPointHintTool;
@@ -156,6 +106,8 @@ type
    HTMLHelpDatabase: THTMLHelpDatabase;
    HelpServer: TLHTTPServerComponent;
    Label7: TLabel;
+   miXClipB: TMenuItem;
+   miYClipB: TMenuItem;
    miQuitEdit: TMenuItem;
    miProtocol: TMenuItem;
    miSaveP: TMenuItem;
@@ -276,6 +228,8 @@ type
    procedure miExitClick(Sender: TObject);
    procedure miExportXClick(Sender: TObject);
    procedure miExportYClick(Sender: TObject);
+   procedure miXClipBClick(Sender: TObject);
+   procedure miYClipBClick(Sender: TObject);
    procedure miOpenClick(Sender: TObject);
    procedure miRestoreClick(Sender: TObject);
    procedure miAboutClick(Sender: TObject);
@@ -320,7 +274,6 @@ procedure ShowProfile(ThebitMap:Tbitmap; Wdth:double;
 procedure DrawProfile(TheBitmap:TBitmap;Beam:TBeam ;Angle,Offset,Width:double;
    Profile:TLineSeries; var PArr:TPArr; var TopLeft,TopRight,BottomLeft,BottomRight:TPoint;
    var PrevW:double);
-procedure CalcParams(PArr:TPArr; var BeamParams:TBeamParams);
 
 
 implementation
@@ -341,21 +294,8 @@ var YPTL,                      {Y profile top right}
     YPW,                       {Y previous width}
     XPW:       double;         {X previous width}
 
-constructor TBeam.Create;
-begin
-  Width :=0 ;
-  Height := 0;
-  XRes := 0;
-  YRes := 0;
-  Cols := 0;
-  Rows := 0;
-  Data := nil;
-end;
-
-
 function RobustStrToFloat(s:string):extended;
-var Val:       extended;
-    fs:        TFormatSettings;
+var fs:        TFormatSettings;
 
 begin
 fs := DefaultFormatSettings;
@@ -649,229 +589,6 @@ for K := 0 to length(PArr) - 1 do with PArr[K] do
 end;
 
 
-procedure CalcParams(PArr:TPArr;var BeamParams:TBeamParams);
-var I,
-    N,
-    NegP,
-    PosP,
-    NegP80,                    {negative increment 80% field of view}
-    NNegP80,                   {new negative increment 80% field of view}
-    PosP80,                    {positive increment 80% field of view}
-    NPosP80,                   {new positive increment 80% field of view}
-    StartNeg,                  {Start pos for negative counter}
-    StartPos,                  {Start pos for positive counter}
-    LPArr,
-    HLPArr:     integer;
-    CMax,
-    HMax,
-    CMin,
-    M90,
-    M80,
-    M20,
-    M10,
-    ALeft,
-    ARight,
-    LSlope,
-    RSlope,
-    LSlopeN,
-    RSlopeN,
-    ASum,
-    ASSqr,
-    RSym,
-    Diff,
-    Res:   double;
-
-begin
-with BeamParams do
-   begin
-   {initialise parameters}
-   LEdge := 0;
-   REdge := 0;
-   LInf := 0;
-   RInf := 0;
-   L10 := 0;
-   R10 := 0;
-   L20 := 0;
-   R20 := 0;
-   L90 := 0;
-   R90 := 0;
-   L80 := 0;
-   R80 := 0;
-   ALeft := 0;
-   ARight := 0;
-   LSlope := 0;
-   RSlope := 0;
-   LSlopeN := 0;
-   RSlopeN := 0;
-   Diff := 0;
-   RSym := 0;
-   ADiff := 0;
-   RDiff := 0;
-   Res := 0;
-
-   {get field size}
-   CMax := 0;
-   CMin := 0;
-   LPArr := length(PArr) - 1;
-   HLParr := (length(PArr) div 2);
-   if LPArr > 0 then
-      begin
-
-      {initialise vars}
-      if not odd(LPArr) then
-         CMax := PArr[HLPArr].Y
-        else
-         CMax := (PArr[HLPArr].Y + PArr[HLPArr - 1].Y)/2;
-      CMin := CMax;
-      {for I:=0 to LPArr do
-         if PArr[I].Y < CMin
-            then CMin := PArr[I].Y;}
-      RCAX := CMax;
-
-      {Leave it to the user to normalise values. Most arrays are already normalised}
-      {HMax := (CMax-CMin)*0.5 + CMin;
-      M90 := (CMax-CMin)*0.9 + CMin;
-      M80 := (CMax-CMin)*0.8 + CMin;
-      M20 := (CMax-CMin)*0.2 + CMin;
-      M10 := (CMax-CMin)*0.1 + CMin;}
-
-      HMax := CMax*0.5;
-      M90 := CMax*0.9;
-      M80 := CMax*0.8;
-      M20 := CMax*0.2;
-      M10 := CMax*0.1;
-      I := 0;
-      if not odd(LPArr) then
-         begin                        {symmetric around central detector}
-         StartNeg := LPArr div 2 - 1;
-         StartPos := LPArr div 2 + 1;
-         ASum := PArr[LPArr div 2].Y;
-         ASSqr := sqr(ASum);
-         N := 1;
-         end
-        else
-         begin                        {central detectors straddle axis}
-         StartNeg := LPArr div 2;
-         StartPos := LPArr div 2 + 1;
-         ASum := 0;
-         ASSqr := 0;
-         N := 0;
-         end;
-      NegP := StartNeg;
-      PosP := StartPos;
-      NNegP80 := StartNeg;
-      NPosP80 := StartPos;
-      NegP80 := 0;
-      PosP80 := 0;
-      if LPArr > 2 then Res := PArr[HLPArr + 1].X - PArr[HLPArr].X;
-      while (I < HLPArr) and not((PArr[NegP].Y = 0) and (PArr[NegP].X = 0)
-         and (PArr[PosP].Y = 0) and (PArr[PosP].X = 0)) do
-         begin
-         {get left inflection point}
-         LSlopeN := abs((PArr[NegP].Y - PArr[NegP+1].Y)/(PArr[NegP].X - PArr[NegP+1].X));
-         if LSlopeN > LSlope then
-            begin
-            LSlope := LSlopeN;
-            LInf := (PArr[NegP].X + PArr[NegP+1].X)/2;   {assume inflection point is in middle}
-            end;
-         RSlopeN := abs((PArr[PosP].Y - PArr[PosP-1].Y)/(PArr[PosP].X - PArr[PosP-1].X));
-         {get right inflection point}
-         if RSlopeN > RSlope then
-            begin
-            RSlope := RSlopeN;
-            RInf := (PArr[PosP].X + PArr[PosP-1].X)/2;   {assume inflection point is in middle}
-            end;
-         if LEdge = 0 then
-            begin
-            if PArr[NegP].Y <= HMax then
-               begin
-               LEdge := ILReg(PArr[NegP].X,PArr[NegP+1].X,PArr[NegP].Y,PArr[NegP+1].Y,HMax);
-               ALeft := ALeft + HMax*abs(LEdge-PArr[NegP+1].X);
-	       end
-              else
-               begin
-               ALeft := ALeft + PArr[NegP].Y*Res;
-               if NegP80 <> NNegP80 then
-                  begin
-                  NegP80 := NNegP80;
-                  {use regression for symmetry as points may not be symmetric}
-                  {ALeft := ALeft + LReg(PArr[NegP80].X,PArr[NegP80+1].X,PArr[NegP80].Y,
-                     PArr[NegP80+1].Y,trunc(-I*Res*0.8)); }
-                  if PArr[NegP80].Y > CMax then CMax := PArr[NegP80].Y;
-                  if PArr[NegP80].Y < CMin then CMin := PArr[NegP80].Y;
-                  ASum := ASum + PArr[NegP80].Y;
-                  ASSqr := ASSqr + sqr(PArr[NegP80].Y);
-                  Inc(N);
-                 end;
-               end;
-            end;
-         if REdge = 0 then
-            begin
-            if PArr[PosP].Y <= HMax then
-               begin
-               REdge := ILReg(PArr[PosP].X,PArr[PosP-1].X,PArr[PosP].Y,PArr[PosP-1].Y,HMax);
-               ARight := ARight + HMax*abs(REdge - PArr[PosP-1].X);
-	       end
-              else
-               begin
-               ARight := ARight + PArr[PosP].Y*Res;
-               if PosP80 <> NPosP80 then
-                  begin
-                  PosP80 := NPosP80;
-                  {ARight := ARight + LReg(PArr[PosP80].X,PArr[PosP80-1].X,PArr[PosP80].Y,
-                     PArr[PosP80-1].Y,trunc(I*Res*0.8)); }
-                  if PArr[PosP80].Y > CMax then CMax := PArr[PosP80].Y;
-                  if PArr[PosP80].Y < CMin then CMin := PArr[PosP80].Y;
-                  if PArr[PosP80].Y > 0 then RSym:= PArr[NegP80].Y/PArr[PosP80].Y
-                     else RSym := 1;
-                  if (RSym < 1.0) and (RSym <> 0) then RSym := 1/RSym;
-                  if RDiff < RSym then RDiff := RSym;
-                  Diff := abs(PArr[NegP80].Y - PArr[PosP80].Y);
-                  if ADiff < Diff then ADiff := Diff;
-                  ASum := ASum + PArr[PosP80].Y;
-                  ASSqr := ASSqr + sqr(PArr[PosP80].Y);
-                  Inc(N);
-                  end;
-               end;
-            end;
-         if L90 = 0 then
-            if PArr[NegP].Y < M90 then
-               L90 := ILReg(PArr[NegP].X,PArr[NegP+1].X,PArr[NegP].Y,PArr[NegP+1].Y,M90);
-         if R90 = 0 then
-            if PArr[PosP].Y < M90 then
-               R90 := ILReg(PArr[PosP].X,PArr[PosP-1].X,PArr[PosP].Y,PArr[PosP-1].Y,M90);
-         if L80 = 0 then
-            if PArr[NegP].Y < M80 then
-               L80 := ILReg(PArr[NegP].X,PArr[NegP+1].X,PArr[NegP].Y,PArr[NegP+1].Y,M80);
-         if R80 = 0 then
-            if PArr[PosP].Y < M80 then
-               R80 := ILReg(PArr[PosP].X,PArr[PosP-1].X,PArr[PosP].Y,PArr[PosP-1].Y,M80);
-         if L20 = 0 then
-            if PArr[NegP].Y < M20 then
-               L20 := ILReg(PArr[NegP].X,PArr[NegP+1].X,PArr[NegP].Y,PArr[NegP+1].Y,M20);
-         if R20 = 0 then
-            if PArr[PosP].Y < M20 then
-               R20 := ILReg(PArr[PosP].X,PArr[PosP-1].X,PArr[PosP].Y,PArr[PosP-1].Y,M20);
-         if L10 = 0 then
-            if PArr[NegP].Y < M10 then
-               L10 := ILReg(PArr[NegP].X,PArr[NegP+1].X,PArr[NegP].Y,PArr[NegP+1].Y,M10);
-         if R10 = 0 then
-            if PArr[PosP].Y < M10 then
-               R10 := ILReg(PArr[PosP].X,PArr[PosP-1].X,PArr[PosP].Y,PArr[PosP-1].Y,M10);
-         Inc(I);
-         Dec(NegP);
-         Inc(PosP);
-         NNegP80 := StartNeg - Trunc(I*0.8);
-         NPosP80 := StartPos + Trunc(I*0.8);
-         end;
-      NP := N;
-      PSum := ASum;
-      PSSqr := ASSqr;
-      end;
-   end;
-end;
-
-
 { TBSForm }
 
 procedure TBSForm.StatusBarDrawPanel(SBar: TStatusBar;Panel: TStatusPanel;
@@ -977,6 +694,38 @@ if YPArr <> nil then
          {writeln(Outfile,YPArr[I].X,',',YPArr[I].Y);}
       CloseFile(Outfile);
       end;
+end;
+
+
+procedure TBSForm.miXClipBClick(Sender: TObject);
+{put the array in a comma delimited string on the clipboard}
+var I          :integer;
+    sClip      :string;
+begin
+if XPArr <> nil then
+   begin
+   sClip := '';
+   for I := 0 to length(XPArr) - 1 do
+       sClip := sClip + FloatToStrF(XPArr[I].X,ffFixed,5,2) + ',' +
+          FloatToStrF(XPArr[I].Y,ffFixed,5,2) + LineEnding;
+   end;
+Clipboard.AsText := sClip;
+end;
+
+
+procedure TBSForm.miYClipBClick(Sender: TObject);
+{put the array in a comma delimited string on the clipboard}
+var I          :integer;
+    sClip      :string;
+begin
+if YPArr <> nil then
+   begin
+   sClip := '';
+   for I := 0 to length(YPArr) - 1 do
+       sClip := sClip + FloatToStrF(YPArr[I].X,ffFixed,5,2) + ',' +
+          FloatToStrF(YPArr[I].Y,ffFixed,5,2) + LineEnding;
+   end;
+Clipboard.AsText := sClip;
 end;
 
 
@@ -1400,6 +1149,7 @@ if OpenDialog.Execute then
 
       {display beam}
       Safe := true;
+      ClearStatus;
       DisplayBeam;
       seXAngleChange(Self);
       seYAngleChange(Self);
@@ -1409,7 +1159,6 @@ if OpenDialog.Execute then
          Dummy := leftStr(Dummy, round(Length(Dummy)*cImage.Width/(2*I) - 1)) + '...'
             + RightStr(Dummy, round(Length(Dummy)*cImage.Width/(2*I) - 1));
       cImage.Caption := Dummy;
-      ClearStatus
       end
      else
       begin
@@ -2679,12 +2428,14 @@ end;
 procedure TBSForm.seYAngleChange(Sender: TObject);
 var Angle,
     Offset,
-    Wdth:     double;
-    MBitmap:   TBitmap;
+    Wdth       :double;
+    MBitmap    :TBitmap;
+    ErrMsg     :string;
 
 begin
 if Safe then
    begin
+   Safe := false;
    Angle := seYAngle.Value;
    Offset := -seYOffset.Value;
    Wdth := seYWidth.Value;
@@ -2694,9 +2445,11 @@ if Safe then
       DrawProfile(MBitmap,Beam,Angle,Offset,Wdth,
          YProfile,YPArr, YPTL,YPTR,YPBL,YPBR,YPW);
       iBeam.Picture.Bitmap := MBitmap;
-      CalcParams(YPArr,YBParams);
+      CalcParams(YPArr,YBParams,ErrMsg);
       ShowYResults(YBParams);
+      if ErrMsg <> '' then BSWarning(ErrMsg);
       end;
+   Safe := true;
    end;
 end;
 
@@ -2704,12 +2457,14 @@ end;
 procedure TBSForm.seXAngleChange(Sender: TObject);
 var Angle,
     Offset,
-    Wdth:     double;
-    MBitmap:   TBitmap;
+    Wdth       :double;
+    MBitmap    :TBitmap;
+    ErrMsg     :string;
 
 begin
 if Safe then
    begin
+   Safe := false;
    Angle := seXAngle.Value;
    Offset := -seXOffset.Value;
    Wdth := seXWidth.Value;
@@ -2719,9 +2474,11 @@ if Safe then
       DrawProfile(MBitmap,Beam,Angle,Offset,Wdth,
          XProfile,XPArr,XPTL,XPTR,XPBL,XPBR,XPW);
       iBeam.Picture.Bitmap := MBitmap;
-      CalcParams(XPArr,XBParams);
+      CalcParams(XPArr,XBParams,ErrMsg);
       ShowXResults(XBParams);
+      if ErrMsg <> '' then BSWarning(ErrMsg);
       end;
+   Safe := true;
    end;
 end;
 

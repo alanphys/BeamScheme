@@ -1,13 +1,14 @@
 object BSForm: TBSForm
   Left = 306
-  Height = 663
+  Height = 656
   Top = 80
-  Width = 608
+  Width = 602
   HorzScrollBar.Page = 737
   VertScrollBar.Page = 755
   Caption = 'Beam Scheme'
-  ClientHeight = 641
-  ClientWidth = 608
+  ClientHeight = 634
+  ClientWidth = 602
+  DesignTimePPI = 95
   Menu = MainMenu1
   OnClose = FormClose
   OnCreate = FormCreate
@@ -15,20 +16,20 @@ object BSForm: TBSForm
   LCLVersion = '2.0.8.0'
   object pBeam: TPanel
     Left = 0
-    Height = 309
+    Height = 306
     Top = 0
-    Width = 303
+    Width = 300
     HelpType = htKeyword
     HelpKeyword = 'HTML/BSHelp82.html'
-    ClientHeight = 309
-    ClientWidth = 303
+    ClientHeight = 306
+    ClientWidth = 300
     ParentFont = False
     TabOrder = 0
     object iBeam: TImage
       Left = 1
-      Height = 259
+      Height = 256
       Top = 49
-      Width = 259
+      Width = 256
       HelpType = htKeyword
       HelpKeyword = 'HTML/BSHelp82.html'
       AntialiasingMode = amOff
@@ -41,10 +42,10 @@ object BSForm: TBSForm
       Left = 1
       Height = 28
       Top = 21
-      Width = 301
+      Width = 298
       Align = alTop
       ClientHeight = 28
-      ClientWidth = 301
+      ClientWidth = 298
       ParentFont = False
       TabOrder = 0
       object sbOpen: TSpeedButton
@@ -107,7 +108,7 @@ object BSForm: TBSForm
         ParentShowHint = False
       end
       object sbExit: TSpeedButton
-        Left = 269
+        Left = 266
         Height = 26
         Hint = 'Exit'
         Top = 1
@@ -155,7 +156,7 @@ object BSForm: TBSForm
         ParentShowHint = False
       end
       object sbInvert: TSpeedButton
-        Left = 71
+        Left = 70
         Height = 26
         Hint = 'Invert'
         Top = 1
@@ -232,7 +233,7 @@ object BSForm: TBSForm
         ParentShowHint = False
       end
       object sbNorm: TSpeedButton
-        Left = 96
+        Left = 95
         Height = 26
         Hint = 'Normalise to CAX'
         Top = 1
@@ -309,7 +310,7 @@ object BSForm: TBSForm
         ParentShowHint = False
       end
       object sbMaxNorm: TSpeedButton
-        Left = 121
+        Left = 120
         Height = 26
         Hint = 'Normalise to maximum'
         Top = 1
@@ -385,7 +386,7 @@ object BSForm: TBSForm
         ParentShowHint = False
       end
       object sbCentre: TSpeedButton
-        Left = 147
+        Left = 145
         Height = 26
         Hint = 'Centre field (resample)'
         Top = 1
@@ -461,7 +462,7 @@ object BSForm: TBSForm
         ParentShowHint = False
       end
       object sbPDF: TSpeedButton
-        Left = 173
+        Left = 171
         Height = 26
         Top = 1
         Width = 26
@@ -505,10 +506,10 @@ object BSForm: TBSForm
       Left = 1
       Height = 20
       Top = 1
-      Width = 301
+      Width = 298
       Align = alTop
       ClientHeight = 20
-      ClientWidth = 301
+      ClientWidth = 298
       Color = clInactiveCaption
       ParentColor = False
       ParentFont = False
@@ -517,7 +518,7 @@ object BSForm: TBSForm
         Left = 5
         Height = 15
         Top = 3
-        Width = 78
+        Width = 77
         AutoSize = False
         Caption = 'Image Name'
         Font.Height = -12
@@ -525,7 +526,7 @@ object BSForm: TBSForm
         ParentFont = False
       end
       object sbIMax: TSpeedButton
-        Left = 276
+        Left = 273
         Height = 18
         Hint = 'Maximise'
         Top = 1
@@ -575,7 +576,7 @@ object BSForm: TBSForm
         ParentShowHint = False
       end
       object sbIMin: TSpeedButton
-        Left = 253
+        Left = 250
         Height = 18
         Hint = 'Restore'
         Top = 1
@@ -626,12 +627,12 @@ object BSForm: TBSForm
       end
     end
     object pMaxMin: TPanel
-      Left = 260
-      Height = 259
+      Left = 257
+      Height = 256
       Top = 49
       Width = 42
       Align = alRight
-      ClientHeight = 259
+      ClientHeight = 256
       ClientWidth = 42
       ParentFont = False
       TabOrder = 2
@@ -647,7 +648,7 @@ object BSForm: TBSForm
       object lMin: TLabel
         Left = 1
         Height = 17
-        Top = 239
+        Top = 237
         Width = 38
         Caption = 'White'
         ParentColor = False
@@ -655,7 +656,7 @@ object BSForm: TBSForm
       end
       object DTrackBar: TDTrackBar
         Left = 0
-        Height = 218
+        Height = 216
         Top = 20
         Width = 42
         Max = 20
@@ -672,22 +673,22 @@ object BSForm: TBSForm
     end
   end
   object pXProfile: TPanel
-    Left = 304
-    Height = 309
+    Left = 301
+    Height = 306
     Top = 0
-    Width = 303
-    ClientHeight = 309
-    ClientWidth = 303
+    Width = 300
+    ClientHeight = 306
+    ClientWidth = 300
     ParentFont = False
     TabOrder = 1
     object Panel3: TPanel
       Left = 1
       Height = 28
       Top = 21
-      Width = 301
+      Width = 298
       Align = alTop
       ClientHeight = 28
-      ClientWidth = 301
+      ClientWidth = 298
       ParentFont = False
       TabOrder = 0
       object Label1: TLabel
@@ -700,7 +701,7 @@ object BSForm: TBSForm
         ParentFont = False
       end
       object Label2: TLabel
-        Left = 105
+        Left = 104
         Height = 17
         Top = 7
         Width = 43
@@ -709,7 +710,7 @@ object BSForm: TBSForm
         ParentFont = False
       end
       object Label3: TLabel
-        Left = 201
+        Left = 199
         Height = 17
         Top = 7
         Width = 42
@@ -718,10 +719,10 @@ object BSForm: TBSForm
         ParentFont = False
       end
       object seXOffset: TSpinEdit
-        Left = 51
-        Height = 26
+        Left = 50
+        Height = 24
         Top = 2
-        Width = 51
+        Width = 50
         HelpType = htKeyword
         HelpKeyword = 'HTML/BSHelp811.html'
         MaxValue = 50
@@ -731,10 +732,10 @@ object BSForm: TBSForm
         TabOrder = 0
       end
       object seXWidth: TSpinEdit
-        Left = 148
-        Height = 26
+        Left = 146
+        Height = 24
         Top = 2
-        Width = 51
+        Width = 50
         HelpType = htKeyword
         HelpKeyword = 'HTML/BSHelp812.html'
         Increment = 2
@@ -745,10 +746,10 @@ object BSForm: TBSForm
         Value = 1
       end
       object seXAngle: TSpinEdit
-        Left = 245
-        Height = 26
+        Left = 242
+        Height = 24
         Top = 2
-        Width = 51
+        Width = 50
         HelpType = htKeyword
         HelpKeyword = 'HTML/BSHelp813.html'
         MaxValue = 45
@@ -762,10 +763,10 @@ object BSForm: TBSForm
       Left = 1
       Height = 20
       Top = 1
-      Width = 301
+      Width = 298
       Align = alTop
       ClientHeight = 20
-      ClientWidth = 301
+      ClientWidth = 298
       Color = clInactiveCaption
       ParentColor = False
       ParentFont = False
@@ -781,7 +782,7 @@ object BSForm: TBSForm
         ParentFont = False
       end
       object sbXMax: TSpeedButton
-        Left = 276
+        Left = 273
         Height = 18
         Hint = 'Maximise'
         Top = 1
@@ -829,7 +830,7 @@ object BSForm: TBSForm
         ParentShowHint = False
       end
       object sbXMin: TSpeedButton
-        Left = 253
+        Left = 250
         Height = 18
         Hint = 'Restore'
         Top = 1
@@ -881,9 +882,9 @@ object BSForm: TBSForm
     end
     object cXProfile: TChart
       Left = 1
-      Height = 259
+      Height = 256
       Top = 49
-      Width = 301
+      Width = 298
       HelpType = htKeyword
       HelpKeyword = 'HTML/BSHelp81.html'
       AxisList = <      
@@ -923,18 +924,18 @@ object BSForm: TBSForm
   end
   object pYProfile: TPanel
     Left = 0
-    Height = 308
-    Top = 310
-    Width = 303
-    ClientHeight = 308
-    ClientWidth = 303
+    Height = 305
+    Top = 307
+    Width = 300
+    ClientHeight = 305
+    ClientWidth = 300
     ParentFont = False
     TabOrder = 2
     object cYProfile: TChart
       Left = 1
-      Height = 258
+      Height = 255
       Top = 49
-      Width = 301
+      Width = 298
       HelpType = htKeyword
       HelpKeyword = 'HTML/BSHelp81.html'
       AxisList = <      
@@ -979,10 +980,10 @@ object BSForm: TBSForm
       Left = 1
       Height = 28
       Top = 21
-      Width = 301
+      Width = 298
       Align = alTop
       ClientHeight = 28
-      ClientWidth = 301
+      ClientWidth = 298
       ParentFont = False
       TabOrder = 0
       object Label4: TLabel
@@ -995,7 +996,7 @@ object BSForm: TBSForm
         ParentFont = False
       end
       object Label5: TLabel
-        Left = 105
+        Left = 104
         Height = 17
         Top = 7
         Width = 43
@@ -1004,7 +1005,7 @@ object BSForm: TBSForm
         ParentFont = False
       end
       object Label6: TLabel
-        Left = 201
+        Left = 199
         Height = 17
         Top = 7
         Width = 42
@@ -1013,10 +1014,10 @@ object BSForm: TBSForm
         ParentFont = False
       end
       object seYOffset: TSpinEdit
-        Left = 51
-        Height = 26
+        Left = 50
+        Height = 24
         Top = 2
-        Width = 51
+        Width = 50
         HelpType = htKeyword
         HelpKeyword = 'HTML/BSHelp811.html'
         MaxValue = 50
@@ -1026,10 +1027,10 @@ object BSForm: TBSForm
         TabOrder = 0
       end
       object seYWidth: TSpinEdit
-        Left = 148
-        Height = 26
+        Left = 146
+        Height = 24
         Top = 2
-        Width = 51
+        Width = 50
         HelpType = htKeyword
         HelpKeyword = 'HTML/BSHelp812.html'
         Increment = 2
@@ -1040,10 +1041,10 @@ object BSForm: TBSForm
         Value = 1
       end
       object seYAngle: TSpinEdit
-        Left = 245
-        Height = 26
+        Left = 242
+        Height = 24
         Top = 2
-        Width = 51
+        Width = 50
         HelpType = htKeyword
         HelpKeyword = 'HTML/BSHelp813.html'
         MaxValue = 135
@@ -1058,10 +1059,10 @@ object BSForm: TBSForm
       Left = 1
       Height = 20
       Top = 1
-      Width = 301
+      Width = 298
       Align = alTop
       ClientHeight = 20
-      ClientWidth = 301
+      ClientWidth = 298
       Color = clInactiveCaption
       ParentColor = False
       ParentFont = False
@@ -1077,7 +1078,7 @@ object BSForm: TBSForm
         ParentFont = False
       end
       object sbYMax: TSpeedButton
-        Left = 276
+        Left = 273
         Height = 18
         Hint = 'Maximise'
         Top = 1
@@ -1125,7 +1126,7 @@ object BSForm: TBSForm
         ParentShowHint = False
       end
       object sbYMin: TSpeedButton
-        Left = 253
+        Left = 250
         Height = 18
         Hint = 'Restore'
         Top = 1
@@ -1177,13 +1178,13 @@ object BSForm: TBSForm
     end
   end
   object pResults: TPanel
-    Left = 304
-    Height = 308
-    Top = 310
-    Width = 303
+    Left = 301
+    Height = 305
+    Top = 307
+    Width = 300
     BevelOuter = bvLowered
-    ClientHeight = 308
-    ClientWidth = 303
+    ClientHeight = 305
+    ClientWidth = 300
     ParentColor = False
     ParentFont = False
     TabOrder = 3
@@ -1191,10 +1192,10 @@ object BSForm: TBSForm
       Left = 1
       Height = 20
       Top = 1
-      Width = 301
+      Width = 298
       Align = alTop
       ClientHeight = 20
-      ClientWidth = 301
+      ClientWidth = 298
       Color = clInactiveCaption
       ParentColor = False
       ParentFont = False
@@ -1210,7 +1211,7 @@ object BSForm: TBSForm
         ParentFont = False
       end
       object sbRMax: TSpeedButton
-        Left = 276
+        Left = 273
         Height = 18
         Hint = 'Maximise'
         Top = 1
@@ -1258,7 +1259,7 @@ object BSForm: TBSForm
         ParentShowHint = False
       end
       object sbRMin: TSpeedButton
-        Left = 253
+        Left = 250
         Height = 18
         Hint = 'Restore'
         Top = 1
@@ -1312,10 +1313,10 @@ object BSForm: TBSForm
       Left = 1
       Height = 28
       Top = 21
-      Width = 301
+      Width = 298
       Align = alTop
       ClientHeight = 28
-      ClientWidth = 301
+      ClientWidth = 298
       ParentFont = False
       TabOrder = 1
       object Label7: TLabel
@@ -1328,10 +1329,10 @@ object BSForm: TBSForm
         ParentFont = False
       end
       object cbProtocol: TComboBox
-        Left = 65
+        Left = 64
         Height = 25
         Top = 2
-        Width = 129
+        Width = 128
         ItemHeight = 17
         OnEditingDone = cbProtocolChange
         ParentFont = False
@@ -1339,7 +1340,7 @@ object BSForm: TBSForm
         TabOrder = 0
       end
       object sbSaveP: TSpeedButton
-        Left = 198
+        Left = 196
         Height = 24
         Top = 2
         Width = 24
@@ -1385,7 +1386,7 @@ object BSForm: TBSForm
         ParentFont = False
       end
       object sbAddP: TSpeedButton
-        Left = 222
+        Left = 220
         Height = 24
         Top = 2
         Width = 24
@@ -1431,7 +1432,7 @@ object BSForm: TBSForm
         ParentFont = False
       end
       object sbDelP: TSpeedButton
-        Left = 247
+        Left = 244
         Height = 24
         Top = 2
         Width = 24
@@ -1477,7 +1478,7 @@ object BSForm: TBSForm
         ParentFont = False
       end
       object sbExitP: TSpeedButton
-        Left = 271
+        Left = 268
         Height = 24
         Top = 2
         Width = 24
@@ -1525,34 +1526,30 @@ object BSForm: TBSForm
     end
     object sgResults: TStringGrid
       Left = 1
-      Height = 258
+      Height = 255
       Top = 49
-      Width = 301
+      Width = 298
       Align = alClient
       ColCount = 4
       Columns = <      
         item
-          MaxSize = 202
           Title.Caption = 'Parameters'
-          Width = 101
+          Width = 100
         end      
         item
-          MaxSize = 202
           Title.Caption = 'Equations'
           Width = 0
           Visible = False
         end      
         item
-          MaxSize = 202
           ReadOnly = True
           Title.Caption = 'X Profile'
-          Width = 101
+          Width = 100
         end      
         item
-          MaxSize = 202
           ReadOnly = True
           Title.Caption = 'Y Profile'
-          Width = 101
+          Width = 100
         end>
       DefaultRowHeight = 18
       FixedCols = 0
@@ -1566,8 +1563,8 @@ object BSForm: TBSForm
   object StatusBar: TStatusBar
     Left = 0
     Height = 22
-    Top = 619
-    Width = 608
+    Top = 612
+    Width = 602
     Panels = <>
     ParentFont = False
     ParentShowHint = False
@@ -1576,7 +1573,7 @@ object BSForm: TBSForm
   end
   object MainMenu1: TMainMenu
     Left = 24
-    Top = 121
+    Top = 120
     object miFile: TMenuItem
       Caption = '&File'
       object miOpen: TMenuItem
@@ -1591,12 +1588,20 @@ object BSForm: TBSForm
     object miExport: TMenuItem
       Caption = '&Export'
       object miExportX: TMenuItem
-        Caption = '&X Profile'
+        Caption = '&X Profile to file'
         OnClick = miExportXClick
       end
       object miExportY: TMenuItem
-        Caption = '&Y Profile'
+        Caption = '&Y Profile to file'
         OnClick = miExportYClick
+      end
+      object miXClipB: TMenuItem
+        Caption = 'X Profile to clipboard'
+        OnClick = miXClipBClick
+      end
+      object miYClipB: TMenuItem
+        Caption = 'Y Profile to clipboard'
+        OnClick = miYClipBClick
       end
     end
     object miProtocol: TMenuItem
@@ -1660,18 +1665,18 @@ object BSForm: TBSForm
     DefaultExt = '.txt'
     Filter = 'DICOM Image|*.dcm|Text Files|*.txt|Windows bitmap|*.bmp|Tiff bitmap|*.tif|JPEG image|*.jpg|All Files|*.*'
     Left = 24
-    Top = 65
+    Top = 64
   end
   object ChartToolsetX: TChartToolset
-    Left = 558
-    Top = 275
+    Left = 552
+    Top = 272
     object ChartToolsetXDataPointHintTool: TDataPointHintTool
       OnHint = ChartToolsetXDataPointHintToolHint
     end
   end
   object ChartToolsetY: TChartToolset
-    Left = 251
-    Top = 582
+    Left = 248
+    Top = 576
     object ChartToolsetYDataPointHintTool: TDataPointHintTool
       OnHint = ChartToolsetYDataPointHintToolHint
     end
@@ -1682,25 +1687,25 @@ object BSForm: TBSForm
     Filter = 'Text files|*.txt|All files|*'
     Options = [ofOverwritePrompt, ofEnableSizing, ofViewDetail]
     Left = 24
-    Top = 186
+    Top = 184
   end
   object HTMLHelpDatabase: THTMLHelpDatabase
     BaseURL = 'http://127.0.0.1:3880/'
     AutoRegister = True
     KeywordPrefix = 'HTML/'
-    Left = 146
-    Top = 65
+    Left = 144
+    Top = 64
   end
   object HTMLBrowserHelpViewer: THTMLBrowserHelpViewer
     BrowserParams = '%s'
     AutoRegister = True
-    Left = 146
-    Top = 121
+    Left = 144
+    Top = 120
   end
   object HelpServer: TLHTTPServerComponent
     Port = 3880
     Timeout = 0
-    Left = 146
-    Top = 186
+    Left = 144
+    Top = 184
   end
 end
