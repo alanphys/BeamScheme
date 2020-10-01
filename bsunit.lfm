@@ -1534,7 +1534,7 @@ object BSForm: TBSForm
       Columns = <      
         item
           Title.Caption = 'Parameters'
-          Width = 100
+          Width = 120
         end      
         item
           Title.Caption = 'Equations'
@@ -1544,12 +1544,12 @@ object BSForm: TBSForm
         item
           ReadOnly = True
           Title.Caption = 'X Profile'
-          Width = 100
+          Width = 90
         end      
         item
           ReadOnly = True
           Title.Caption = 'Y Profile'
-          Width = 100
+          Width = 90
         end>
       DefaultRowHeight = 18
       FixedCols = 0

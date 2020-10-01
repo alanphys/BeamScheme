@@ -9,7 +9,6 @@ uses
    Classes, SysUtils, bstypes;
 
 function LReg(X1,X2,Y1,Y2,X:double):double;
-function ILReg(X1,X2,Y1,Y2,Y:double):double;
 function Limit(A,B,C,Phi0,R0,MidX,MidY:double):TPoint;
 function LimitL(Angle,Phi,TanA,Offset,MidX,MidY:double; LowerX,LowerY,UpperX,UpperY:integer):TRect;
 procedure CalcParams(PArr:TPArr; var BeamParams:TBeamParams; var ErrMsg:string);
@@ -114,7 +113,27 @@ Result.BottomRight := BR;
 end;
 
 
-procedure CalcInfPoint(PArr:TPArr; var InfP:double; var ErrMsg:string);
+function HillFunc(X:float; B:TVector):double;
+{calculates the value of the Hill function at x}
+begin
+if X > 0 then
+   Result := B[0] + (B[1] - B[0])/(1.0 + Power(B[2]/X, B[3]))
+  else
+   Result := B[0];
+end;
+
+
+function InvHillFunc(Y:float; B:TVector):double;
+{calculates the inverse Hill function at y}
+begin
+if (Y > min(B[0],B[1])) and (Y < max(B[0],B[1])) and (B[3] <> 0) then
+   Result := B[2]*power((Y - B[0])/(B[1] - Y),1/B[3])
+  else
+   Result := 0;
+end;
+
+
+procedure CalcInfPoints(PArr:TPArr; var InfP,Inf20,Inf50,Inf80:double; var ErrMsg:string);
 {Perform non-linear regression on Hill function to get inflection point}
 var I,
     N          :integer;       {number of points}
@@ -122,8 +141,10 @@ var I,
     X,                         {X values}
     Y          :TVector;       {Y values}
     V          :TMatrix;       {variance-covariance matrix}
+    IPDose,                    {dose value at inflection point}
     XMax,                      {max of X values}
-    YMax       :double;        {max of Y values}
+    YMax,                      {max of Y values}
+    Xsign      :double;        {sign of x values}
 
 begin
 N := length(PArr);
@@ -156,7 +177,13 @@ HillFit(X, Y, 1, N, True, MaxIter, Tol, B, V);
 
 if MathErr = MatOk then
    begin
-   InfP := B[2]*power((B[3]-1)/(B[3]+1),1/B[3])*sign(PArr[0].X);
+   Xsign := sign(PArr[0].X);
+   InfP := B[2]*power((B[3]-1)/(B[3]+1),1/B[3]);
+   IPDose := HillFunc(InfP,B);
+   InfP := InfP*XSign;
+   Inf50 := InvHillFunc(abs(B[1] - B[0])*0.5,B)*Xsign;
+   Inf20 := InvHillFunc(IPDose*0.4,B)*XSign;
+   Inf80 := InvHillFunc(IPDose*1.6,B)*XSign;
    end
   else
     ErrMsg := ErrMsg + 'Unable to fit curve! ' + MathErrMessage + '. ';
@@ -361,11 +388,11 @@ with BeamParams do
 
       {get left inflection point}
       PArrL := copy(PArr,0,NegP80);           {copy from tail to 80% of field size}
-      CalcInfPoint(PArrL,LInf,ErrMsg);
+      CalcInfPoints(PArrL,LInf,InfL20,InfL50,InfL80,ErrMsg);
 
       {get right inflection point}
       PArrR := copy(PArr,PosP80,LPArr-PosP80);{copy from 80% of field size to tail}
-      CalcInfPoint(PArrR,RInf,ErrMsg);
+      CalcInfPoints(PArrR,RInf,InfR20,InfR50,InfR80,ErrMsg);
       end;
    end;
 end;

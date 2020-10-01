@@ -78,7 +78,10 @@ unit bsunit;
  29/9/2020  shift maths routines to unit mathsfuncs
  30/9/2020  shift types and constants to unit bstypes
             use Hill function non linear regression to determine inflection points
-            add copy profiles to clipboard}
+            add copy profiles to clipboard
+ 1/10/2020  use parser.SetVariable for performance enhancement
+            fix status warning display
+            add FFF params inflection point, 0.4*InfP (20%) and 1.6*InfP (80%)}
 
 
 {$mode objfpc}{$H+}
@@ -2436,6 +2439,7 @@ begin
 if Safe then
    begin
    Safe := false;
+   ClearStatus;
    Angle := seYAngle.Value;
    Offset := -seYOffset.Value;
    Wdth := seYWidth.Value;
@@ -2465,6 +2469,7 @@ begin
 if Safe then
    begin
    Safe := false;
+   ClearStatus;
    Angle := seXAngle.Value;
    Offset := -seXOffset.Value;
    Wdth := seXWidth.Value;
@@ -2492,28 +2497,34 @@ Parser := TParser.Create(BSForm);
 with BeamParams do
    begin
    {Transfer parameters to parser}
-   Parser.Variable['ALeft'] := ALeft;
-   Parser.Variable['ARight'] := ARight;
-   Parser.Variable['RDiff'] := RDiff;
-   Parser.Variable['ADiff'] := ADiff;
-   Parser.Variable['PMax'] := CMax;
-   Parser.Variable['PMin'] := CMin;
-   Parser.Variable['RCAX'] := RCAX;
-   Parser.Variable['LEdge'] := LEdge;
-   Parser.Variable['REdge'] := REdge;
-   Parser.Variable['LInf'] := LInf;
-   Parser.Variable['RInf'] := RInf;
-   Parser.Variable['L10'] := L10;
-   Parser.Variable['R10'] := R10;
-   Parser.Variable['L20'] := L20;
-   Parser.Variable['R20'] := R20;
-   Parser.Variable['L80'] := L80;
-   Parser.Variable['R80'] := R80;
-   Parser.Variable['L90'] := L90;
-   Parser.Variable['R90'] := R90;
-   Parser.Variable['N'] := NP;
-   Parser.Variable['PSum'] := PSum;
-   Parser.Variable['PSSqr'] := PSSqr;
+   Parser.SetVariable('ALeft',ALeft);
+   Parser.SetVariable('ARight',ARight);
+   Parser.SetVariable('RDiff',RDiff);
+   Parser.SetVariable('ADiff',ADiff);
+   Parser.SetVariable('PMax',CMax);
+   Parser.SetVariable('PMin',CMin);
+   Parser.SetVariable('RCAX',RCAX);
+   Parser.SetVariable('LEdge',LEdge);
+   Parser.SetVariable('REdge',REdge);
+   Parser.SetVariable('LInf',LInf);
+   Parser.SetVariable('RInf',RInf);
+   Parser.SetVariable('L10',L10);
+   Parser.SetVariable('R10',R10);
+   Parser.SetVariable('L20',L20);
+   Parser.SetVariable('R20',R20);
+   Parser.SetVariable('L80',L80);
+   Parser.SetVariable('R80',R80);
+   Parser.SetVariable('L90',L90);
+   Parser.SetVariable('R90',R90);
+   Parser.SetVariable('IL20',InfL20);
+   Parser.SetVariable('IR20',InfR20);
+   Parser.SetVariable('IL50',InfL50);
+   Parser.SetVariable('IR50',InfR50);
+   Parser.SetVariable('IL80',InfL80);
+   Parser.SetVariable('IR80',InfR80);
+   Parser.SetVariable('N',NP);
+   Parser.SetVariable('PSum',PSum);
+   Parser.SetVariable('PSSqr',PSSqr);
 
    {calc values and write to string grid}
    for I:=1 to sgResults.RowCount-1 do
@@ -2526,7 +2537,7 @@ with BeamParams do
             sgResults.Cells[2,I] := FloatToStrF(Parser.Value,ffFixed,4,2);
             except
                on E:Exception do
-                  BSError('Could not evaluation expression, ' + sExpr);
+                  BSError('Could not evaluate expression, ' + sExpr);
             end;
          end
         else sgResults.Cells[2,I] := '';
@@ -2545,28 +2556,34 @@ Parser := TParser.Create(BSForm);
 with BeamParams do
    begin
    {Transfer parameters to parser}
-   Parser.Variable['ALeft'] := ALeft;
-   Parser.Variable['ARight'] := ARight;
-   Parser.Variable['RDiff'] := RDiff;
-   Parser.Variable['ADiff'] := ADiff;
-   Parser.Variable['PMax'] := CMax;
-   Parser.Variable['PMin'] := CMin;
-   Parser.Variable['RCAX'] := RCAX;
-   Parser.Variable['LEdge'] := LEdge;
-   Parser.Variable['REdge'] := REdge;
-   Parser.Variable['LInf'] := LInf;
-   Parser.Variable['RInf'] := RInf;
-   Parser.Variable['L10'] := L10;
-   Parser.Variable['R10'] := R10;
-   Parser.Variable['L20'] := L20;
-   Parser.Variable['R20'] := R20;
-   Parser.Variable['L80'] := L80;
-   Parser.Variable['R80'] := R80;
-   Parser.Variable['L90'] := L90;
-   Parser.Variable['R90'] := R90;
-   Parser.Variable['N'] := NP;
-   Parser.Variable['PSum'] := PSum;
-   Parser.Variable['PSSqr'] := PSSqr;
+   Parser.SetVariable('ALeft',ALeft);
+   Parser.SetVariable('ARight',ARight);
+   Parser.SetVariable('RDiff',RDiff);
+   Parser.SetVariable('ADiff',ADiff);
+   Parser.SetVariable('PMax',CMax);
+   Parser.SetVariable('PMin',CMin);
+   Parser.SetVariable('RCAX',RCAX);
+   Parser.SetVariable('LEdge',LEdge);
+   Parser.SetVariable('REdge',REdge);
+   Parser.SetVariable('LInf',LInf);
+   Parser.SetVariable('RInf',RInf);
+   Parser.SetVariable('L10',L10);
+   Parser.SetVariable('R10',R10);
+   Parser.SetVariable('L20',L20);
+   Parser.SetVariable('R20',R20);
+   Parser.SetVariable('L80',L80);
+   Parser.SetVariable('R80',R80);
+   Parser.SetVariable('L90',L90);
+   Parser.SetVariable('R90',R90);
+   Parser.SetVariable('IL20',InfL20);
+   Parser.SetVariable('IR20',InfR20);
+   Parser.SetVariable('IL50',InfL50);
+   Parser.SetVariable('IR50',InfR50);
+   Parser.SetVariable('IL80',InfL80);
+   Parser.SetVariable('IR80',InfR80);
+   Parser.SetVariable('N',NP);
+   Parser.SetVariable('PSum',PSum);
+   Parser.SetVariable('PSSqr',PSSqr);
 
    {calc values and write to string grid}
    for I:=1 to sgResults.RowCount-1 do
@@ -2579,7 +2596,7 @@ with BeamParams do
             sgResults.Cells[3,I] := FloatToStrF(Parser.Value,ffFixed,4,2);
             except
                on E:Exception do
-                  BSError('Could not evaluation expression, ' + sExpr);
+                  BSError('Could not evaluate expression, ' + sExpr);
             end;
          end
         else sgResults.Cells[3,I] := '';

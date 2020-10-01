@@ -46,8 +46,6 @@ type
      RCAX,                     {Central axis value}
      LEdge,                    {Position of left edge 50%}
      REdge,                    {Position of right edge 50%}
-     LInf,                     {Position of left inflection point}
-     RInf,                     {Position of right inflection point}
      L10,                      {10% of CAX value left of CAX}
      R10,                      {10% of CAX value right of CAX}
      L20,                      {20% of CAX value left of CAX}
@@ -56,6 +54,14 @@ type
      R80,                      {80% of CAX value right of CAX}
      L90,                      {90% of CAX value left of CAX}
      R90,                      {90% of CAX value right of CAX}
+     LInf,                     {Position of left inflection point}
+     RInf,                     {Position of right inflection point}
+     InfL20,                   {0.4 times dose at left inflection point}
+     InfR20,                   {0.4 times dose at right inflection point}
+     InfL50,                   {Position of 50% dose level left from Hill function}
+     InfR50,                   {Position of 50% dose level right from Hill function}
+     InfL80,                   {1.6 times dose at left inflection point}
+     InfR80,                   {1.6 times dose at right inflection point}
      PSum,                     {Sum of profile values}
      PSSqr,                    {Squared sum of profile values}
      NP        :double;        {Number of points in 80 of profile}

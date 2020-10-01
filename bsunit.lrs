@@ -1087,10 +1087,10 @@ LazarusResources.Add('TBSForm','FORMDATA',[
   +#156#212#255'j'#154#210#255'f'#151#207#255#7'Visible'#8#7'OnClick'#7#12'bbEx'
   +'itPClick'#10'ParentFont'#8#0#0#0#11'TStringGrid'#9'sgResults'#4'Left'#2#1#6
   +'Height'#3#255#0#3'Top'#2'1'#5'Width'#3'*'#1#5'Align'#7#8'alClient'#8'ColCou'
-  +'nt'#2#4#7'Columns'#14#1#13'Title.Caption'#6#10'Parameters'#5'Width'#2'd'#0#1
+  +'nt'#2#4#7'Columns'#14#1#13'Title.Caption'#6#10'Parameters'#5'Width'#2'x'#0#1
   +#13'Title.Caption'#6#9'Equations'#5'Width'#2#0#7'Visible'#8#0#1#8'ReadOnly'#9
-  ,#13'Title.Caption'#6#9'X Profile'#5'Width'#2'd'#0#1#8'ReadOnly'#9#13'Title.C'
-  +'aption'#6#9'Y Profile'#5'Width'#2'd'#0#0#16'DefaultRowHeight'#2#18#9'FixedC'
+  ,#13'Title.Caption'#6#9'X Profile'#5'Width'#2'Z'#0#1#8'ReadOnly'#9#13'Title.C'
+  +'aption'#6#9'Y Profile'#5'Width'#2'Z'#0#0#16'DefaultRowHeight'#2#18#9'FixedC'
   +'ols'#2#0#7'Options'#11#15'goFixedVertLine'#15'goFixedHorzLine'#10'goVertLin'
   +'e'#13'goRangeSelect'#13'goAutoAddRows'#14'goSmoothScroll'#0#10'ParentFont'#8
   +#8'RowCount'#2#10#10'ScrollBars'#7#14'ssAutoVertical'#8'TabOrder'#2#2#0#0#0
