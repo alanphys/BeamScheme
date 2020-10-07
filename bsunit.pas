@@ -81,7 +81,10 @@ unit bsunit;
             add copy profiles to clipboard
  1/10/2020  use parser.SetVariable for performance enhancement
             fix status warning display
-            add FFF params inflection point, 0.4*InfP (20%) and 1.6*InfP (80%)}
+            add FFF params inflection point, 0.4*InfP (20%) and 1.6*InfP (80%)
+ 7/10/2020  add copy results to clipboard
+            make Protocol read only while not in edit mode
+            add context menus for X Y profiles and results}
 
 
 {$mode objfpc}{$H+}
@@ -109,8 +112,14 @@ type
    HTMLHelpDatabase: THTMLHelpDatabase;
    HelpServer: TLHTTPServerComponent;
    Label7: TLabel;
-   miXClipB: TMenuItem;
-   miYClipB: TMenuItem;
+   miResClip: TMenuItem;
+   miResExp: TMenuItem;
+   miYToFile: TMenuItem;
+   miYToClip: TMenuItem;
+   miXToFile: TMenuItem;
+   miXToClip: TMenuItem;
+   pmiCopytoFile: TMenuItem;
+   pmiCopyClip: TMenuItem;
    miQuitEdit: TMenuItem;
    miProtocol: TMenuItem;
    miSaveP: TMenuItem;
@@ -122,6 +131,7 @@ type
    miExportX: TMenuItem;
    miExport: TMenuItem;
    Panel8: TPanel;
+   pmContext: TPopupMenu;
    SaveDialog: TSaveDialog;
    sbMaxNorm: TSpeedButton;
    sbCentre: TSpeedButton;
@@ -149,7 +159,7 @@ type
    cImage: TLabel;
    lMin: TLabel;
    Label8: TLabel;
-   MainMenu1: TMainMenu;
+   MainMenu: TMainMenu;
    miRestore: TMenuItem;
    miResults: TMenuItem;
    miYProfile: TMenuItem;
@@ -197,6 +207,10 @@ type
    procedure bbSavePClick(Sender: TObject);
    procedure cbProtocolChange(Sender: TObject);
    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+   procedure miResClipClick(Sender: TObject);
+   procedure pmContextPopup(Sender: TObject);
+   procedure pmiCopyClipClick(Sender: TObject);
+   procedure pmiCopytoFileClick(Sender: TObject);
    procedure sbPDFClick(Sender: TObject);
    procedure StatusBarDrawPanel(SBar: TStatusBar;Panel: TStatusPanel; const Rect: TRect);
    procedure BSError(sError:string);
@@ -732,9 +746,44 @@ Clipboard.AsText := sClip;
 end;
 
 
+procedure TBSForm.miResClipClick(Sender: TObject);
+begin
+sgResults.CopyToClipboard(false);
+end;
+
+
+procedure TBSForm.pmContextPopup(Sender: TObject);
+begin
+if pmContext.PopupComponent = pResults then
+   begin
+   pmiCopyToFile.Enabled := false;
+   pmicopyToFile.Visible := false;
+   end
+  else
+   begin
+   pmiCopyToFile.Enabled := true;
+   pmicopyToFile.Visible := true;
+   end;
+end;
+
+
+procedure TBSForm.pmiCopyClipClick(Sender: TObject);
+begin
+if pmContext.PopupComponent = pXProfile then miXClipBClick(Sender);
+if pmContext.PopupComponent = pYProfile then miYClipBClick(Sender);
+if pmContext.PopupComponent = pResults then miResClipClick(Sender);
+end;
+
+
+procedure TBSForm.pmiCopytoFileClick(Sender: TObject);
+begin
+if pmContext.PopupComponent = pXProfile then miExportXClick(Sender);
+if pmContext.PopupComponent = pYProfile then miExportYClick(Sender);
+end;
+
+
 procedure TBSForm.bbSavePClick(Sender: TObject);
 var I          :integer;
-    ParamName,                 {parameter name}
     ProtName,                  {protocol name}
     ProtPath   :string;        {protocol file path}
 
@@ -763,12 +812,13 @@ if ProtName <> '' then
 
    if SaveDialog.Execute then
       begin
-      try;
+         try;
          sgResults.SaveToCSVFile(SaveDialog.FileName,',',false);
-      except
+         except
          on E:Exception do
             BSError('Could not save protocol.');
-      end;
+         end;
+      cbProtocol.Style := csDropDownList;
       sbSaveP.Enabled := false;
       sbSaveP.Visible := false;
       miSaveP.Enabled := false;
@@ -836,6 +886,7 @@ end;
 procedure TBSForm.bbExitPClick(Sender: TObject);
 begin
 ClearStatus;
+cbProtocol.Style := csDropDownList;
 sbSaveP.Enabled := false;
 sbSaveP.Visible := false;
 miSaveP.Enabled := false;
@@ -2086,6 +2137,7 @@ end;
 procedure TBSForm.miEditPClick(Sender: TObject);
 begin
 Editing := true;
+cbProtocol.Style := csDropDown;
 sbSaveP.Enabled := true;
 sbSaveP.Visible := true;
 miSaveP.Enabled := true;

@@ -13,8 +13,83 @@
     <MacroValues Count="1">
       <Macro1 Name="LCLWidgetType" Value="qt5"/>
     </MacroValues>
-    <BuildModes Count="1">
+    <BuildModes Count="3" Active="Release">
       <Item1 Name="default" Default="True"/>
+      <Item2 Name="Debug">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <SearchPaths>
+            <IncludeFiles Value="/usr/share/fpcsrc/packages/fcl-pdf/src/"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <CStyleOperator Value="False"/>
+              <IncludeAssertionCode Value="True"/>
+              <AllowLabel Value="False"/>
+              <CPPInline Value="False"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <Checks>
+              <IOChecks Value="True"/>
+              <OverflowChecks Value="True"/>
+              <StackChecks Value="True"/>
+            </Checks>
+            <VerifyObjMethodCallValidity Value="True"/>
+            <Optimizations>
+              <VariablesInRegisters Value="True"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <DebugInfoType Value="dsDwarf2Set"/>
+              <TrashVariables Value="True"/>
+            </Debugging>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+          <Other>
+            <CustomOptions Value="-OoNOREGVAR"/>
+          </Other>
+        </CompilerOptions>
+      </Item2>
+      <Item3 Name="Release">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <SearchPaths>
+            <IncludeFiles Value="/usr/share/fpcsrc/packages/fcl-pdf/src/"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <CStyleOperator Value="False"/>
+              <AllowLabel Value="False"/>
+              <CPPInline Value="False"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+              <VariablesInRegisters Value="True"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+              <StripSymbols Value="True"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+        </CompilerOptions>
+      </Item3>
       <SharedMatrixOptions Count="1">
         <Item1 ID="058648199351" Modes="default" Type="IDEMacro" MacroName="LCLWidgetType" Value="qt5"/>
       </SharedMatrixOptions>
@@ -69,8 +144,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="52"/>
-        <CursorPos X="60" Y="84"/>
+        <TopLine Value="749"/>
+        <CursorPos Y="755"/>
+        <FoldState Value=" T3xS0D1R"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -804,7 +880,7 @@
         <EditorIndex Value="4"/>
         <TopLine Value="40"/>
         <CursorPos X="29" Y="70"/>
-        <UsageCount Value="196"/>
+        <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit107>
@@ -841,9 +917,9 @@
       <Unit112>
         <Filename Value="/usr/lib64/lazarus/lcl/interfaces/qt5/qtobject.inc"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="235"/>
-        <CursorPos Y="254"/>
-        <UsageCount Value="4"/>
+        <TopLine Value="270"/>
+        <CursorPos Y="289"/>
+        <UsageCount Value="10"/>
       </Unit112>
       <Unit113>
         <Filename Value="/usr/lib64/lazarus/lcl/interfaces/qt5/cbindings/src/qobject_hook_c.cpp"/>
@@ -939,7 +1015,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="46"/>
         <CursorPos X="3" Y="163"/>
-        <UsageCount Value="108"/>
+        <UsageCount Value="112"/>
       </Unit125>
       <Unit126>
         <Filename Value="../../Downloads/SVN/lazarus/components/powerpdf_0.9.15_20170215/PReport.pas"/>
@@ -984,7 +1060,7 @@
         <EditorIndex Value="2"/>
         <TopLine Value="317"/>
         <CursorPos X="84" Y="370"/>
-        <UsageCount Value="36"/>
+        <UsageCount Value="40"/>
         <Loaded Value="True"/>
       </Unit131>
       <Unit132>
@@ -993,7 +1069,7 @@
         <EditorIndex Value="1"/>
         <TopLine Value="28"/>
         <CursorPos X="65" Y="62"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="39"/>
         <Loaded Value="True"/>
       </Unit132>
       <Unit133>
@@ -1004,115 +1080,127 @@
         <UsageCount Value="11"/>
       </Unit133>
     </Units>
-    <JumpHistory Count="27" HistoryIndex="26">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="19" Column="12"/>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="2450" Column="26" TopLine="2424"/>
       </Position1>
       <Position2>
-        <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="160" Column="50" TopLine="140"/>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="2548" Column="20" TopLine="2534"/>
       </Position2>
       <Position3>
-        <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="377" Column="46" TopLine="347"/>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="2570" TopLine="2537"/>
       </Position3>
       <Position4>
-        <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="217" TopLine="199"/>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="2569" Column="39" TopLine="2537"/>
       </Position4>
       <Position5>
-        <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="369" Column="44" TopLine="301"/>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="2570" TopLine="2537"/>
       </Position5>
       <Position6>
         <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="159" Column="63" TopLine="129"/>
+        <Caret Line="181" Column="46" TopLine="156"/>
       </Position6>
       <Position7>
-        <Filename Value="bsunit.pas"/>
-        <Caret Line="2398" Column="8" TopLine="2378"/>
+        <Filename Value="mathsfuncs.pas"/>
+        <Caret Line="120" Column="14" TopLine="102"/>
       </Position7>
       <Position8>
-        <Filename Value="bsunit.pas"/>
-        <Caret Line="2399" Column="8" TopLine="2379"/>
+        <Filename Value="mathsfuncs.pas"/>
+        <Caret Line="186" Column="44" TopLine="155"/>
       </Position8>
       <Position9>
-        <Filename Value="bsunit.pas"/>
-        <Caret Line="54" Column="18" TopLine="44"/>
+        <Filename Value="mathsfuncs.pas"/>
+        <Caret Line="129" Column="48" TopLine="119"/>
       </Position9>
       <Position10>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="698" TopLine="671"/>
+        <Caret Line="84" Column="60" TopLine="52"/>
       </Position10>
       <Position11>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="1022" Column="15" TopLine="1002"/>
+        <Caret Line="127" Column="13" TopLine="109"/>
       </Position11>
       <Position12>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="89" Column="76" TopLine="69"/>
+        <Caret Line="712" TopLine="706"/>
       </Position12>
       <Position13>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="707" Column="26" TopLine="688"/>
+        <Caret Line="825" TopLine="806"/>
       </Position13>
       <Position14>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="296" Column="5" TopLine="276"/>
+        <Caret Line="744" Column="8" TopLine="708"/>
       </Position14>
       <Position15>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="724" Column="24" TopLine="691"/>
+        <Caret Line="741" TopLine="722"/>
       </Position15>
       <Position16>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="2483" Column="26" TopLine="2449"/>
+        <Caret Line="754" TopLine="732"/>
       </Position16>
       <Position17>
-        <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="15" Column="34"/>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="750" Column="55" TopLine="699"/>
       </Position17>
       <Position18>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="2462" Column="17" TopLine="2433"/>
+        <Caret Line="1653" TopLine="1635"/>
       </Position18>
       <Position19>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="2450" Column="26" TopLine="2424"/>
+        <Caret Line="1654" TopLine="1636"/>
       </Position19>
       <Position20>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="2548" Column="20" TopLine="2534"/>
+        <Caret Line="1655" TopLine="1637"/>
       </Position20>
       <Position21>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="2570" TopLine="2537"/>
+        <Caret Line="1656" TopLine="1638"/>
       </Position21>
       <Position22>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="2569" Column="39" TopLine="2537"/>
+        <Caret Line="1657" TopLine="1639"/>
       </Position22>
       <Position23>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="2570" TopLine="2537"/>
+        <Caret Line="1656" TopLine="1638"/>
       </Position23>
       <Position24>
-        <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="181" Column="46" TopLine="156"/>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="1655" TopLine="1637"/>
       </Position24>
       <Position25>
-        <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="120" Column="14" TopLine="102"/>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="1656" TopLine="1638"/>
       </Position25>
       <Position26>
-        <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="186" Column="44" TopLine="155"/>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="757" TopLine="706"/>
       </Position26>
       <Position27>
-        <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="129" Column="48" TopLine="119"/>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="747" Column="6" TopLine="709"/>
       </Position27>
+      <Position28>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="2118" Column="18" TopLine="2115"/>
+      </Position28>
+      <Position29>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="868" Column="18" TopLine="865"/>
+      </Position29>
+      <Position30>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="87" Column="59" TopLine="70"/>
+      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
