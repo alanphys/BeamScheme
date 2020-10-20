@@ -1,0 +1,735 @@
+%PDF-1.3
+%äüöß
+1 0 obj
+<<
+/Type /Catalog
+/PageLayout /SinglePage
+/OpenAction [5 0 R /XYZ null null 1]
+/ViewerPreferences 3 0 R
+/Pages 4 0 R
+>>
+endobj
+
+2 0 obj
+<<
+/Producer (fpGUI Toolkit 1.4)
+>>
+endobj
+
+3 0 obj
+<<
+/Type /ViewerPreferences
+/FitWindow true
+>>
+endobj
+
+4 0 obj
+<<
+/Type /Pages
+/Kids [5 0 R]
+/Count 1
+>>
+endobj
+
+5 0 obj
+<<
+/Type /Page
+/Parent 4 0 R
+/MediaBox [0 0 752 1199]
+/Resources <<
+/ProcSet [/PDF /Text /ImageC]
+/Font <<
+/F0 7 0 R
+>>
+>>
+/Contents 6 0 R
+>>
+endobj
+
+6 0 obj
+<<
+/Length 5598
+>>
+stream
+0 0 0 rg
+/F0 13 Tf
+/F0 13 Tf
+BT
+316 1103 TD
+(Beam Scheme v0.52) Tj
+ET
+1 J
+1 w
+72 114 608 977 re
+S
+/F0 13 Tf
+BT
+376 596 TD
+() Tj
+ET
+0.76 0.88 0.96 rg
+73 1070 606 20 re
+b
+0 0 0 rg
+/F0 13 Tf
+BT
+376 1074 TD
+() Tj
+ET
+/F0 12 Tf
+BT
+78 1074 TD
+(Results) Tj
+ET
+73 1042 606 28 re
+S
+/F0 13 Tf
+BT
+376 1050 TD
+() Tj
+ET
+/F0 13 Tf
+BT
+75 1048 TD
+(Protocol:) Tj
+ET
+138 1043 129 25 re
+S
+/F0 13 Tf
+BT
+140 1049 TD
+(BaseParams) Tj
+ET
+244 1058 m
+254 1052 l
+S
+254 1052 m
+264 1058 l
+S
+/F0 13 Tf
+BT
+75 1027 TD
+(Parameters) Tj
+ET
+BT
+196 1027 TD
+(X Profile) Tj
+ET
+BT
+287 1027 TD
+(Y Profile) Tj
+ET
+BT
+75 1009 TD
+(Field stats) Tj
+ET
+BT
+196 1009 TD
+() Tj
+ET
+BT
+287 1009 TD
+() Tj
+ET
+BT
+75 991 TD
+(CAX dose) Tj
+ET
+BT
+196 991 TD
+(50392.00) Tj
+ET
+BT
+287 991 TD
+(50580.00) Tj
+ET
+BT
+75 973 TD
+(Max dose) Tj
+ET
+BT
+196 973 TD
+(52420.00) Tj
+ET
+BT
+287 973 TD
+(52770.00) Tj
+ET
+BT
+75 955 TD
+(Max pos \(cm\)) Tj
+ET
+BT
+196 955 TD
+(6.20) Tj
+ET
+BT
+287 955 TD
+(5.46) Tj
+ET
+BT
+75 937 TD
+(Min dose) Tj
+ET
+BT
+196 937 TD
+(50223.00) Tj
+ET
+BT
+287 937 TD
+(50358.00) Tj
+ET
+BT
+75 919 TD
+(Sum) Tj
+ET
+BT
+196 919 TD
+(24563902.00) Tj
+ET
+BT
+287 919 TD
+(24487380.00) Tj
+ET
+BT
+75 901 TD
+(Sum squares) Tj
+ET
+BT
+196 901 TD
+(1267752731424.00) Tj
+ET
+BT
+287 901 TD
+(1262495664554.00) Tj
+ET
+BT
+75 883 TD
+(Num points) Tj
+ET
+BT
+196 883 TD
+(476.00) Tj
+ET
+BT
+287 883 TD
+(475.00) Tj
+ET
+BT
+75 865 TD
+() Tj
+ET
+BT
+196 865 TD
+() Tj
+ET
+BT
+287 865 TD
+() Tj
+ET
+BT
+75 847 TD
+(Interpolated params) Tj
+ET
+BT
+196 847 TD
+() Tj
+ET
+BT
+287 847 TD
+() Tj
+ET
+BT
+75 829 TD
+(90% Left \(cm\)) Tj
+ET
+BT
+196 829 TD
+(-9.88) Tj
+ET
+BT
+287 829 TD
+(-9.82) Tj
+ET
+BT
+75 811 TD
+(90% Right \(cm\)) Tj
+ET
+BT
+196 811 TD
+(9.81) Tj
+ET
+BT
+287 811 TD
+(9.82) Tj
+ET
+BT
+75 793 TD
+(80% Left \(cm\)) Tj
+ET
+BT
+196 793 TD
+(-9.95) Tj
+ET
+BT
+287 793 TD
+(-9.89) Tj
+ET
+BT
+75 775 TD
+(80% Right \(cm\)) Tj
+ET
+BT
+196 775 TD
+(9.88) Tj
+ET
+BT
+287 775 TD
+(9.89) Tj
+ET
+BT
+75 757 TD
+(50% Left \(cm\)) Tj
+ET
+BT
+196 757 TD
+(-10.05) Tj
+ET
+BT
+287 757 TD
+(-10.02) Tj
+ET
+BT
+75 739 TD
+(50% Right \(cm\)) Tj
+ET
+BT
+196 739 TD
+(9.98) Tj
+ET
+BT
+287 739 TD
+(9.99) Tj
+ET
+BT
+75 721 TD
+(20% Left \(cm\)) Tj
+ET
+BT
+196 721 TD
+(-10.25) Tj
+ET
+BT
+287 721 TD
+(-10.36) Tj
+ET
+BT
+75 703 TD
+(20% Right \(cm\)) Tj
+ET
+BT
+196 703 TD
+(10.19) Tj
+ET
+BT
+287 703 TD
+(10.37) Tj
+ET
+BT
+75 685 TD
+(10% Left \(cm\)) Tj
+ET
+BT
+196 685 TD
+(-10.68) Tj
+ET
+BT
+287 685 TD
+(-10.67) Tj
+ET
+BT
+75 667 TD
+(10% Right \(cm\)) Tj
+ET
+BT
+196 667 TD
+(10.61) Tj
+ET
+BT
+287 667 TD
+(10.69) Tj
+ET
+BT
+75 649 TD
+() Tj
+ET
+BT
+196 649 TD
+() Tj
+ET
+BT
+287 649 TD
+() Tj
+ET
+BT
+75 631 TD
+(Inflection point) Tj
+ET
+BT
+196 631 TD
+() Tj
+ET
+BT
+287 631 TD
+() Tj
+ET
+BT
+75 613 TD
+(80% Left \(cm\)) Tj
+ET
+BT
+196 613 TD
+(-9.88) Tj
+ET
+BT
+287 613 TD
+(-9.79) Tj
+ET
+BT
+75 595 TD
+(80% Right \(cm\)) Tj
+ET
+BT
+196 595 TD
+(9.80) Tj
+ET
+BT
+287 595 TD
+(9.78) Tj
+ET
+BT
+75 577 TD
+(Inf pt left \(cm\)) Tj
+ET
+BT
+196 577 TD
+(-10.06) Tj
+ET
+BT
+287 577 TD
+(-10.04) Tj
+ET
+BT
+75 559 TD
+(Inf pt right \(cm\)) Tj
+ET
+BT
+196 559 TD
+(9.99) Tj
+ET
+BT
+287 559 TD
+(10.02) Tj
+ET
+BT
+75 541 TD
+(50% Left \(cm\)) Tj
+ET
+BT
+196 541 TD
+(-10.07) Tj
+ET
+BT
+287 541 TD
+(-10.07) Tj
+ET
+BT
+75 523 TD
+(50% Right \(cm\)) Tj
+ET
+BT
+196 523 TD
+(10.01) Tj
+ET
+BT
+287 523 TD
+(10.04) Tj
+ET
+BT
+75 505 TD
+(20% Left \(cm\)) Tj
+ET
+BT
+196 505 TD
+(-10.24) Tj
+ET
+BT
+287 505 TD
+(-10.30) Tj
+ET
+BT
+75 487 TD
+(20% Right \(cm\)) Tj
+ET
+BT
+196 487 TD
+(10.18) Tj
+ET
+BT
+287 487 TD
+(10.26) Tj
+ET
+BT
+75 469 TD
+(Slope left \(%/cm\)) Tj
+ET
+BT
+196 469 TD
+(84.86) Tj
+ET
+BT
+287 469 TD
+(61.32) Tj
+ET
+BT
+75 451 TD
+(Slope right \(%/cm\)) Tj
+ET
+BT
+196 451 TD
+(-80.69) Tj
+ET
+BT
+287 451 TD
+(-64.65) Tj
+ET
+BT
+75 433 TD
+() Tj
+ET
+BT
+196 433 TD
+() Tj
+ET
+BT
+287 433 TD
+() Tj
+ET
+BT
+75 415 TD
+(Dose point values) Tj
+ET
+BT
+196 415 TD
+() Tj
+ET
+BT
+287 415 TD
+() Tj
+ET
+BT
+75 397 TD
+(Left 20% FW ) Tj
+ET
+BT
+196 397 TD
+(51206.13) Tj
+ET
+BT
+287 397 TD
+(51216.34) Tj
+ET
+BT
+75 379 TD
+(Right 20% FW) Tj
+ET
+BT
+196 379 TD
+(51261.21) Tj
+ET
+BT
+287 379 TD
+(51337.14) Tj
+ET
+BT
+75 361 TD
+(Left 50% FW) Tj
+ET
+BT
+196 361 TD
+(51970.83) Tj
+ET
+BT
+287 361 TD
+(51969.36) Tj
+ET
+BT
+75 343 TD
+(Right 50% FW) Tj
+ET
+BT
+196 343 TD
+(51974.25) Tj
+ET
+BT
+287 343 TD
+(52109.71) Tj
+ET
+BT
+75 325 TD
+(Left 60% FW) Tj
+ET
+BT
+196 325 TD
+(52279.19) Tj
+ET
+BT
+287 325 TD
+(51869.08) Tj
+ET
+BT
+75 307 TD
+(Right 60% FW) Tj
+ET
+BT
+196 307 TD
+(52259.06) Tj
+ET
+BT
+287 307 TD
+(52171.85) Tj
+ET
+BT
+75 289 TD
+(Left 80% FW) Tj
+ET
+BT
+196 289 TD
+(51808.45) Tj
+ET
+BT
+287 289 TD
+(52209.81) Tj
+ET
+BT
+75 271 TD
+(Right 80% FW) Tj
+ET
+BT
+196 271 TD
+(51878.09) Tj
+ET
+BT
+287 271 TD
+(51847.01) Tj
+ET
+BT
+75 253 TD
+() Tj
+ET
+BT
+196 253 TD
+() Tj
+ET
+BT
+287 253 TD
+() Tj
+ET
+BT
+75 235 TD
+(Symmetry) Tj
+ET
+BT
+196 235 TD
+() Tj
+ET
+BT
+287 235 TD
+() Tj
+ET
+BT
+75 217 TD
+(Area left) Tj
+ET
+BT
+196 217 TD
+(514927.37) Tj
+ET
+BT
+287 217 TD
+(511809.12) Tj
+ET
+BT
+75 199 TD
+(Area right) Tj
+ET
+BT
+196 199 TD
+(511686.18) Tj
+ET
+BT
+287 199 TD
+(511660.79) Tj
+ET
+BT
+75 181 TD
+(Ratio) Tj
+ET
+BT
+196 181 TD
+(1.01) Tj
+ET
+BT
+287 181 TD
+(1.01) Tj
+ET
+BT
+75 163 TD
+(Difference) Tj
+ET
+BT
+196 163 TD
+(338.00) Tj
+ET
+BT
+287 163 TD
+(691.00) Tj
+ET
+73 145 606 897 re
+S
+
+endstream
+endobj
+
+7 0 obj
+<<
+/Type /Font
+/Subtype /Type1
+/Encoding /WinAnsiEncoding
+/FirstChar 32
+/LastChar 255
+/BaseFont /Helvetica
+/Name /F0
+>>
+endobj
+
+xref
+0 8
+0000000000 65535 f
+0000000021 00000 n
+0000000167 00000 n
+0000000225 00000 n
+0000000295 00000 n
+0000000361 00000 n
+0000000534 00000 n
+0000006194 00000 n
+trailer
+<<
+/Size 8
+/Root 1 0 R
+/Info 2 0 R
+/ID [<ab6732ac64000214bb62b947da17c473> <ab6732ac64000214bb62b947da17c473>]
+>>
+startxref
+6342
+%%EOF

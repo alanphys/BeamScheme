@@ -11,10 +11,10 @@ The available predefined protocols are:
 .. toctree::
    :maxdepth: 1
    
-   BSHelp1421.rst
-   BSHelp1422.rst
-   BSHelp1423.rst
-   BSHelp1424.rst
-   BSHelp1425.rst
-   BSHelp1426.rst
-   BSHelp1427.rst
+   BSHelp14-2-1.rst
+   BSHelp14-2-2.rst
+   BSHelp14-2-3.rst
+   BSHelp14-2-4.rst
+   BSHelp14-2-5.rst
+   BSHelp14-2-6.rst
+   BSHelp14-2-7.rst

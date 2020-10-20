@@ -133,7 +133,7 @@ if (Y > min(B[0],B[1])) and (Y < max(B[0],B[1])) and (B[3] <> 0) then
 end;
 
 
-procedure CalcInfPoints(PArr:TPArr; var InfP,Inf20,Inf50,Inf80:double; var ErrMsg:string);
+procedure CalcInfPoints(PArr:TPArr; var InfP,InfS,Inf20,Inf50,Inf80:double; var ErrMsg:string);
 {Perform non-linear regression on Hill function to get inflection point}
 var I,
     N          :integer;       {number of points}
@@ -152,6 +152,11 @@ DimVector(X,N);
 DimVector(Y,N);
 DimVector(B,4);
 DimMatrix(V,4,4);
+InfP := 0;
+InfS := 0;
+Inf20 := 0;
+Inf50 := 0;
+Inf80 := 0;
 
 {transfer values to X,Y. LMath derived from Fortran lower array index starts at 1}
 YMax := PArr[0].Y;
@@ -181,6 +186,7 @@ if MathErr = MatOk then
    InfP := B[2]*power((B[3]-1)/(B[3]+1),1/B[3]);
    IPDose := HillFunc(InfP,B);
    InfP := InfP*XSign;
+   InfS := -XSign*B[3];
    Inf50 := InvHillFunc(abs(B[1] - B[0])*0.5,B)*Xsign;
    Inf20 := InvHillFunc(IPDose*0.4,B)*XSign;
    Inf80 := InvHillFunc(IPDose*1.6,B)*XSign;
@@ -193,16 +199,18 @@ end;
 procedure CalcParams(PArr:TPArr;var BeamParams:TBeamParams; var ErrMsg:string);
 var I,
     N,
-    NegP,
-    PosP,
+    NegP,                      {Negative counter}
+    PosP,                      {Positive counter}
     NegP80,                    {negative increment 80% field of view}
     NNegP80,                   {new negative increment 80% field of view}
     PosP80,                    {positive increment 80% field of view}
     NPosP80,                   {new positive increment 80% field of view}
     StartNeg,                  {Start pos for negative counter}
     StartPos,                  {Start pos for positive counter}
-    LPArr,
-    HLPArr     :integer;
+    LEPos,                     {Left edge index}
+    REPos,                     {Right edge index}
+    LPArr,                     {Array length}
+    HLPArr     :integer;       {Half array length}
     HMax,
     M90,
     M80,
@@ -233,6 +241,14 @@ with BeamParams do
    R90 := 0;
    L80 := 0;
    R80 := 0;
+   LD20 := 0;
+   RD20 := 0;
+   LD50 := 0;
+   RD50 := 0;
+   LD60 := 0;
+   RD60 := 0;
+   LD80 := 0;
+   RD80 := 0;
    ALeft := 0;
    ARight := 0;
    Diff := 0;
@@ -251,9 +267,15 @@ with BeamParams do
 
       {initialise vars}
       if not odd(LPArr) then
-         CMax := PArr[HLPArr].Y
+         begin
+         CMax := PArr[HLPArr].Y;
+         MPos := PArr[HLPArr].X;
+         end
         else
+         begin
          CMax := (PArr[HLPArr].Y + PArr[HLPArr - 1].Y)/2;
+         MPos := (PArr[HLPArr].X + PArr[HLPArr - 1].X)/2;
+         end;
       CMin := CMax;
       {for I:=0 to LPArr do
          if PArr[I].Y < CMin
@@ -295,6 +317,8 @@ with BeamParams do
       NPosP80 := StartPos;
       NegP80 := 0;
       PosP80 := 0;
+      LEPos := StartNeg;
+      REPos := StartPos;
       if LPArr > 2 then Res := PArr[HLPArr + 1].X - PArr[HLPArr].X;
       while (I < HLPArr) and not((PArr[NegP].Y = 0) and (PArr[NegP].X = 0)
          and (PArr[PosP].Y = 0) and (PArr[PosP].X = 0)) do
@@ -304,6 +328,7 @@ with BeamParams do
             if PArr[NegP].Y <= HMax then
                begin
                LEdge := ILReg(PArr[NegP].X,PArr[NegP+1].X,PArr[NegP].Y,PArr[NegP+1].Y,HMax);
+               LEPos := NegP;
                ALeft := ALeft + HMax*abs(LEdge-PArr[NegP+1].X);
 	       end
               else
@@ -315,7 +340,11 @@ with BeamParams do
                   {use regression for symmetry as points may not be symmetric}
                   {ALeft := ALeft + LReg(PArr[NegP80].X,PArr[NegP80+1].X,PArr[NegP80].Y,
                      PArr[NegP80+1].Y,trunc(-I*Res*0.8)); }
-                  if PArr[NegP80].Y > CMax then CMax := PArr[NegP80].Y;
+                  if PArr[NegP80].Y > CMax then
+                     begin
+                     CMax := PArr[NegP80].Y;
+                     MPos := PArr[NegP80].X
+                     end;
                   if PArr[NegP80].Y < CMin then CMin := PArr[NegP80].Y;
                   ASum := ASum + PArr[NegP80].Y;
                   ASSqr := ASSqr + sqr(PArr[NegP80].Y);
@@ -328,6 +357,7 @@ with BeamParams do
             if PArr[PosP].Y <= HMax then
                begin
                REdge := ILReg(PArr[PosP].X,PArr[PosP-1].X,PArr[PosP].Y,PArr[PosP-1].Y,HMax);
+               REPos := PosP;
                ARight := ARight + HMax*abs(REdge - PArr[PosP-1].X);
 	       end
               else
@@ -338,7 +368,11 @@ with BeamParams do
                   PosP80 := NPosP80;
                   {ARight := ARight + LReg(PArr[PosP80].X,PArr[PosP80-1].X,PArr[PosP80].Y,
                      PArr[PosP80-1].Y,trunc(I*Res*0.8)); }
-                  if PArr[PosP80].Y > CMax then CMax := PArr[PosP80].Y;
+                  if PArr[PosP80].Y > CMax then
+                     begin
+                     CMax := PArr[PosP80].Y;
+                     MPos := PArr[PosP80].X;
+                     end;
                   if PArr[PosP80].Y < CMin then CMin := PArr[PosP80].Y;
                   if PArr[PosP80].Y > 0 then RSym:= PArr[NegP80].Y/PArr[PosP80].Y
                      else RSym := 1;
@@ -387,12 +421,39 @@ with BeamParams do
       PSSqr := ASSqr;
 
       {get left inflection point}
-      PArrL := copy(PArr,0,NegP80);           {copy from tail to 80% of field size}
-      CalcInfPoints(PArrL,LInf,InfL20,InfL50,InfL80,ErrMsg);
+      if abs(LEdge) < 3.5 then
+         PArrL := copy(PArr,0,HLPArr)       {copy half profile}
+        else
+         PArrL := copy(PArr,0,NegP80);      {copy from tail to 80% of field size}
+      CalcInfPoints(PArrL,LInf,LSlope,InfL20,InfL50,InfL80,ErrMsg);
 
       {get right inflection point}
-      PArrR := copy(PArr,PosP80,LPArr-PosP80);{copy from 80% of field size to tail}
-      CalcInfPoints(PArrR,RInf,InfR20,InfR50,InfR80,ErrMsg);
+      if abs(REdge) < 3.5 then
+         PArrR := copy(PArr,HLPArr,LPArr-HLPArr){copy half profile}
+        else
+         PArrR := copy(PArr,PosP80,LPArr-PosP80);{copy from 80% of field size to tail}
+      CalcInfPoints(PArrR,RInf,RSlope,InfR20,InfR50,InfR80,ErrMsg);
+
+      {get left dose points}
+      NegP := StartNeg - Trunc((StartNeg - LEPos)*0.20);
+      LD20 := LReg(PArr[NegP+1].X,PArr[NegP].X,PArr[NegP+1].Y,PArr[NegP].Y,LInf*0.20);
+      NegP := StartNeg - Trunc((StartNeg - LEPos)*0.50);
+      LD50 := LReg(PArr[NegP+1].X,PArr[NegP].X,PArr[NegP+1].Y,PArr[NegP].Y,LInf*0.50);
+      NegP := StartNeg - Trunc((StartNeg - LEPos)*0.60);
+      LD60 := LReg(PArr[NegP+1].X,PArr[NegP].X,PArr[NegP+1].Y,PArr[NegP].Y,LInf*0.60);
+      NegP := StartNeg - Trunc((StartNeg - LEPos)*0.80);
+      LD80 := LReg(PArr[NegP+1].X,PArr[NegP].X,PArr[NegP+1].Y,PArr[NegP].Y,LInf*0.80);
+
+      {get right dose points}
+      PosP := StartPos + Trunc((REPos - StartPos)*0.20);
+      RD20 := LReg(PArr[PosP-1].X,PArr[PosP].X,PArr[PosP-1].Y,PArr[PosP].Y,RInf*0.20);
+      PosP := StartPos + Trunc((REPos - StartPos)*0.50);
+      RD50 := LReg(PArr[PosP-1].X,PArr[PosP].X,PArr[PosP-1].Y,PArr[PosP].Y,RInf*0.50);
+      PosP := StartPos + Trunc((REPos - StartPos)*0.60);
+      RD60 := LReg(PArr[PosP-1].X,PArr[PosP].X,PArr[PosP-1].Y,PArr[PosP].Y,RInf*0.60);
+      PosP := StartPos + Trunc((REPos - StartPos)*0.80);
+      RD80 := LReg(PArr[PosP-1].X,PArr[PosP].X,PArr[PosP-1].Y,PArr[PosP].Y,RInf*0.80);
+
       end;
    end;
 end;

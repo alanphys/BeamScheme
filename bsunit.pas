@@ -66,6 +66,7 @@ unit bsunit;
  23/10/2019 Updated help
             Fix click on empty Image pane crash
  25/10/2019 Fix user protocol path
+ Version 0.5 released 25/10/2019
  16/4/2020  Fix various memory leaks
  6/8/2020   use Form2PDf for printing PDF
             fix SaveDialog titles
@@ -84,7 +85,15 @@ unit bsunit;
             add FFF params inflection point, 0.4*InfP (20%) and 1.6*InfP (80%)
  7/10/2020  add copy results to clipboard
             make Protocol read only while not in edit mode
-            add context menus for X Y profiles and results}
+            add context menus for X Y profiles and results
+ 8/10/2020  fix duplicate text file open
+            fix RAWOpen range check error
+            add sigmoid slope for penumbra
+            add position of max
+            fix protocol name change on edit
+            add profile points for FFF
+ 14/10/2020 add app version
+ 20/10/2020 fix file extensions}
 
 
 {$mode objfpc}{$H+}
@@ -296,7 +305,7 @@ procedure DrawProfile(TheBitmap:TBitmap;Beam:TBeam ;Angle,Offset,Width:double;
 implementation
 
 uses DICOM, define_types, types, math, StrUtils, helpintfs, aboutunit,
-     LazFileUtils, Parser10, form2pdf, mathsfuncs;
+     LazFileUtils, Parser10, form2pdf, mathsfuncs, fileinfo;
 
 const AllChars = [#0..#255] - DigitChars - ['.'];
 
@@ -310,6 +319,28 @@ var YPTL,                      {Y profile top right}
     XPBR:      TPoint;         {X profile bottom left}
     YPW,                       {Y previous width}
     XPW:       double;         {X previous width}
+
+
+function GetAppVersionString(IncludeBuildInfo:Boolean=True; MinorDigits:Byte=2;
+   IncludePosRelease:Boolean=False; IncludeAnyRelease:Boolean=False): String;
+var VersionInfo: TVersionInfo;
+begin
+Result:= '';
+try
+  VersionInfo:= TVersionInfo.Create;
+  VersionInfo.Load(Application.Handle);
+  Result:= IntToStr(VersionInfo.FixedInfo.FileVersion[0]) + '.' +
+     Format('%0.*d',[MinorDigits,VersionInfo.FixedInfo.FileVersion[1]]);
+  if (IncludeAnyRelease or (IncludePosRelease and (VersionInfo.FixedInfo.FileVersion[2]<>0))) then
+     Result:= Result + '.' + IntToStr(VersionInfo.FixedInfo.FileVersion[2]);
+  if IncludeBuildInfo then
+     Result:= Result + '.' + IntToStr(VersionInfo.FixedInfo.FileVersion[3]);
+ finally
+   if assigned(VersionInfo) then
+     VersionInfo.Free;
+ end;
+end; {getappversionstring}
+
 
 function RobustStrToFloat(s:string):extended;
 var fs:        TFormatSettings;
@@ -591,7 +622,7 @@ repeat
             if Z > BSForm.DTrackBar.PositionU then Z := BSForm.DTrackBar.PositionU;
             PArr[K].Y := PArr[K].Y + Z;
             inc(OLP);
-   									end
+            end
            else
             OverLimit := true;
          end;
@@ -997,6 +1028,7 @@ var I          :integer;
     SearchRec  :TSearchRec;
 
 begin
+BSForm.Caption := 'Beam Scheme v' + GetAppVersionString(false,2);
 Beam := TBeam.Create;
 StatusMessages := TStringList.Create;
 
@@ -1164,7 +1196,7 @@ if OpenDialog.Execute then
       DataOK := BMPOpen(OpenDialog.Filename);
    if (not DataOK) and ((Dummy = '.JPG') or (Dummy = '.JPEG')) then
       DataOK := BMPOpen(OpenDialog.Filename);
-   if not DataOK then {assume file is text}
+   if not DataOK and ((Dummy = 'TXT') or (Dummy = '')) then {assume file is text}
       DataOK := TextOpen(Opendialog.FileName);
 
    {set limits}
@@ -1216,7 +1248,7 @@ if OpenDialog.Execute then
       end
      else
       begin
-      BSError('Unrecognised file');
+      BSError('Unrecognised file or file read error.');
       end;
    end;
 end;
@@ -1235,11 +1267,11 @@ readln(Infile,Dummy);
 CloseFile(Infile);
 if LeftStr(Dummy,10) = '** WARNING' then
    Result := MapCheckOpen(sFileName);
-if LeftStr(Dummy,8) = '0001108e' then
+if not Result and (LeftStr(Dummy,8) = '0001108e') then
    Result := XiOOpen(sFileName);
-if LeftStr(Dummy,8) = 'BrainLAB' then
+if not Result and (LeftStr(Dummy,8) = 'BrainLAB') then
    Result := BrainLabOpen(sFileName);
-if Length(Dummy) > 4 then                   {assume image is matrix of text values}
+if not Result and (Length(Dummy) > 4) then                {assume image is matrix of text values}
    Result := RAWOpen(sFileName);
 end;
 
@@ -1307,8 +1339,8 @@ if Dummy[1] = '*' then {file is MapCheck}
      else
       begin
       BSError('File error, no data found!');
-						end;
-			end;
+      end;
+   end;
 CloseFile(Infile);
 end;
 
@@ -1724,7 +1756,6 @@ Result := false;
      except
        BSError('File error, corrupt file');
      end;
-
 end;
 
 
@@ -1878,9 +1909,9 @@ Result := true;
       readln(Infile,Dummy);
       Dummy := Tab2Space(Dummy,1);
       J := 0;
-      while Dummy <> '' do
+      while Result and (Dummy <> '') do
          begin
-         SetLength(Beam.Data[I],J+2);
+         SetLength(Beam.Data[I],J+3);
          sValue := Copy2SpaceDel(Dummy);
             try
             Value := RobustStrToFloat(sValue);
@@ -2138,6 +2169,7 @@ procedure TBSForm.miEditPClick(Sender: TObject);
 begin
 Editing := true;
 cbProtocol.Style := csDropDown;
+cbProtocol.Text := cbProtocol.Items[cbProtocol.ItemIndex];
 sbSaveP.Enabled := true;
 sbSaveP.Visible := true;
 miSaveP.Enabled := true;
@@ -2160,6 +2192,7 @@ end;
 procedure TBSForm.miAboutClick(Sender: TObject);
 begin
   AboutForm := TAboutForm.Create(Self);
+  AboutForm.Caption := 'BeamScheme version ' + GetAppVersionString(True,2,True,True);
   AboutForm.ShowModal;
   AboutForm.Free;
 end;
@@ -2556,10 +2589,13 @@ with BeamParams do
    Parser.SetVariable('PMax',CMax);
    Parser.SetVariable('PMin',CMin);
    Parser.SetVariable('RCAX',RCAX);
+   Parser.SetVariable('MPos',MPos);
    Parser.SetVariable('LEdge',LEdge);
    Parser.SetVariable('REdge',REdge);
    Parser.SetVariable('LInf',LInf);
    Parser.SetVariable('RInf',RInf);
+   Parser.SetVariable('LSlope',LSlope);
+   Parser.SetVariable('RSlope',RSlope);
    Parser.SetVariable('L10',L10);
    Parser.SetVariable('R10',R10);
    Parser.SetVariable('L20',L20);
@@ -2574,6 +2610,14 @@ with BeamParams do
    Parser.SetVariable('IR50',InfR50);
    Parser.SetVariable('IL80',InfL80);
    Parser.SetVariable('IR80',InfR80);
+   Parser.SetVariable('LD20',LD20);
+   Parser.SetVariable('RD20',RD20);
+   Parser.SetVariable('LD50',LD50);
+   Parser.SetVariable('RD50',RD50);
+   Parser.SetVariable('LD60',LD60);
+   Parser.SetVariable('RD60',RD60);
+   Parser.SetVariable('LD80',LD80);
+   Parser.SetVariable('RD80',RD80);
    Parser.SetVariable('N',NP);
    Parser.SetVariable('PSum',PSum);
    Parser.SetVariable('PSSqr',PSSqr);
@@ -2615,10 +2659,13 @@ with BeamParams do
    Parser.SetVariable('PMax',CMax);
    Parser.SetVariable('PMin',CMin);
    Parser.SetVariable('RCAX',RCAX);
+   Parser.SetVariable('MPos',MPos);
    Parser.SetVariable('LEdge',LEdge);
    Parser.SetVariable('REdge',REdge);
    Parser.SetVariable('LInf',LInf);
    Parser.SetVariable('RInf',RInf);
+   Parser.SetVariable('LSlope',LSlope);
+   Parser.SetVariable('RSlope',RSlope);
    Parser.SetVariable('L10',L10);
    Parser.SetVariable('R10',R10);
    Parser.SetVariable('L20',L20);
@@ -2633,6 +2680,14 @@ with BeamParams do
    Parser.SetVariable('IR50',InfR50);
    Parser.SetVariable('IL80',InfL80);
    Parser.SetVariable('IR80',InfR80);
+   Parser.SetVariable('LD20',LD20);
+   Parser.SetVariable('RD20',RD20);
+   Parser.SetVariable('LD50',LD50);
+   Parser.SetVariable('RD50',RD50);
+   Parser.SetVariable('LD60',LD60);
+   Parser.SetVariable('RD60',RD60);
+   Parser.SetVariable('LD80',LD80);
+   Parser.SetVariable('RD80',RD80);
    Parser.SetVariable('N',NP);
    Parser.SetVariable('PSum',PSum);
    Parser.SetVariable('PSSqr',PSSqr);

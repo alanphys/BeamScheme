@@ -10,6 +10,6 @@ that you cannot do it ask your System Administrator or Physicist to do it for yo
 .. toctree::
    :maxdepth: 2
 
-   BSHelp51.rst
-   BSHelp52.rst
-   BSHelp53.rst
+   BSHelp5-1.rst
+   BSHelp5-2.rst
+   BSHelp5-3.rst

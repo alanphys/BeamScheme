@@ -10,5 +10,5 @@ The file menu options are:
 .. toctree::
    :maxdepth: 1
    
-   BSHelp8311.rst
-   BSHelp8312.rst
+   BSHelp8-3-1-1.rst
+   BSHelp8-3-1-2.rst

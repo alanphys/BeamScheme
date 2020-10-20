@@ -11,8 +11,8 @@ The Print option opens the print preview page. The profiles and results may be e
 .. toctree::
    :maxdepth: 1
    
-   BSHelp8331.rst
-   BSHelp8332.rst
+   BSHelp8-3-3-1.rst
+   BSHelp8-3-3-2.rst
    
 .. |save| image:: _static/pdficon_small.png
 

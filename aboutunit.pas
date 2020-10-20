@@ -27,6 +27,7 @@ type
 
   end;
 
+
 var
   AboutForm: TAboutForm;
 

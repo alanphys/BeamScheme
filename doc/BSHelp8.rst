@@ -12,7 +12,7 @@ Using BeamScheme is simple. There are two profiles, a horizontal or X profile an
    :maxdepth: 2
    :includehidden:
 
-   BSHelp83.rst
-   BSHelp81.rst
-   BSHelp82.rst
-   BSHelp84.rst
+   BSHelp8-3.rst
+   BSHelp8-1.rst
+   BSHelp8-2.rst
+   BSHelp8-4.rst

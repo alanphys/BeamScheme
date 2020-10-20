@@ -11,5 +11,5 @@ Contents:
 .. toctree::
    :maxdepth: 2
 
-   BSHelp61.rst
-   BSHelp62.rst
+   BSHelp6-1.rst
+   BSHelp6-2.rst

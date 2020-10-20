@@ -17,10 +17,10 @@ The image pane contains a tool bar with buttons that allow various operations ca
    :maxdepth: 1
    :hidden:
    
-   BSHelp821.rst
-   BSHelp822.rst
-   BSHelp823.rst
-   BSHelp824.rst
+   BSHelp8-2-1.rst
+   BSHelp8-2-2.rst
+   BSHelp8-2-3.rst
+   BSHelp8-2-4.rst
 
 .. |max| image:: _static/max.png
 

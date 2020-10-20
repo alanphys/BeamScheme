@@ -9,6 +9,6 @@ From version 0.5 BeamScheme supports definable protocol and parameter sets. A li
 .. toctree::
    :maxdepth: 2
 
-   BSHelp141.rst
-   BSHelp836.rst
-   BSHelp142.rst
+   BSHelp14-1.rst
+   BSHelp8-3-6.rst
+   BSHelp14-2.rst

@@ -11,9 +11,9 @@ The profiles are altered by the Offset, Width and Angle spin boxes.
 .. toctree::
    :maxdepth: 1
    
-   BSHelp811.rst
-   BSHelp812.rst
-   BSHelp813.rst
+   BSHelp8-1-1.rst
+   BSHelp8-1-2.rst
+   BSHelp8-1-3.rst
 
 .. |max| image:: _static/max.png
 

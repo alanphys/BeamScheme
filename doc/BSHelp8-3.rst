@@ -9,9 +9,9 @@ The menu bar allows you to open datasets, export profiles, edit protocols and pr
 .. toctree::
    :maxdepth: 1
    
-   BSHelp831.rst
-   BSHelp832.rst
-   BSHelp836.rst
-   The Print Menu <BSHelp833.rst>
-   BSHelp834.rst
-   BSHelp835.rst
+   BSHelp8-3-1.rst
+   BSHelp8-3-2.rst
+   BSHelp8-3-6.rst
+   The Print Menu <BSHelp8-3-3.rst>
+   BSHelp8-3-4.rst
+   BSHelp8-3-5.rst

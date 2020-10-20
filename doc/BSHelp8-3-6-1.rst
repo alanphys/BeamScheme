@@ -8,6 +8,22 @@ Selecting "Protocol, Edit" in the menubar allows existing protocols to be edited
 
 To create a parameter section heading leave the equation area blank. Parameter names may be indented by putting spaces in front.
 
+Parameter equations are created by combining base parameters in an arithmetic expression. The expression may not include spaces and should conform to standard pascal.
+
+|Note| The times operator is the '*' not the 'x'.
+
+For example the expression the flatness dose difference paramter 
+
+.. math:: 100 \cdot \cfrac {max-min} {max + min}
+
+is entered as:
+
++--------------+--------------------------------+
+| Parameter    | Expression                     |
++==============+================================+
+| Flatness (%) | 100*abs(PMax-PMin)/(PMax+PMin) |
++--------------+--------------------------------+
+
 Functions available are:
 
 *  |Save| :ref:`Save protocol`
@@ -19,12 +35,13 @@ Functions available are:
    :maxdepth: 1
    :hidden:
 
-   BSHelp8362.rst
-   BSHelp83612.rst
-   BSHelp83613.rst
-   BSHelp8363.rst
+   BSHelp8-3-6-2.rst
+   BSHelp8-3-6-1-2.rst
+   BSHelp8-3-6-1-3.rst
+   BSHelp8-3-6-3.rst
    
 .. |Save| image:: _static/save.png
 .. |Add| image:: _static/add.png
 .. |Del| image:: _static/del.png
 .. |Exit| image:: _static/exit.png
+.. |Note| image:: _static/Note.png

@@ -36,11 +36,6 @@ TAChart
 LGPL
 
 -------------------------------------------
-PowerPDF
--------------------------------------------
-LGPL
-
--------------------------------------------
 lNet
 -------------------------------------------
 LGPL
@@ -75,3 +70,8 @@ Orginal credits:
   I would greatly appreciate suggestions, bug reports, any feed-back that might contribute to further improve TParser's speed and functionality.
 
 Alin Flaider, aflaidar@datalog.ro
+
+-------------------------------------------
+LMath
+-------------------------------------------
+LGPL
