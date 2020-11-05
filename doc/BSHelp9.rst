@@ -18,3 +18,4 @@ Calculation of the profiles and parameters are discussed in the following sectio
    BSHelp10.rst
    BSHelp11.rst
    BSHelp9-1.rst
+   BSHelp9-2.rst

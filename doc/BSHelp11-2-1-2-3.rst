@@ -1,0 +1,16 @@
+
+.. index:: 
+   single: Field; Size inflection point
+
+Inflection Point Field Size
+===========================
+
+The field size (*FS*) is defined as the distance from the left :ref:`Inflection Point Field Edge` to the right :ref:`Inflection Point Field Edge`:
+
+.. math:: FS = d(RE) - d(LE)
+
+Where *d(RE)* and *d(LE)* the linear distances from the profile centre to the right and left field edges respectively. 
+
+|Note| The profile must be centered on the origin as defined by the array or imaging modality for best results.
+
+.. |Note| image:: _static/Note.png

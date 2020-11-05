@@ -1,0 +1,16 @@
+
+.. index:: 
+   single: Field; Edge Inflection
+
+Inflection Point Field Edge
+===========================
+
+The field edges as given by the inflection point are defined at the first point from the centre of the profile where the gradient of the profile reaches its maximum value. This is the same as the inflection point of a Hill function fitted to the penumbra.:
+
+Since version 0.5 BeamScheme no longer does automatic grounding of the profile, i.e. reducing the minimum to zero. This means that if you want the grounded field size you must *explicitly* normalise or window the image.
+
+Refer to the base :ref:`Inflection Point Parameters` for more detail on the fitting of the Hill function.
+
+|Note| The profile must be centered on the origin as defined by the array or imaging modality for best results.
+
+.. |Note| image:: _static/Note.png

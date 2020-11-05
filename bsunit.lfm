@@ -20,18 +20,19 @@ object BSForm: TBSForm
     Top = 0
     Width = 300
     HelpType = htKeyword
-    HelpKeyword = 'HTML/BSHelp82.html'
+    HelpKeyword = 'HTML/BSHelp8-2.html'
     ClientHeight = 306
     ClientWidth = 300
     ParentFont = False
     TabOrder = 0
+    TabStop = True
     object iBeam: TImage
       Left = 1
       Height = 256
       Top = 49
       Width = 256
       HelpType = htKeyword
-      HelpKeyword = 'HTML/BSHelp82.html'
+      HelpKeyword = 'HTML/BSHelp8-2.html'
       AntialiasingMode = amOff
       Align = alClient
       OnClick = iBeamClick
@@ -43,6 +44,8 @@ object BSForm: TBSForm
       Height = 28
       Top = 21
       Width = 298
+      HelpType = htKeyword
+      HelpKeyword = 'HTML/BSHelp8-2.html'
       Align = alTop
       ClientHeight = 28
       ClientWidth = 298
@@ -55,7 +58,7 @@ object BSForm: TBSForm
         Top = 1
         Width = 26
         HelpType = htKeyword
-        HelpKeyword = 'HTML/BSHelp831.html'
+        HelpKeyword = 'HTML/BSHelp8-3-1.html'
         Glyph.Data = {
           46050000424D4605000000000000360000002800000012000000120000000100
           2000000000001005000064000000640000000000000000000000000000000000
@@ -464,6 +467,7 @@ object BSForm: TBSForm
       object sbPDF: TSpeedButton
         Left = 171
         Height = 26
+        Hint = 'Save PDF'
         Top = 1
         Width = 26
         Glyph.Data = {
@@ -499,7 +503,9 @@ object BSForm: TBSForm
           C0C0C0C0FFFFFFFFFFFFFFFFFF00
         }
         OnClick = sbPDFClick
+        ShowHint = True
         ParentFont = False
+        ParentShowHint = False
       end
     end
     object Panel4: TPanel
@@ -725,7 +731,7 @@ object BSForm: TBSForm
         Top = 2
         Width = 50
         HelpType = htKeyword
-        HelpKeyword = 'HTML/BSHelp811.html'
+        HelpKeyword = 'HTML/BSHelp8-1-1.html'
         MaxValue = 50
         MinValue = -50
         OnChange = seXAngleChange
@@ -738,7 +744,7 @@ object BSForm: TBSForm
         Top = 2
         Width = 50
         HelpType = htKeyword
-        HelpKeyword = 'HTML/BSHelp812.html'
+        HelpKeyword = 'HTML/BSHelp8-1-2.html'
         Increment = 2
         MinValue = 1
         OnChange = seXAngleChange
@@ -752,7 +758,7 @@ object BSForm: TBSForm
         Top = 2
         Width = 50
         HelpType = htKeyword
-        HelpKeyword = 'HTML/BSHelp813.html'
+        HelpKeyword = 'HTML/BSHelp8-1-3.html'
         MaxValue = 45
         MinValue = -44
         OnChange = seXAngleChange
@@ -772,6 +778,7 @@ object BSForm: TBSForm
       ParentColor = False
       ParentFont = False
       TabOrder = 1
+      TabStop = True
       object cXprof: TLabel
         Left = 5
         Height = 15
@@ -887,7 +894,8 @@ object BSForm: TBSForm
       Top = 49
       Width = 298
       HelpType = htKeyword
-      HelpKeyword = 'HTML/BSHelp81.html'
+      HelpKeyword = 'HTML/BSHelp8-1.html'
+      AutoFocus = True
       AxisList = <      
         item
           Marks.LabelBrush.Style = bsClear
@@ -933,13 +941,15 @@ object BSForm: TBSForm
     ParentFont = False
     PopupMenu = pmContext
     TabOrder = 2
+    TabStop = True
     object cYProfile: TChart
       Left = 1
       Height = 255
       Top = 49
       Width = 298
       HelpType = htKeyword
-      HelpKeyword = 'HTML/BSHelp81.html'
+      HelpKeyword = 'HTML/BSHelp8-1.html'
+      AutoFocus = True
       AxisList = <      
         item
           Marks.LabelBrush.Style = bsClear
@@ -1021,7 +1031,7 @@ object BSForm: TBSForm
         Top = 2
         Width = 50
         HelpType = htKeyword
-        HelpKeyword = 'HTML/BSHelp811.html'
+        HelpKeyword = 'HTML/BSHelp8-1-1.html'
         MaxValue = 50
         MinValue = -50
         OnChange = seYAngleChange
@@ -1034,7 +1044,7 @@ object BSForm: TBSForm
         Top = 2
         Width = 50
         HelpType = htKeyword
-        HelpKeyword = 'HTML/BSHelp812.html'
+        HelpKeyword = 'HTML/BSHelp8-1-2.html'
         Increment = 2
         MinValue = 1
         OnChange = seYAngleChange
@@ -1048,7 +1058,7 @@ object BSForm: TBSForm
         Top = 2
         Width = 50
         HelpType = htKeyword
-        HelpKeyword = 'HTML/BSHelp813.html'
+        HelpKeyword = 'HTML/BSHelp8-1-3.html'
         MaxValue = 135
         MinValue = 46
         OnChange = seYAngleChange
@@ -1317,6 +1327,8 @@ object BSForm: TBSForm
       Height = 28
       Top = 21
       Width = 298
+      HelpType = htKeyword
+      HelpKeyword = 'HTML/BSHelp8-4.html'
       Align = alTop
       ClientHeight = 28
       ClientWidth = 298
@@ -1534,24 +1546,30 @@ object BSForm: TBSForm
       Height = 255
       Top = 49
       Width = 298
+      HelpType = htKeyword
+      HelpKeyword = 'HTML/BSHelp8-4.html'
       Align = alClient
       ColCount = 4
       Columns = <      
         item
+          MaxSize = 200
           Title.Caption = 'Parameters'
           Width = 120
         end      
         item
+          MaxSize = 200
           Title.Caption = 'Equations'
           Width = 0
           Visible = False
         end      
         item
+          MaxSize = 200
           ReadOnly = True
           Title.Caption = 'X Profile'
           Width = 90
         end      
         item
+          MaxSize = 200
           ReadOnly = True
           Title.Caption = 'Y Profile'
           Width = 90
@@ -1723,7 +1741,7 @@ object BSForm: TBSForm
   object HelpServer: TLHTTPServerComponent
     Port = 3880
     Timeout = 0
-    Left = 144
+    Left = 143
     Top = 184
   end
   object pmContext: TPopupMenu

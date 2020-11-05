@@ -10,6 +10,7 @@
 *.trc
 
 # directories to ignore
+Results/
 backup/
 _build/
 

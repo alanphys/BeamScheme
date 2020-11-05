@@ -1,0 +1,138 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Editing Protocols &#8212; BeamScheme 0.52-beta documentation</title>
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/language_data.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Save protocol" href="BSHelp8-3-6-2.html" />
+    <link rel="prev" title="The Protocol Menu" href="BSHelp8-3-6.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="BSHelp8-3-6-2.html" title="Save protocol"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="BSHelp8-3-6.html" title="The Protocol Menu"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.52-beta documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="BSHelp8.html" >Using BeamScheme</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="BSHelp8-3.html" >The Menu Bar</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="BSHelp8-3-6.html" accesskey="U">The Protocol Menu</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="editing-protocols">
+<span id="index-0"></span><h1>Editing Protocols<a class="headerlink" href="#editing-protocols" title="Permalink to this headline">¶</a></h1>
+<p>Selecting “Protocol, Edit” in the menubar allows existing protocols to be edited. The Result window changes to the Edit Protocol window. The parameters are displayed in a grid with the left hand column giving the parameter name and the right hand column giving the parameter equation. Click in the appropriate block to edit. You can also use &lt;ctrl-c&gt; and &lt;ctrl-v&gt; to copy and paste.</p>
+<p>To create a parameter section heading leave the equation area blank. Parameter names may be indented by putting spaces in front.</p>
+<p>Parameter equations are created by combining base parameters in an arithmetic expression. The expression may not include spaces and should conform to standard pascal.</p>
+<p><img alt="Note" src="_images/Note.png" /> The multiplication operator is the ‘*’ not the ‘x’.</p>
+<p>For example the expression the flatness dose difference paramter</p>
+<div class="math notranslate nohighlight">
+\[100 \cdot \cfrac {max-min} {max + min}\]</div>
+<p>is entered as:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30%" />
+<col style="width: 70%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Parameter</p></th>
+<th class="head"><p>Expression</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Flatness (%)</p></td>
+<td><p>100*abs(PMax-PMin)/(PMax+PMin)</p></td>
+</tr>
+</tbody>
+</table>
+<p>Functions available are:</p>
+<ul class="simple">
+<li><p><img alt="Save" src="_images/save.png" /> <a class="reference internal" href="BSHelp8-3-6-2.html#save-protocol"><span class="std std-ref">Save protocol</span></a></p></li>
+<li><p><img alt="Add" src="_images/add.png" /> <a class="reference internal" href="BSHelp8-3-6-1-2.html#add-line"><span class="std std-ref">Add line</span></a></p></li>
+<li><p><img alt="Del" src="_images/del.png" /> <a class="reference internal" href="BSHelp8-3-6-1-3.html#delete-line"><span class="std std-ref">Delete line</span></a></p></li>
+<li><p><img alt="Exit" src="_images/exit.png" /> <a class="reference internal" href="BSHelp8-3-6-3.html#exit-editing"><span class="std std-ref">Exit editing</span></a></p></li>
+</ul>
+<div class="toctree-wrapper compound">
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="BSHelp8-3-6.html"
+                        title="previous chapter">The Protocol Menu</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="BSHelp8-3-6-2.html"
+                        title="next chapter">Save protocol</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/BSHelp8-3-6-1.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="BSHelp8-3-6-2.html" title="Save protocol"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="BSHelp8-3-6.html" title="The Protocol Menu"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="BSHelp.html">BeamScheme 0.52-beta documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="BSHelp8.html" >Using BeamScheme</a> &#187;</li>
+          <li class="nav-item nav-item-2"><a href="BSHelp8-3.html" >The Menu Bar</a> &#187;</li>
+          <li class="nav-item nav-item-3"><a href="BSHelp8-3-6.html" >The Protocol Menu</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020, AC Chamberlain.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.2.2.
+    </div>
+  </body>
+</html>

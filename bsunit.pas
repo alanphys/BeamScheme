@@ -93,7 +93,8 @@ unit bsunit;
             fix protocol name change on edit
             add profile points for FFF
  14/10/2020 add app version
- 20/10/2020 fix file extensions}
+ 20/10/2020 fix file extensions
+ 5/11/2020  update help}
 
 
 {$mode objfpc}{$H+}
@@ -328,7 +329,7 @@ begin
 Result:= '';
 try
   VersionInfo:= TVersionInfo.Create;
-  VersionInfo.Load(Application.Handle);
+  VersionInfo.Load(HINSTANCE);
   Result:= IntToStr(VersionInfo.FixedInfo.FileVersion[0]) + '.' +
      Format('%0.*d',[MinorDigits,VersionInfo.FixedInfo.FileVersion[1]]);
   if (IncludeAnyRelease or (IncludePosRelease and (VersionInfo.FixedInfo.FileVersion[2]<>0))) then
@@ -1196,7 +1197,9 @@ if OpenDialog.Execute then
       DataOK := BMPOpen(OpenDialog.Filename);
    if (not DataOK) and ((Dummy = '.JPG') or (Dummy = '.JPEG')) then
       DataOK := BMPOpen(OpenDialog.Filename);
-   if not DataOK and ((Dummy = 'TXT') or (Dummy = '')) then {assume file is text}
+   if (not DataOK) and (Dummy = '.ALL') then
+      DataOK := XiOOpen(OpenDialog.FileName);
+   if not DataOK and ((Dummy = '.TXT') or (Dummy = '')) then {assume file is text}
       DataOK := TextOpen(Opendialog.FileName);
 
    {set limits}

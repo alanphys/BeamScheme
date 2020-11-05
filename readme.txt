@@ -54,7 +54,7 @@ These detail new or changed functionality in BeamScheme. Please see the History 
 
 Latest release
 Version 0.52
-This version adds support for FFF beams. A Hill function is fitted to the penumbra region to determine the inflection point. Clipboard functionality has been added. Profile and results can be exported to the clipboard. The profiles and results now have context menus giving direct access to this functionality.
+This version adds support for FFF beams. A Hill function is fitted to the penumbra region to determine the inflection point. Clipboard functionality has been added. Profile and results can be exported to the clipboard. The profiles and results now have context menus giving direct access to this functionality. The online help has been updated.
 
 Version 0.51
 BeamScheme now uses Form2PDF to render results to PDF. This has several advantages, the image is printed with the results, considerably less mouse clicks are required to save results and the results are printed as the form itself. The hard copy functionality has been removed. The PDF can, of course, still be printed by any PDF viewer.

@@ -83,7 +83,7 @@ type TMargins = record
 
 {Set Include files in "Project Options, Paths" to include
 /usr/share/fpcsrc/packages/fcl-pdf/src for linux and
-C:\lazarus\fpc\3.0.4\source\packages\fcl-pdf\src for windows
+C:\lazarus\fpc\3.2.0\source\packages\fcl-pdf\src for windows
 otherwise the fontmetrics_stdpdf.inc file will not be found}
 {$I fontmetrics_stdpdf.inc }
 

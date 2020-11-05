@@ -1,0 +1,12 @@
+
+.. index:: 
+   single: Penumbra; slope
+
+Penumbra Slope
+==============
+
+The tradional parameters for defining the penumbra do not work for FFF beams. The slope of the Hill function at the inflection point provides a good indication of the width of the penumbra. The :ref:`Inflection point left slope` and :ref:`Inflection point right slope` are given.
+
+|Note| The profile must be centered on the origin as defined by the array or imaging modality for best results.
+
+.. |Note| image:: _static/Note.png

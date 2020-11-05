@@ -1,0 +1,12 @@
+
+.. index:: 
+   single: Penumbra; 80-20% inflection point
+
+Inflection Point Penumbra 80%-20%
+=================================
+
+The tradional parameters for defining the penumbra do not work for FFF beams. The 80%-20% penumbra based on the inflection point is calculated as the distance between the :ref:`80% left inflection point distance` to the :ref:`20% left inflection point distance` for the left penumbra and similarly for the right penumbra.
+
+|Note| The profile must be centered on the origin as defined by the array or imaging modality for best results.
+
+.. |Note| image:: _static/Note.png

@@ -37,11 +37,11 @@ along with a description of the problem to alanphys@yenzakahle.co.za.
    :maxdepth: 1
    :hidden:
    
-   BSHelp71.rst
-   BSHelp72.rst
-   BSHelp73.rst
-   BSHelp74.rst
-   BSHelp75.rst
-   BSHelp76.rst
-   BSHelp77.rst
-   BSHelp78.rst
+   BSHelp7-1.rst
+   BSHelp7-2.rst
+   BSHelp7-3.rst
+   BSHelp7-4.rst
+   BSHelp7-5.rst
+   BSHelp7-6.rst
+   BSHelp7-7.rst
+   BSHelp7-8.rst

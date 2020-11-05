@@ -10,3 +10,4 @@
 "   Right (cm)",abs(IR80-IR20),,
 "   Left slope (%/cm)",LSlope,,
 "   Right Slope (%/cm)",RSlope,,
+Symmetry,100*(ARight-ALeft)/(ARight+ALeft),,
