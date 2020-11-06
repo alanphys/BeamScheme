@@ -1,15 +1,15 @@
 BeamScheme Readme file (c) 2008-2020 AC Chamberlain
 
 1) Introduction
-Welcome to BeamScheme version 0.52
+Welcome to BeamScheme
 
 This software will assist you in extracting 1D profiles from 2D datasets and calculating various parameters on the profiles. BeamScheme can open various image and 2D array file formats such as SNC MapCheck, PTW 720, IBA Matrix and StarTrack, XiO, DICOM, jpg, etc.
 
-Parameters such as field size, field centre, penumbra, flatness and symmetry are calculated. Profiles can be taken at any angle, offset or thickness. Profiles can be exported to a text file for further processing. Results can be printed or exported to PDF.
+Parameters such as field size, field centre, penumbra, flatness and symmetry are calculated. Profiles can be taken at any angle, offset or thickness. Profiles can be exported to a text file or clipboard for further processing. Results can be exported to PDF.
 
 BeamScheme is not intended to replace the commercial software available with 2D arrays, but to complement it.
 
-BeamScheme now supports user definable parameters and parameter sets. To support this multi-page pdf and print output had to be added as well as an expression editor. This is an interim release for testing.
+BeamScheme now supports user definable parameters and parameter sets. FFF parameters have been added.
 
 2) Licence
 Please read the file Licence.txt. This means that if as a result of using this program you fry your patients, trash your linac, nuke the cat, blow the city power in a ten block radius and generally cause global thermonuclear meltdown! Sorry, you were warned!
@@ -75,7 +75,12 @@ Added Average and Standard Deviation parameters over the flattened region of the
 Version 0.40
 Profiles can now be positioned by clicking on the image with the mouse.
 
-9) History
+9) Known issues
+Windows does not automatically focus the control under the mouse cursor therefore the context sensitive help may return the wrong help page.
+
+With the introduction of FFF parameters and model fitting the linear search algorithm that forms the core of BeamScheme has reached its limitations. The area symmetry used in the FFF protocol uses the field size as defined by the FWHM and not the inflection point due to the limitations of the algorithm.
+
+10) History
 22/07/2008 version 0.1
 3/09/2009  added DICOM unit
 22/8/2011  Fix field centre error,
