@@ -94,7 +94,8 @@ unit bsunit;
             add profile points for FFF
  14/10/2020 add app version
  20/10/2020 fix file extensions
- 5/11/2020  update help}
+ 5/11/2020  update help
+ 17/11/2020 fix resolution for tiff files}
 
 
 {$mode objfpc}{$H+}
@@ -2066,13 +2067,15 @@ end;
 
 
 function TBSForm.BMPOpen(sFileName:string):boolean;
-var I,J        :integer;
+var I,J,
+    ResUnit    :integer;
     Value,
     Res        :double;
     SrcIntfImage:TLazIntfImage;
     lRawImage  :TRawImage;
     Curcolor   :TFPColor;
-    sRes       :string;
+    sRes,
+    sResUnit   :string;
 
 begin
 Res := 2.54/300;               {assume image scanned at 300 dpi}
@@ -2087,8 +2090,13 @@ Beam.Cols := SrcIntfImage.Width + 2;
 Beam.Rows := SrcIntfImage.Height;
 if SrcIntfImage.ExtraCount>0 then
    try
+   sResUnit := SrcIntfImage.Extra['TiffResolutionUnit'];
+   ResUnit := StrToInt(sResUnit);
    sRes := SrcIntfImage.Extra['TiffXResolution'];
-   Res := 2.54/StrToFloat(Copy2Symb(sRes,'/'));      {assume res is in dpi}
+   case ResUnit of
+      2: Res := 2.54/StrToFloat(Copy2Symb(sRes,'/'));      {res is in dpi}
+      3: Res := 1/StrToFloat(Copy2Symb(sRes,'/'));         {res is in dpcm}
+      end;
    except
    BSWarning('Image resolution not found, defaulting to 300 dpi');
    end;

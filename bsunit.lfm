@@ -1552,24 +1552,20 @@ object BSForm: TBSForm
       ColCount = 4
       Columns = <      
         item
-          MaxSize = 200
           Title.Caption = 'Parameters'
           Width = 120
         end      
         item
-          MaxSize = 200
           Title.Caption = 'Equations'
           Width = 0
           Visible = False
         end      
         item
-          MaxSize = 200
           ReadOnly = True
           Title.Caption = 'X Profile'
           Width = 90
         end      
         item
-          MaxSize = 200
           ReadOnly = True
           Title.Caption = 'Y Profile'
           Width = 90

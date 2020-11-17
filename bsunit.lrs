@@ -1094,19 +1094,18 @@ LazarusResources.Add('TBSForm','FORMDATA',[
   +'ParentFont'#8#0#0#0#11'TStringGrid'#9'sgResults'#4'Left'#2#1#6'Height'#3#255
   +#0#3'Top'#2'1'#5'Width'#3'*'#1#8'HelpType'#7#9'htKeyword'#11'HelpKeyword'#6
   +#19'HTML/BSHelp8-4.html'#5'Align'#7#8'alClient'#8'ColCount'#2#4#7'Columns'#14
-  +#1#7'MaxSize'#3#200#0#13'Title.Caption'#6#10'Parameters'#5'Width'#2'x'#0#1#7
-  +'MaxSize'#3#200#0#13'Title.Caption'#6#9'Equations'#5'Width'#2#0#7'Visible'#8
-  +#0#1#7'MaxSize'#3#200#0#8'ReadOnly'#9#13'Title.Caption'#6#9'X Profile'#5'Wid'
-  +'th'#2'Z'#0#1#7'MaxSize'#3#200#0#8'ReadOnly'#9#13'Title.Caption'#6#9'Y Profi'
-  +'le'#5'Width'#2'Z'#0#0#16'DefaultRowHeight'#2#18#9'FixedCols'#2#0#7'Options'
-  +#11#15'goFixedVertLine'#15'goFixedHorzLine'#10'goVertLine'#13'goRangeSelect'
-  +#13'goAutoAddRows'#14'goSmoothScroll'#0#10'ParentFont'#8#8'RowCount'#2#10#10
-  +'ScrollBars'#7#14'ssAutoVertical'#8'TabOrder'#2#2#0#0#0#10'TStatusBar'#9'Sta'
-  +'tusBar'#4'Left'#2#0#6'Height'#2#22#3'Top'#3'd'#2#5'Width'#3'Z'#2#6'Panels'
-  +#14#0#10'ParentFont'#8#14'ParentShowHint'#8#8'ShowHint'#9#11'OnDrawPanel'#7
-  +#18'StatusBarDrawPanel'#0#0#9'TMainMenu'#8'MainMenu'#4'Left'#2#24#3'Top'#2'x'
-  +#0#9'TMenuItem'#6'miFile'#7'Caption'#6#5'&File'#0#9'TMenuItem'#6'miOpen'#7'C'
-  +'aption'#6#5'&Open'#7'OnClick'#7#11'miOpenClick'#0#0#9'TMenuItem'#6'miExit'#7
+  +#1#13'Title.Caption'#6#10'Parameters'#5'Width'#2'x'#0#1#13'Title.Caption'#6#9
+  +'Equations'#5'Width'#2#0#7'Visible'#8#0#1#8'ReadOnly'#9#13'Title.Caption'#6#9
+  +'X Profile'#5'Width'#2'Z'#0#1#8'ReadOnly'#9#13'Title.Caption'#6#9'Y Profile'
+  +#5'Width'#2'Z'#0#0#16'DefaultRowHeight'#2#18#9'FixedCols'#2#0#7'Options'#11
+  +#15'goFixedVertLine'#15'goFixedHorzLine'#10'goVertLine'#13'goRangeSelect'#13
+  +'goAutoAddRows'#14'goSmoothScroll'#0#10'ParentFont'#8#8'RowCount'#2#10#10'Sc'
+  +'rollBars'#7#14'ssAutoVertical'#8'TabOrder'#2#2#0#0#0#10'TStatusBar'#9'Statu'
+  +'sBar'#4'Left'#2#0#6'Height'#2#22#3'Top'#3'd'#2#5'Width'#3'Z'#2#6'Panels'#14
+  +#0#10'ParentFont'#8#14'ParentShowHint'#8#8'ShowHint'#9#11'OnDrawPanel'#7#18
+  +'StatusBarDrawPanel'#0#0#9'TMainMenu'#8'MainMenu'#4'Left'#2#24#3'Top'#2'x'#0
+  +#9'TMenuItem'#6'miFile'#7'Caption'#6#5'&File'#0#9'TMenuItem'#6'miOpen'#7'Cap'
+  +'tion'#6#5'&Open'#7'OnClick'#7#11'miOpenClick'#0#0#9'TMenuItem'#6'miExit'#7
   +'Caption'#6#5'E&xit'#7'OnClick'#7#11'miExitClick'#0#0#0#9'TMenuItem'#8'miExp'
   +'ort'#7'Caption'#6#7'&Export'#0#9'TMenuItem'#9'miExportX'#7'Caption'#6#10'&X'
   +' Profile'#0#9'TMenuItem'#9'miXToClip'#7'Caption'#6#12'To Clipboard'#7'OnCli'
