@@ -14,6 +14,8 @@ const pi = 3.14159265359;
 
 type
 
+  TNorm = (none, norm_cax, norm_max);
+
   TBeamData = array of array of double;
 
   TProfilePoint = record

@@ -53,6 +53,8 @@ Normalisation places the minimum of the image at 0 and the maximum at 100. If th
 These detail new or changed functionality in BeamScheme. Please see the History for bug fixes.
 
 Latest release
+Normalisation is now modal, i.e. non destructive. The normalisation modes are none, norm_cax and norm_max. In mode none the dataset is unnormalised and not grounded with the reference value taken at CAX. For norm_cax the data is grounded and normalised to 100% at the CAX value. For norm_max the data is grounded and normalised to 100% at the profile maximum value. The normalisation modes are enabled by the appropriate toolbar button.
+
 Version 0.52
 This version adds support for FFF beams. A Hill function is fitted to the penumbra region to determine the inflection point. Clipboard functionality has been added. Profile and results can be exported to the clipboard. The profiles and results now have context menus giving direct access to this functionality. The online help has been updated.
 
@@ -178,3 +180,9 @@ Version 0.5 released 25/10/2019
            fix protocol name change on edit
            add profile points for FFF
 14/10/2020 add app version
+20/10/2020 fix file extensions
+5/11/2020  update help
+17/11/2020 fix resolution for tiff files
+7/12/2020  add normalisation to max for calcs
+11/12/2020 make normalisation modal, i.e. non destructive
+           change toolbar panel to TToolBar

@@ -11,7 +11,7 @@ uses
 function LReg(X1,X2,Y1,Y2,X:double):double;
 function Limit(A,B,C,Phi0,R0,MidX,MidY:double):TPoint;
 function LimitL(Angle,Phi,TanA,Offset,MidX,MidY:double; LowerX,LowerY,UpperX,UpperY:integer):TRect;
-procedure CalcParams(PArr:TPArr; var BeamParams:TBeamParams; var ErrMsg:string);
+procedure CalcParams(PArr:TPArr; var BeamParams:TBeamParams; Norm:TNorm; var ErrMsg:string);
 
 implementation
 
@@ -196,7 +196,7 @@ if MathErr = MatOk then
 end;
 
 
-procedure CalcParams(PArr:TPArr;var BeamParams:TBeamParams; var ErrMsg:string);
+procedure CalcParams(PArr:TPArr;var BeamParams:TBeamParams; Norm:TNorm; var ErrMsg:string);
 var I,
     N,
     NegP,                      {Negative counter}
@@ -277,9 +277,11 @@ with BeamParams do
          MPos := (PArr[HLPArr].X + PArr[HLPArr - 1].X)/2;
          end;
       CMin := CMax;
-      {for I:=0 to LPArr do
-         if PArr[I].Y < CMin
-            then CMin := PArr[I].Y;}
+
+      if Norm = norm_max then                  {set normalisation to max of profile}
+         for I:=0 to LPArr do
+            if PArr[I].Y > CMax
+               then CMax := PArr[I].Y;
       RCAX := CMax;
 
       {Leave it to the user to normalise values. Most arrays are already normalised}

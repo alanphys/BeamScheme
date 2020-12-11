@@ -95,7 +95,10 @@ unit bsunit;
  14/10/2020 add app version
  20/10/2020 fix file extensions
  5/11/2020  update help
- 17/11/2020 fix resolution for tiff files}
+ 17/11/2020 fix resolution for tiff files
+ 7/12/2020  add normalisation to max for calcs
+ 11/12/2020 make normalisation modal, i.e. non destructive
+            change toolbar panel to TToolBar}
 
 
 {$mode objfpc}{$H+}
@@ -122,6 +125,7 @@ type
    HTMLBrowserHelpViewer: THTMLBrowserHelpViewer;
    HTMLHelpDatabase: THTMLHelpDatabase;
    HelpServer: TLHTTPServerComponent;
+   ImageList: TImageList;
    Label7: TLabel;
    miResClip: TMenuItem;
    miResExp: TMenuItem;
@@ -144,16 +148,24 @@ type
    Panel8: TPanel;
    pmContext: TPopupMenu;
    SaveDialog: TSaveDialog;
-   sbMaxNorm: TSpeedButton;
-   sbCentre: TSpeedButton;
    sbSaveP: TSpeedButton;
    sbAddP: TSpeedButton;
    sbDelP: TSpeedButton;
    sbExitP: TSpeedButton;
-   sbPDF: TSpeedButton;
    StatusBar: TStatusBar;
    StatusMessages: TStringList;
    sgResults: TStringGrid;
+   ToolBar: TToolBar;
+   tbOpen: TToolButton;
+   ToolButton1: TToolButton;
+   tbInvert: TToolButton;
+   tbNormCax: TToolButton;
+   tbNormMax: TToolButton;
+   tbCentre: TToolButton;
+   ToolButton2: TToolButton;
+   tbPDF: TToolButton;
+   ToolButton3: TToolButton;
+   tbExit: TToolButton;
    YProfile: TLineSeries;
    XProfile: TLineSeries;
    cYProf: TLabel;
@@ -176,7 +188,6 @@ type
    miYProfile: TMenuItem;
    miXProfile: TMenuItem;
    miImage: TMenuItem;
-   Panel1: TPanel;
    Panel4: TPanel;
    Panel5: TPanel;
    Panel6: TPanel;
@@ -188,12 +199,9 @@ type
    pBeam: TPanel;
    pXProfile: TPanel;
    Panel3: TPanel;
-   sbExit: TSpeedButton;
    sbXMax: TSpeedButton;
    sbYMax: TSpeedButton;
-   sbInvert: TSpeedButton;
    sbIMin: TSpeedButton;
-   sbOpen: TSpeedButton;
    sbRMax: TSpeedButton;
    sbYMin: TSpeedButton;
    sbXMin: TSpeedButton;
@@ -205,7 +213,6 @@ type
    seYOffset: TSpinEdit;
    seYWidth: TSpinEdit;
    sbIMax: TSpeedButton;
-   sbNorm: TSpeedButton;
    Window: TMenuItem;
    miPrint: TMenuItem;
    miExit: TMenuItem;
@@ -295,6 +302,7 @@ var
     sProtPath    :string;
     Safe,
     Editing      :boolean;
+    Normalisation:TNorm;
 
 procedure DisplayBeam;
 procedure ShowProfile(ThebitMap:Tbitmap; Wdth:double;
@@ -428,7 +436,9 @@ var I,J,K,L,
     WI,WJ,
     LimX,
     LimY,
-    OLP,OLN:   longint;
+    OLP,OLN,
+    DTBPL,                     {DTrackBar.Position Low}
+    DTBPU     :longint;        {DTrackBar.Position Up}
     WNX,
     WNY,
     WPX,
@@ -442,7 +452,9 @@ var I,J,K,L,
     PLen,
     TanA,
     Phi,
-    Z:         double;
+    Z,
+    CMax,                      {profile max or cax value}
+    CMin       :double;        {profile min value}
     Start,
     Stop:      TPoint;
     DLine:     TRect;
@@ -516,13 +528,15 @@ XInc := (Stop.X - Start.X)/PLen;
 YInc := (Stop.Y - Start.Y)/PLen;
 K:= 0;
 MidP := sqrt(sqr((Stop.X - Start.X)*Beam.XRes) + sqr((Stop.Y - Start.Y)*Beam.YRes))/2;
+DTBPL := BSForm.DTrackBar.PositionL;
+DTBPU := BSForm.DTrackBar.PositionU;
 
 {Add first point}
 OverLimit := false;
 PArr[K].X := sqrt(sqr((X - Start.X)*Beam.XRes) + sqr((Y - Start.Y)*Beam.YRes)) - MidP;
 Z := Beam.Data[I,J+2];
-if Z < BSForm.DTrackBar.PositionL then Z := BSForm.DTrackBar.PositionL;
-if Z > BSForm.DTrackBar.PositionU then Z := BSForm.DTrackBar.PositionU;
+if Z < DTBPL then Z := DTBPL;
+if Z > DTBPU then Z := DTBPU;
 PArr[K].Y := Z;
 
 {add wide profile}
@@ -546,8 +560,8 @@ if PrevW > 0 then
       if (WJ >= 0) and (WJ < LimX) and (WI >= 0) and (WI < LimY) then
          begin
          Z := Beam.Data[WI,WJ+2];
-         if Z < BSForm.DTrackBar.PositionL then Z := BSForm.DTrackBar.PositionL;
-         if Z > BSForm.DTrackBar.PositionU then Z := BSForm.DTrackBar.PositionU;
+         if Z < DTBPL then Z := DTBPL;
+         if Z > DTBPU then Z := DTBPU;
          PArr[K].Y := PArr[K].Y + Z;
          inc(OLN);
          end
@@ -560,8 +574,8 @@ if PrevW > 0 then
       if (WJ >= 0) and (WJ < LimX) and (WI >= 0) and (WI < LimY) then
          begin
          Z := Beam.Data[WI,WJ+2];
-         if Z < BSForm.DTrackBar.PositionL then Z := BSForm.DTrackBar.PositionL;
-         if Z > BSForm.DTrackBar.PositionU then Z := BSForm.DTrackBar.PositionU;
+         if Z < DTBPL then Z := DTBPL;
+         if Z > DTBPU then Z := DTBPU;
          PArr[K].Y := PArr[K].Y + Z;
          inc(OLP);
          end
@@ -582,8 +596,8 @@ repeat
    OverLimit := false;
    PArr[K].X := sqrt(sqr((X - Start.X)*Beam.XRes) + sqr((Y - Start.Y)*Beam.YRes)) - MidP;
    Z := Beam.Data[I,J+2];
-   if Z < BSForm.DTrackBar.PositionL then Z := BSForm.DTrackBar.PositionL;
-   if Z > BSForm.DTrackBar.PositionU then Z := BSForm.DTrackBar.PositionU;
+   if Z < DTBPL then Z := DTBPL;
+   if Z > DTBPU then Z := DTBPU;
    PArr[K].Y := Z;
 
    {add wide profiles}
@@ -607,8 +621,8 @@ repeat
          if (WJ >= 0) and (WJ < LimX) and (WI >= 0) and (WI < LimY) then
             begin
             Z := Beam.Data[WI,WJ+2];
-            if Z < BSForm.DTrackBar.PositionL then Z := BSForm.DTrackBar.PositionL;
-            if Z > BSForm.DTrackBar.PositionU then Z := BSForm.DTrackBar.PositionU;
+            if Z < DTBPL then Z := DTBPL;
+            if Z > DTBPU then Z := DTBPU;
             PArr[K].Y := PArr[K].Y + Z;
             inc(OLN);
             end
@@ -620,8 +634,8 @@ repeat
          if (WJ >= 0) and (WJ < LimX) and (WI >= 0) and (WI < LimY) then
             begin
             Z := Beam.Data[WI,WJ+2];
-            if Z < BSForm.DTrackBar.PositionL then Z := BSForm.DTrackBar.PositionL;
-            if Z > BSForm.DTrackBar.PositionU then Z := BSForm.DTrackBar.PositionU;
+            if Z < DTBPL then Z := DTBPL;
+            if Z > DTBPU then Z := DTBPU;
             PArr[K].Y := PArr[K].Y + Z;
             inc(OLP);
             end
@@ -632,10 +646,25 @@ repeat
       end;
    until (I = Stop.Y) and (J = Stop.X);
 
+{normalise array}
+CMax := 0;
+CMin := 0;
+if Normalisation <> none then
+   begin
+   CMax := PArr[(length(PArr) - 1) div 2].Y;
+   if Normalisation = norm_max then
+      for K := 0 to length(PArr) - 1 do
+         if PArr[K].Y > CMax then
+            CMax := PArr[K].Y;
+   end;
 
 {write array to profile}
 for K := 0 to length(PArr) - 1 do with PArr[K] do
-   if (X <> 0) or (Y <> 0) then Profile.AddXY(PArr[K].X,PArr[K].y,'',clRed);
+   if (X <> 0) or (Y <> 0) then
+      if Normalisation = none then
+         Profile.AddXY(X,Y,'',clRed)
+        else
+         Profile.AddXY(X,(Y - CMin)*100/(CMax - CMin),'',clRed);
 end;
 
 
@@ -1086,6 +1115,7 @@ if not HelpServer.Listen(3880) then
 
 Safe := true;
 Editing := false;
+Normalisation := none;
 end;
 
 
@@ -2208,6 +2238,7 @@ begin
   AboutForm.Free;
 end;
 
+
 procedure TBSForm.miContentsClick(Sender: TObject);
 begin
 ShowHelpOrErrorForKeyword('','HTML/BSHelp.html');
@@ -2221,6 +2252,7 @@ sbXMinClick(Sender);
 sbYMinClick(Sender);
 sbRMinClick(Sender);
 end;
+
 
 procedure TBSForm.sbInvertClick(Sender: TObject);
 {Invert and rescale}
@@ -2249,39 +2281,18 @@ seXAngleChange(Self);
 seYAngleChange(Self);
 end;
 
-procedure TBSForm.sbNormClick(Sender: TObject);
-var Max        :double;
-    I,J        :integer;
-    z          :double;
 
+procedure TBSForm.sbNormClick(Sender: TObject);
 begin
-XPTR := Point(0,0);
-XPTL := Point(0,0);
-XPBR := Point(0,0);
-XPBL := Point(0,0);
-YPTR := Point(0,0);
-YPTL := Point(0,0);
-YPBR := Point(0,0);
-YPBL := Point(0,0);
-Max := Beam.Data[Beam.Rows div 2,(Beam.cols - 2) div 2 + 2];
-if Max <> Beam.Min then
-   for I:=0 to Beam.Rows - 1 do
-     for J:=2 to Beam.Cols - 1 do
-        begin
-        Z := Beam.Data[I,J];
-        Z :=(Z - Beam.Min)*100/(Max - Beam.Min);
-        Beam.Data[I,J] := Z;
-        end;
-Beam.Max := (Beam.Max - Beam.Min)*100/(Max - Beam.Min);
-Beam.Min := 0;
-DTrackBar.Max := Round(Beam.Max);
-DTrackBar.Min := 0;
-DTrackBar.PositionU:= DTrackBar.Max;
-DTrackBar.PositionL := 0;
-DTrackBar.LargeChange := 5;
-DTrackBar.SmallChange := 1;
-DTrackBar.TickInterval := 5;
-DisplayBeam;
+if tbNormCax.Down then
+   begin
+   Normalisation := norm_cax;
+   end
+  else
+   begin
+   Normalisation := none;
+   end;
+
 seXAngleChange(Self);
 seYAngleChange(Self);
 end;
@@ -2292,32 +2303,15 @@ var I,J        :integer;
     z          :double;
 
 begin
-XPTR := Point(0,0);
-XPTL := Point(0,0);
-XPBR := Point(0,0);
-XPBL := Point(0,0);
-YPTR := Point(0,0);
-YPTL := Point(0,0);
-YPBR := Point(0,0);
-YPBL := Point(0,0);
-if Beam.Max <> Beam.Min then
-   for I:=0 to Beam.Rows - 1 do
-     for J:=2 to Beam.Cols - 1 do
-        begin
-        Z := Beam.Data[I,J];
-        Z :=(Z - Beam.Min)*100/(Beam.Max - Beam.Min);
-        Beam.Data[I,J] := Z;
-        end;
-Beam.Max := 100;
-Beam.Min := 0;
-DTrackBar.Max := 100;
-DTrackBar.Min := 0;
-DTrackBar.PositionU:= 100;
-DTrackBar.PositionL := 0;
-DTrackBar.LargeChange := 5;
-DTrackBar.SmallChange := 1;
-DTrackBar.TickInterval := 5;
-DisplayBeam;
+if tbNormMax.Down then
+   begin
+   Normalisation := norm_max;
+   end
+else
+   begin
+   Normalisation := none;
+   end;
+
 seXAngleChange(Self);
 seYAngleChange(Self);
 end;
@@ -2542,10 +2536,10 @@ if Safe then
    if (iBeam.Picture.Bitmap <> nil) and (length(Beam.Data) <> 0) then
       begin
       MBitmap := iBeam.Picture.Bitmap;
-      DrawProfile(MBitmap,Beam,Angle,Offset,Wdth,
-         YProfile,YPArr, YPTL,YPTR,YPBL,YPBR,YPW);
+      DrawProfile(MBitmap, Beam, Angle, Offset, Wdth,
+         YProfile, YPArr, YPTL, YPTR, YPBL, YPBR, YPW);
       iBeam.Picture.Bitmap := MBitmap;
-      CalcParams(YPArr,YBParams,ErrMsg);
+      CalcParams(YPArr, YBParams, Normalisation, ErrMsg);
       ShowYResults(YBParams);
       if ErrMsg <> '' then BSWarning(ErrMsg);
       end;
@@ -2572,10 +2566,10 @@ if Safe then
    if (iBeam.Picture.Bitmap <> nil) and (length(Beam.Data) <> 0) then
       begin
       MBitmap := iBeam.Picture.Bitmap;
-      DrawProfile(MBitmap,Beam,Angle,Offset,Wdth,
-         XProfile,XPArr,XPTL,XPTR,XPBL,XPBR,XPW);
+      DrawProfile(MBitmap, Beam, Angle, Offset, Wdth,
+         XProfile, XPArr, XPTL, XPTR, XPBL, XPBR, XPW);
       iBeam.Picture.Bitmap := MBitmap;
-      CalcParams(XPArr,XBParams,ErrMsg);
+      CalcParams(XPArr, XBParams, Normalisation, ErrMsg);
       ShowXResults(XBParams);
       if ErrMsg <> '' then BSWarning(ErrMsg);
       end;
