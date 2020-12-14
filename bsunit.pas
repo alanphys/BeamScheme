@@ -98,7 +98,8 @@ unit bsunit;
  17/11/2020 fix resolution for tiff files
  7/12/2020  add normalisation to max for calcs
  11/12/2020 make normalisation modal, i.e. non destructive
-            change toolbar panel to TToolBar}
+            change toolbar panel to TToolBar
+ 14/12/2020 select default protocol on startup}
 
 
 {$mode objfpc}{$H+}
@@ -648,7 +649,6 @@ repeat
 
 {normalise array}
 CMax := 0;
-CMin := 0;
 if Normalisation <> none then
    begin
    CMax := PArr[(length(PArr) - 1) div 2].Y;
@@ -656,15 +656,21 @@ if Normalisation <> none then
       for K := 0 to length(PArr) - 1 do
          if PArr[K].Y > CMax then
             CMax := PArr[K].Y;
+
+   CMin := CMax;
+   for K := 0 to length(PArr) - 1 do
+      if PArr[K].Y < CMin then
+         CMin := PArr[K].Y;
    end;
 
 {write array to profile}
 for K := 0 to length(PArr) - 1 do with PArr[K] do
+   begin
+   if Normalisation <> none then
+      Y := (Y - CMin)*100/(CMax - CMin);
    if (X <> 0) or (Y <> 0) then
-      if Normalisation = none then
-         Profile.AddXY(X,Y,'',clRed)
-        else
-         Profile.AddXY(X,(Y - CMin)*100/(CMax - CMin),'',clRed);
+      Profile.AddXY(X,Y,'',clRed)
+   end;
 end;
 
 
@@ -1031,6 +1037,8 @@ if FindFirst(sSearchPath,0,SearchRec) = 0 then
    end;
    Findclose(SearchRec);
 ProtList.Free;
+if cbProtocol.Items.Count > 0 then
+   cbProtocol.ItemIndex := cbProtocol.Items.IndexOf('Default');
 end;
 
 

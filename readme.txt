@@ -45,9 +45,9 @@ If you have an integrated imaging mode, use this as it will give you a better im
 DICOM images will usually need to be inverted (by clicking the Invert button) and then normalised (by clicking the normalise button).
 
 7) Notes on normalising
-The program uses the normalised, corrected MapCheck data. No normalisation should be necessary for the MapCheck if it has been calibrated correctly.
+The program uses the normalised, corrected 2D array data. No normalisation should be necessary for the 2D arrays if they have been calibrated and zeroed correctly.
 
-Normalisation places the minimum of the image at 0 and the maximum at 100. If the image contains dead pixels or other strange artifacts it is possible for the normalisation to fail and give you strange results. This is not the fault of the program but of the image. See the previous comment about calibration. Normalisation now acts on the windowed data.
+There are two normalisation modes. CAX or maximum. Normalisation places the minimum of the image at 0 and the CAX or maximum value at 100. If the image contains dead pixels or other strange artifacts it is possible for the normalisation to fail and give you strange results. This is not the fault of the program but of the image. See the previous comment about calibration. Normalisation acts on the windowed data and is non-destructive.
 
 8) Release notes
 These detail new or changed functionality in BeamScheme. Please see the History for bug fixes.
@@ -186,3 +186,4 @@ Version 0.5 released 25/10/2019
 7/12/2020  add normalisation to max for calcs
 11/12/2020 make normalisation modal, i.e. non destructive
            change toolbar panel to TToolBar
+14/12/2020 select default protocol on startup
