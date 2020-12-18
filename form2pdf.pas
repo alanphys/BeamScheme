@@ -42,18 +42,22 @@ your uses clause. Any visual control can be passed as a parent eg. TTabControl.
 Licence: Apache v2.0
 
 History
-26/6/2020 Initial commit.
-3/7/2020  Fix bottom margin pagination.
-5/07/2020 (TvS):moved initialization of FormToPDF to initalization part of unit
-6/7/2020  changed FormToPDF to function to return error code
-          added control and filename checks
-8/7/2020  add functionality to append pages to document, FDoc now global
-13/7/2020 load and use system fonts
-15/7/2020 add text alignment for labels
-17/7/2020 add text alignment for spinedits
-          add Panel caption
-5/8/2020  add hide string grid columns
-6/8/2020  fix string grid fixed cols bug}
+26/6/2020  Initial commit.
+3/7/2020   Fix bottom margin pagination.
+5/07/2020  (TvS):moved initialization of FormToPDF to initalization part of unit
+6/7/2020   changed FormToPDF to function to return error code
+           added control and filename checks
+8/7/2020   add functionality to append pages to document, FDoc now global
+13/7/2020  load and use system fonts
+15/7/2020  add text alignment for labels
+17/7/2020  add text alignment for spinedits
+           add Panel caption
+5/8/2020   add hide string grid columns
+6/8/2020   fix string grid fixed cols bug
+           add consistent margin schema
+17/12/2020 use rounded rect for smoother appearance
+           fix TStringGrid no columns bug
+18/12/2020 fix TStringGrid extend beyond end of control}
 
 interface
 
@@ -83,7 +87,7 @@ type TMargins = record
 
 {Set Include files in "Project Options, Paths" to include
 /usr/share/fpcsrc/packages/fcl-pdf/src for linux and
-C:\lazarus\fpc\3.2.0\source\packages\fcl-pdf\src for windows
+C:\lazarus\fpc\3.0.4\source\packages\fcl-pdf\src for windows
 otherwise the fontmetrics_stdpdf.inc file will not be found}
 {$I fontmetrics_stdpdf.inc }
 
@@ -157,7 +161,7 @@ DW := AControl.Width;
 DH := DY - (Margins.T + AControl.Top);
 DX := Margins.L + AControl.Left;
 DY := Margins.T + AControl.Top + DH;
-APage.DrawRect(DX,DY,DW,DH,1,false,true);
+APage.DrawRoundedRect(DX,DY,DW,DH,1,1,false,true);
 end;
 
 
@@ -178,7 +182,7 @@ if AControl.Color <> clDefault then
    APage.SetColor(ColorToPDF(AControl.Color),false);
    IsFilled := true;
    end;
-APage.DrawRect(DX,DY,DW,DH,1,IsFilled,true);
+APage.DrawRoundedRect(DX,DY,DW,DH,1,1,IsFilled,true);
 end;
 
 
@@ -849,19 +853,29 @@ if cStrGrd.Visible then
          end;
 
       for J:=cStrGrd.FixedCols to cStrGrd.ColCount - 1 do
-         if cStrGrd.Columns.Items[J - cStrGrd.FixedCols].Visible then
-         begin
-         {if column headers are defined write these}
-         if (I=0) and (J < cStrGrd.Columns.Count) and (cStrGrd.FixedRows > 0) then
-            APage.WriteText(DX,DY,cStrGrd.Columns[J - cStrGrd.FixedCols].Title.Caption)
+         if (cStrGrd.Columns.Count > 0) then
+            begin
+            if (cStrGrd.Columns[J - cStrGrd.FixedCols].Visible) then
+               begin
+               if I < cStrGrd.FixedRows then
+                  APage.WriteText(DX,DY,cStrGrd.Columns[J - cStrGrd.FixedCols].Title.Caption)
+                 else
+                  APage.WriteText(DX,DY,cStrGrd.Cells[J,I]);
+               DX := DX + cStrGrd.ColWidths[J];
+               end;
+            end
            else
+            begin
             APage.WriteText(DX,DY,cStrGrd.Cells[J,I]);
-         DX := DX + cStrGrd.ColWidths[J];
-         end;
+            DX := DX + cStrGrd.ColWidths[J];
+            end;
+
       DX := Margins.L + cStrGrd.Left + 2;
       DY := DY + cStrGrd.RowHeights[I];
-      if (DY > APage.Paper.Printable.B) or ((DY > Margins.T + cStrGrd.Top + cStrGrd.Height) and fp) then
+      if (DY > APage.Paper.Printable.B) or
+         ((DY > Margins.T + cStrGrd.Top + cStrGrd.Height) and fp) then
          begin
+         if fp then DY := Margins.T + cStrGrd.Top + cStrGrd.Height;
          DrawVarBorder(cStrGrd,APage,DX,DY,Margins);
          APage := SetupPage(cStrGrd,FDoc);
          SetControlFont(cStrGrd,APage,IDX,fsize);
@@ -909,6 +923,7 @@ if cValueList.Visible then
       DY := DY + fSize;
       if (DY > APage.Paper.Printable.B) or ((DY > Margins.T + cValueList.Top + cValueList.Height) and fp) then
          begin
+         if fp then DY := Margins.T + cValueList.Top + cValueList.Height;
          DrawVarBorder(cValueList,APage,DX,DY,Margins);
          APage := SetupPage(cValueList,FDoc);
          SetControlFont(cValueList,APage,IDX,fsize);
