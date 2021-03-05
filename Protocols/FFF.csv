@@ -8,6 +8,6 @@
 "Penumbra (Inflection)",,,
 "   Left (cm)",abs(IL80-IL20),,
 "   Right (cm)",abs(IR80-IR20),,
-"   Left slope (%/cm)",LSlope,,
-"   Right Slope (%/cm)",RSlope,,
+"   Left slope (%/cm)",100*LSlope/RCAX,,
+"   Right Slope (%/cm)",100*RSlope/RCAX,,
 Symmetry,100*(ARight-ALeft)/(ARight+ALeft),,

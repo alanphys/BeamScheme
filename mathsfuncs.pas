@@ -114,7 +114,12 @@ end;
 
 
 function HillFunc(X:float; B:TVector):double;
-{calculates the value of the Hill function at x}
+{calculates the value of the Hill function at x
+parameters:
+   B[0] high limit
+   B[1] low limit
+   B[2] initial inf point
+   B[3] slope}
 begin
 if X > 0 then
    Result := B[0] + (B[1] - B[0])/(1.0 + Power(B[2]/X, B[3]))
@@ -124,12 +129,35 @@ end;
 
 
 function InvHillFunc(Y:float; B:TVector):double;
-{calculates the inverse Hill function at y}
+{calculates the inverse Hill function at y
+parameters:
+   B[0] high limit
+   B[1] low limit
+   B[2] initial inf point
+   B[3] slope}
 begin
 if (Y > min(B[0],B[1])) and (Y < max(B[0],B[1])) and (B[3] <> 0) then
    Result := B[2]*power((Y - B[0])/(B[1] - Y),1/B[3])
   else
    Result := 0;
+end;
+
+
+function DerivHillFunc(X:float; B:TVector): double;
+{calculates the tangent of the Hill function at X
+parameters:
+   B[0] high limit
+   B[1] low limit
+   B[2] initial inf point
+   B[3] slope}
+var cxd        :double;
+begin
+Result := 0;
+if X > 0 then
+   begin
+   cxd := power(B[2]/X,B[3]);
+   Result := (B[1] - B[0])*B[3]*cxd/(sqr(cxd + 1)*X)
+   end;
 end;
 
 
@@ -185,8 +213,8 @@ if MathErr = MatOk then
    Xsign := sign(PArr[0].X);
    InfP := B[2]*power((B[3]-1)/(B[3]+1),1/B[3]);
    IPDose := HillFunc(InfP,B);
+   InfS := XSign*DerivHillFunc(InfP,B);
    InfP := InfP*XSign;
-   InfS := -XSign*B[3];
    Inf50 := InvHillFunc(abs(B[1] - B[0])*0.5,B)*Xsign;
    Inf20 := InvHillFunc(IPDose*0.4,B)*XSign;
    Inf80 := InvHillFunc(IPDose*1.6,B)*XSign;

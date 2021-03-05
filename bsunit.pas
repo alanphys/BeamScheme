@@ -99,7 +99,8 @@ unit bsunit;
  7/12/2020  add normalisation to max for calcs
  11/12/2020 make normalisation modal, i.e. non destructive
             change toolbar panel to TToolBar
- 14/12/2020 select default protocol on startup}
+ 14/12/2020 select default protocol on startup
+ 3/3/2021   fix FFF penumbra slope}
 
 
 {$mode objfpc}{$H+}

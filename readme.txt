@@ -187,3 +187,4 @@ Version 0.5 released 25/10/2019
 11/12/2020 make normalisation modal, i.e. non destructive
            change toolbar panel to TToolBar
 14/12/2020 select default protocol on startup
+3/3/2021   fix FFF penumbra slope
