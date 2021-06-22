@@ -8,6 +8,10 @@
 *.gitignore
 *.directory
 *.trc
+*.exe
+*.pdf
+*.lps
+beamscheme
 
 # directories to ignore
 Results/

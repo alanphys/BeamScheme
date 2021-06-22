@@ -6,13 +6,13 @@ object BSForm: TBSForm
   HorzScrollBar.Page = 737
   VertScrollBar.Page = 755
   Caption = 'Beam Scheme'
-  ClientHeight = 641
+  ClientHeight = 633
   ClientWidth = 608
   Menu = MainMenu
   OnClose = FormClose
   OnCreate = FormCreate
   OnResize = FormResize
-  LCLVersion = '2.0.10.0'
+  LCLVersion = '2.0.12.0'
   object pBeam: TPanel
     Left = 0
     Height = 309
@@ -27,8 +27,8 @@ object BSForm: TBSForm
     TabStop = True
     object iBeam: TImage
       Left = 1
-      Height = 260
-      Top = 48
+      Height = 259
+      Top = 49
       Width = 259
       HelpType = htKeyword
       HelpKeyword = 'HTML/BSHelp8-2.html'
@@ -164,28 +164,28 @@ object BSForm: TBSForm
     end
     object pMaxMin: TPanel
       Left = 260
-      Height = 260
-      Top = 48
+      Height = 259
+      Top = 49
       Width = 42
       Align = alRight
-      ClientHeight = 260
+      ClientHeight = 259
       ClientWidth = 42
       ParentFont = False
       TabOrder = 1
       object Label8: TLabel
         Left = 3
-        Height = 17
+        Height = 18
         Top = 0
-        Width = 36
+        Width = 33
         Caption = 'Black'
         ParentColor = False
         ParentFont = False
       end
       object lMin: TLabel
         Left = 1
-        Height = 17
+        Height = 18
         Top = 239
-        Width = 38
+        Width = 36
         Caption = 'White'
         ParentColor = False
         ParentFont = False
@@ -209,7 +209,7 @@ object BSForm: TBSForm
     end
     object ToolBar: TToolBar
       Left = 1
-      Height = 27
+      Height = 28
       Top = 21
       Width = 301
       BorderWidth = 1
@@ -343,38 +343,39 @@ object BSForm: TBSForm
       TabOrder = 0
       object Label1: TLabel
         Left = 2
-        Height = 17
+        Height = 18
         Top = 7
-        Width = 44
+        Width = 41
         Caption = 'Offset:'
         ParentColor = False
         ParentFont = False
       end
       object Label2: TLabel
         Left = 105
-        Height = 17
+        Height = 18
         Top = 7
-        Width = 43
+        Width = 40
         Caption = 'Width:'
         ParentColor = False
         ParentFont = False
       end
       object Label3: TLabel
         Left = 201
-        Height = 17
+        Height = 18
         Top = 7
-        Width = 42
+        Width = 39
         Caption = 'Angle:'
         ParentColor = False
         ParentFont = False
       end
       object seXOffset: TSpinEdit
         Left = 51
-        Height = 26
+        Height = 24
         Top = 2
         Width = 51
         HelpType = htKeyword
         HelpKeyword = 'HTML/BSHelp8-1-1.html'
+        AutoSize = False
         MaxValue = 50
         MinValue = -50
         OnChange = seXAngleChange
@@ -383,25 +384,27 @@ object BSForm: TBSForm
       end
       object seXWidth: TSpinEdit
         Left = 148
-        Height = 26
+        Height = 24
         Top = 2
         Width = 51
         HelpType = htKeyword
         HelpKeyword = 'HTML/BSHelp8-1-2.html'
+        AutoSize = False
         Increment = 2
         MinValue = 1
         OnChange = seXAngleChange
         ParentFont = False
         TabOrder = 1
-        Value = 1
+        Value = 3
       end
       object seXAngle: TSpinEdit
-        Left = 245
-        Height = 26
+        Left = 247
+        Height = 24
         Top = 2
         Width = 51
         HelpType = htKeyword
         HelpKeyword = 'HTML/BSHelp8-1-3.html'
+        AutoSize = False
         MaxValue = 45
         MinValue = -44
         OnChange = seXAngleChange
@@ -424,9 +427,9 @@ object BSForm: TBSForm
       TabStop = True
       object cXprof: TLabel
         Left = 5
-        Height = 15
+        Height = 17
         Top = 3
-        Width = 50
+        Width = 47
         Caption = 'X Profile'
         Font.Height = -12
         ParentColor = False
@@ -643,38 +646,39 @@ object BSForm: TBSForm
       TabOrder = 0
       object Label4: TLabel
         Left = 2
-        Height = 17
+        Height = 18
         Top = 7
-        Width = 44
+        Width = 41
         Caption = 'Offset:'
         ParentColor = False
         ParentFont = False
       end
       object Label5: TLabel
         Left = 105
-        Height = 17
+        Height = 18
         Top = 7
-        Width = 43
+        Width = 40
         Caption = 'Width:'
         ParentColor = False
         ParentFont = False
       end
       object Label6: TLabel
         Left = 201
-        Height = 17
+        Height = 18
         Top = 7
-        Width = 42
+        Width = 39
         Caption = 'Angle:'
         ParentColor = False
         ParentFont = False
       end
       object seYOffset: TSpinEdit
         Left = 51
-        Height = 26
+        Height = 24
         Top = 2
         Width = 51
         HelpType = htKeyword
         HelpKeyword = 'HTML/BSHelp8-1-1.html'
+        AutoSize = False
         MaxValue = 50
         MinValue = -50
         OnChange = seYAngleChange
@@ -683,11 +687,12 @@ object BSForm: TBSForm
       end
       object seYWidth: TSpinEdit
         Left = 148
-        Height = 26
+        Height = 24
         Top = 2
         Width = 51
         HelpType = htKeyword
         HelpKeyword = 'HTML/BSHelp8-1-2.html'
+        AutoSize = False
         Increment = 2
         MinValue = 1
         OnChange = seYAngleChange
@@ -697,11 +702,12 @@ object BSForm: TBSForm
       end
       object seYAngle: TSpinEdit
         Left = 245
-        Height = 26
+        Height = 24
         Top = 2
         Width = 51
         HelpType = htKeyword
         HelpKeyword = 'HTML/BSHelp8-1-3.html'
+        AutoSize = False
         MaxValue = 135
         MinValue = 46
         OnChange = seYAngleChange
@@ -724,9 +730,9 @@ object BSForm: TBSForm
       TabOrder = 2
       object cYProf: TLabel
         Left = 5
-        Height = 15
+        Height = 17
         Top = 3
-        Width = 49
+        Width = 47
         Caption = 'Y Profile'
         Font.Height = -12
         ParentColor = False
@@ -858,9 +864,9 @@ object BSForm: TBSForm
       TabOrder = 0
       object cResults: TLabel
         Left = 5
-        Height = 15
+        Height = 17
         Top = 3
-        Width = 44
+        Width = 41
         Caption = 'Results'
         Font.Height = -12
         ParentColor = False
@@ -979,19 +985,20 @@ object BSForm: TBSForm
       TabOrder = 1
       object Label7: TLabel
         Left = 2
-        Height = 17
+        Height = 18
         Top = 7
-        Width = 57
+        Width = 55
         Caption = 'Protocol:'
         ParentColor = False
         ParentFont = False
       end
       object cbProtocol: TComboBox
         Left = 65
-        Height = 25
+        Height = 24
         Top = 2
         Width = 129
-        ItemHeight = 25
+        AutoSize = False
+        ItemHeight = 18
         OnEditingDone = cbProtocolChange
         OnSelect = cbProtocolChange
         ParentFont = False
@@ -1228,8 +1235,8 @@ object BSForm: TBSForm
   end
   object StatusBar: TStatusBar
     Left = 0
-    Height = 22
-    Top = 619
+    Height = 23
+    Top = 610
     Width = 608
     Panels = <>
     ParentFont = False

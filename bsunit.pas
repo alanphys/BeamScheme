@@ -2563,6 +2563,8 @@ var Angle,
     Wdth       :double;
     MBitmap    :TBitmap;
     ErrMsg     :string;
+    StartTime,
+    EndTime    :integer;
 
 begin
 if Safe then
@@ -2575,11 +2577,14 @@ if Safe then
    if (iBeam.Picture.Bitmap <> nil) and (length(Beam.Data) <> 0) then
       begin
       MBitmap := iBeam.Picture.Bitmap;
+      StartTime := GetTickCount64;
       DrawProfile(MBitmap, Beam, Angle, Offset, Wdth,
          XProfile, XPArr, XPTL, XPTR, XPBL, XPBR, XPW);
       iBeam.Picture.Bitmap := MBitmap;
       CalcParams(XPArr, XBParams, Normalisation, ErrMsg);
       ShowXResults(XBParams);
+      EndTime := GetTickCount64 - StartTime;
+      BSMessage('Parameters calculated in ' + IntToStr(EndTime) + ' ms.');
       if ErrMsg <> '' then BSWarning(ErrMsg);
       end;
    Safe := true;
