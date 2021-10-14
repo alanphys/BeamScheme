@@ -13,8 +13,8 @@
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <MinorVersionNr Value="53"/>
-      <BuildNr Value="111"/>
+      <MinorVersionNr Value="54"/>
+      <BuildNr Value="112"/>
       <Attributes pvaPreRelease="True"/>
       <StringTable CompanyName="Yenzakahle Medical Physics Inc"/>
     </VersionInfo>
@@ -135,7 +135,7 @@
         <PackageName Value="LCL"/>
       </Item7>
     </RequiredPackages>
-    <Units Count="111">
+    <Units Count="112">
       <Unit0>
         <Filename Value="beamscheme.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -150,8 +150,9 @@
         <ComponentName Value="BSForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="2564"/>
-        <CursorPos X="40" Y="2599"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="2504"/>
+        <CursorPos Y="2522"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -831,9 +832,9 @@
         <Filename Value="Parser10.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="46"/>
-        <CursorPos X="3" Y="163"/>
-        <UsageCount Value="161"/>
+        <TopLine Value="166"/>
+        <CursorPos X="19" Y="650"/>
+        <UsageCount Value="165"/>
       </Unit97>
       <Unit98>
         <Filename Value="../../Downloads/SVN/lazarus/components/powerpdf_0.9.15_20170215/PReport.pas"/>
@@ -867,29 +868,28 @@
       </Unit101>
       <Unit102>
         <Filename Value="form2pdf.pas"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="49"/>
+        <TopLine Value="64"/>
         <CursorPos X="3" Y="75"/>
-        <UsageCount Value="16"/>
+        <UsageCount Value="18"/>
         <Loaded Value="True"/>
       </Unit102>
       <Unit103>
         <Filename Value="mathsfuncs.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="259"/>
-        <CursorPos Y="458"/>
-        <UsageCount Value="89"/>
+        <TopLine Value="161"/>
+        <CursorPos X="12" Y="179"/>
+        <UsageCount Value="93"/>
         <Loaded Value="True"/>
       </Unit103>
       <Unit104>
         <Filename Value="bstypes.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="13"/>
-        <CursorPos X="33" Y="17"/>
-        <UsageCount Value="88"/>
+        <TopLine Value="12"/>
+        <CursorPos X="25" Y="30"/>
+        <UsageCount Value="92"/>
         <Loaded Value="True"/>
       </Unit104>
       <Unit105>
@@ -934,127 +934,133 @@
         <CursorPos X="6" Y="10"/>
         <UsageCount Value="10"/>
       </Unit110>
+      <Unit111>
+        <Filename Value="/usr/share/fpcsrc/rtl/objpas/classes/classesh.inc"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="3" Y="1848"/>
+        <UsageCount Value="10"/>
+      </Unit111>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="229" TopLine="210"/>
+        <Caret Line="271" TopLine="253"/>
       </Position1>
       <Position2>
         <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="271" TopLine="252"/>
+        <Caret Line="229" TopLine="210"/>
       </Position2>
       <Position3>
         <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="272" TopLine="252"/>
+        <Caret Line="271" TopLine="252"/>
       </Position3>
       <Position4>
-        <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="269" TopLine="252"/>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="671" Column="2" TopLine="639"/>
       </Position4>
       <Position5>
         <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="271" TopLine="252"/>
+        <Caret Line="324" TopLine="322"/>
       </Position5>
       <Position6>
         <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="229" TopLine="210"/>
+        <Caret Line="384" Column="23" TopLine="365"/>
       </Position6>
       <Position7>
-        <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="271" TopLine="252"/>
+        <Filename Value="form2pdf.pas"/>
+        <Caret Line="854" TopLine="847"/>
       </Position7>
       <Position8>
-        <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="272" TopLine="252"/>
+        <Filename Value="form2pdf.pas"/>
+        <Caret Line="855" TopLine="847"/>
       </Position8>
       <Position9>
-        <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="229" TopLine="210"/>
+        <Filename Value="form2pdf.pas"/>
+        <Caret Line="857" TopLine="847"/>
       </Position9>
       <Position10>
-        <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="272" TopLine="253"/>
+        <Filename Value="form2pdf.pas"/>
+        <Caret Line="859" TopLine="847"/>
       </Position10>
       <Position11>
-        <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="269" TopLine="253"/>
+        <Filename Value="form2pdf.pas"/>
+        <Caret Line="860" TopLine="847"/>
       </Position11>
       <Position12>
-        <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="271" TopLine="253"/>
+        <Filename Value="form2pdf.pas"/>
+        <Caret Line="854" TopLine="844"/>
       </Position12>
       <Position13>
-        <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="229" TopLine="210"/>
+        <Filename Value="form2pdf.pas"/>
+        <Caret Line="924" Column="15" TopLine="895"/>
       </Position13>
       <Position14>
-        <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="271" TopLine="252"/>
+        <Filename Value="form2pdf.pas"/>
+        <Caret Line="877" Column="21" TopLine="849"/>
       </Position14>
       <Position15>
-        <Filename Value="bsunit.pas"/>
-        <Caret Line="671" Column="2" TopLine="639"/>
+        <Filename Value="mathsfuncs.pas"/>
+        <Caret Line="215" TopLine="203"/>
       </Position15>
       <Position16>
         <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="324" TopLine="322"/>
+        <Caret Line="458" TopLine="259"/>
       </Position16>
       <Position17>
-        <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="384" Column="23" TopLine="365"/>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="103" Column="35" TopLine="83"/>
       </Position17>
       <Position18>
-        <Filename Value="form2pdf.pas"/>
-        <Caret Line="854" TopLine="847"/>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="2586" Column="75" TopLine="2549"/>
       </Position18>
       <Position19>
-        <Filename Value="form2pdf.pas"/>
-        <Caret Line="855" TopLine="847"/>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="2583" Column="32" TopLine="2566"/>
       </Position19>
       <Position20>
-        <Filename Value="form2pdf.pas"/>
-        <Caret Line="857" TopLine="847"/>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="327" TopLine="306"/>
       </Position20>
       <Position21>
-        <Filename Value="form2pdf.pas"/>
-        <Caret Line="859" TopLine="847"/>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="1576" Column="15" TopLine="1558"/>
       </Position21>
       <Position22>
-        <Filename Value="form2pdf.pas"/>
-        <Caret Line="860" TopLine="847"/>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="248" Column="13" TopLine="231"/>
       </Position22>
       <Position23>
-        <Filename Value="form2pdf.pas"/>
-        <Caret Line="854" TopLine="844"/>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="1115" TopLine="1097"/>
       </Position23>
       <Position24>
-        <Filename Value="form2pdf.pas"/>
-        <Caret Line="924" Column="15" TopLine="895"/>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="254" Column="37" TopLine="236"/>
       </Position24>
       <Position25>
-        <Filename Value="form2pdf.pas"/>
-        <Caret Line="877" Column="21" TopLine="849"/>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="784" Column="4" TopLine="774"/>
       </Position25>
       <Position26>
         <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="215" TopLine="203"/>
+        <Caret Line="179" Column="12" TopLine="161"/>
       </Position26>
       <Position27>
-        <Filename Value="mathsfuncs.pas"/>
-        <Caret Line="458" TopLine="259"/>
+        <Filename Value="bsunit.pas"/>
+        <Caret Line="2566" Column="56" TopLine="2549"/>
       </Position27>
       <Position28>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="103" Column="35" TopLine="83"/>
+        <Caret Line="1201" TopLine="1173"/>
       </Position28>
       <Position29>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="2586" Column="75" TopLine="2549"/>
+        <Caret Line="1164" Column="13" TopLine="1147"/>
       </Position29>
       <Position30>
         <Filename Value="bsunit.pas"/>
-        <Caret Line="2583" Column="32" TopLine="2566"/>
+        <Caret Line="108" Column="42" TopLine="82"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
@@ -1090,15 +1096,6 @@
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <BreakPoints Count="1">
-      <Item1>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="mathsfuncs.pas"/>
-        <Line Value="458"/>
-      </Item1>
-    </BreakPoints>
     <Watches Count="3">
       <Item1>
         <Expression Value="Diff"/>

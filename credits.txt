@@ -8,8 +8,6 @@ Wolfgang Krug and Chris Rorden for the DICOM import routines
 
 Doug Gregor and Curtis Carpenter for DTrackbar
 
-PowerPDF package from Takeshi Kanno as ported by Stefan (Chtk) and Jesús Reyes Aguilar
-
 Lightweight Networking Library (lNet) written by Ales Katona and Micha Nelissen
 
 TParser version 10.1 by Renate Schaaf (1993), Alin Flaider (1996, 1997) and Stefan Hoffmeister (1996, 1997)

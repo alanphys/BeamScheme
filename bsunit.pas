@@ -100,7 +100,13 @@ unit bsunit;
  11/12/2020 make normalisation modal, i.e. non destructive
             change toolbar panel to TToolBar
  14/12/2020 select default protocol on startup
- 3/3/2021   fix FFF penumbra slope}
+ 3/3/2021   fix FFF penumbra slope
+ 11/9/2021  fix recognise files with tiff extension
+ 4/10/2021  fix ShowProfile and refactor
+            fix initialise vars
+            profile draw on trackbar change
+ 14/10/2021 Remove sExePath in file Open.}
+
 
 
 {$mode objfpc}{$H+}
@@ -319,8 +325,6 @@ implementation
 uses DICOM, define_types, types, math, StrUtils, helpintfs, aboutunit,
      LazFileUtils, Parser10, form2pdf, mathsfuncs, fileinfo;
 
-const AllChars = [#0..#255] - DigitChars - ['.'];
-
 var YPTL,                      {Y profile top right}
     YPTR,                      {Y profile top left}
     YPBL,                      {Y profile bottom right}
@@ -404,12 +408,6 @@ with Beam do if (Rows>0) and (Cols>0) then
            Val := Round((Z - BMin)*65535/(BMax - BMin));
            GreyVal := FPColor(Val,Val,Val);
            IntFImage.Colors[J-2,I] := GreyVal;
-           end
-     else
-      for I:=0 to Beam.Rows - 1 do
-        for J:=2 to Beam.Cols - 1 do
-           begin
-           IntFImage.Colors[J-2,I] := GreyVal;
            end;
      BSForm.iBeam.Picture.Bitmap.LoadFromIntfImage(IntFImage);
      IntFImage.Free;
@@ -423,7 +421,7 @@ begin
 {Draw profile on array}
 TheBitmap.Canvas.Pen.Color := clRed xor clWhite;
 TheBitmap.Canvas.Pen.Mode := pmXor;
-if Wdth > 1 then
+if Wdth > 0 then
    TheBitmap.Canvas.Polygon([TopLeft,TopRight,BottomRight,BottomLeft])
   else
    TheBitmap.Canvas.Line(TopLeft,BottomRight);
@@ -467,14 +465,7 @@ begin
 Profile.Clear;
 if (TopLeft.x or TopRight.x or BottomLeft.x or BottomRight.x or
    TopLeft.y or TopRight.y or BottomLeft.y or BottomRight.y <> 0) then
-   begin
-   TheBitmap.Canvas.Pen.Color := clRed xor ClWhite;
-   TheBitmap.Canvas.Pen.Mode := pmXor;
-   if PrevW > 0 then
-      TheBitmap.Canvas.Polygon([TopLeft,TopRight,BottomRight,BottomLeft])
-     else
-      TheBitmap.Canvas.Line(TopLeft,BottomRight);
-   end;
+   ShowProfile(TheBitMap,PrevW,Topleft,Topright,BottomRight,BottomLeft);
 
 {Draw new profile}
 Angle := Angle*2*pi/360;                       //convert angle to radians
@@ -503,12 +494,7 @@ if (Angle > -TanA) and (Angle <= TanA) then {Profile is X profile}
    end;
 
 {Draw profile on array}
-TheBitmap.Canvas.Pen.Color := clRed xor clWhite;
-TheBitmap.Canvas.Pen.Mode := pmXor;
-if PrevW > 0 then
-   TheBitmap.Canvas.Polygon([TopLeft,TopRight,BottomRight,BottomLeft])
-  else
-   TheBitmap.Canvas.Line(TopLeft,BottomRight);
+ShowProfile(TheBitMap,PrevW,Topleft,Topright,BottomRight,BottomLeft);
 
 DLine := LimitL(Angle,Phi,TanA,Offset,MidX,MidY,0,0,LimX,LimY);
 Start := DLine.TopLeft;
@@ -650,6 +636,7 @@ repeat
 
 {normalise array}
 CMax := 0;
+CMin := 0;
 if Normalisation <> none then
    begin
    CMax := PArr[(length(PArr) - 1) div 2].Y;
@@ -794,8 +781,8 @@ if XPArr <> nil then
    for I := 0 to length(XPArr) - 1 do
        sClip := sClip + FloatToStrF(XPArr[I].X,ffFixed,5,2) + ',' +
           FloatToStrF(XPArr[I].Y,ffFixed,5,2) + LineEnding;
+   Clipboard.AsText := sClip;
    end;
-Clipboard.AsText := sClip;
 end;
 
 
@@ -810,8 +797,8 @@ if YPArr <> nil then
    for I := 0 to length(YPArr) - 1 do
        sClip := sClip + FloatToStrF(YPArr[I].X,ffFixed,5,2) + ',' +
           FloatToStrF(YPArr[I].Y,ffFixed,5,2) + LineEnding;
+   Clipboard.AsText := sClip;
    end;
-Clipboard.AsText := sClip;
 end;
 
 
@@ -1061,11 +1048,7 @@ end;
 
 
 procedure TBSForm.FormCreate(Sender: TObject);
-var I          :integer;
-    sExePath,
-    sSearchPath,
-    FileName   :string;
-    SearchRec  :TSearchRec;
+var sExePath   :string;
 
 begin
 BSForm.Caption := 'Beam Scheme v' + GetAppVersionString(false,2);
@@ -1136,6 +1119,7 @@ if Ctrl.HelpKeyword <> '' then
    ShowHelpOrErrorForKeyword('',Ctrl.HelpKeyword)
   else
    ShowHelpOrErrorForKeyword('','HTML/BSHelp.html');
+Result := True;
 end;
 
 
@@ -1145,8 +1129,8 @@ if Safe then
    begin
    DTrackBar.Invalidate;
    DisplayBeam;
-   ShowProfile(iBeam.Picture.Bitmap,seYWidth.Value,YPTL,YPTR,YPBR,YPBL);
-   ShowProfile(iBeam.Picture.Bitmap,seXWidth.Value,XPTL,XPTR,XPBR,XPBL);
+   ShowProfile(iBeam.Picture.Bitmap,XPW,YPTL,YPTR,YPBR,YPBL);
+   ShowProfile(iBeam.Picture.Bitmap,YPW,XPTL,XPTR,XPBR,XPBL);
    end;
 end;
 
@@ -1179,8 +1163,7 @@ end;
 
 procedure TBSForm.miOpenClick(Sender: TObject);
 var I          :integer;
-    Dummy,
-    sExePath   :string;
+    Dummy      :string;
     DataOK     :boolean;
 
 begin
@@ -1205,8 +1188,6 @@ for I:=1 to sgResults.Rowcount-1 do
    sgResults.Cells[3,I] := '';
    end;
 
-{sExePath := ExtractFilePath(Application.ExeName);
-SetCurrentDir(sExePath);}
 DataOK := false;
 
 with OpenDialog do
@@ -1215,10 +1196,9 @@ with OpenDialog do
    {$IFDEF WINDOWS}
    Filter := 'DICOM Image|*.dcm|MapCheck Text Files|*.txt|PTW|*.mcc|IBA|*.opg|Windows bitmap|*.bmp|Tiff bitmap|*.tif|JPEG image|*.jpg|HIS image|*.his|All Files|*.*';
    {$ELSE}
-   Filter := 'DICOM Image|*.dcm|MapCheck, XIO, RAW Text Files|*.txt|PTW|*.mcc|IBA|*.opg|Windows bitmap|*.bmp|Tiff bitmap|*.tif|JPEG image|*.jpg;*jpeg|HIS image|*.his|All Files|*';
+   Filter := 'DICOM Image|*.dcm|MapCheck, XIO, RAW Text Files|*.txt|PTW|*.mcc|IBA|*.opg|Windows bitmap|*.bmp|Tiff bitmap|*.tif;*.tiff|JPEG image|*.jpg;*jpeg|HIS image|*.his|All Files|*';
    {$ENDIF}
    Title := 'Open file';
-   InitialDir := sExePath;
    end;
 if OpenDialog.Execute then
    begin
@@ -1233,7 +1213,7 @@ if OpenDialog.Execute then
       DataOK := HISOpen(OpenDialog.Filename);
    if (not DataOK) and (Dummy = '.BMP') then
       DataOK := BMPOpen(OpenDialog.Filename);
-   if (not DataOK) and (Dummy = '.TIF') then
+   if (not DataOK) and ((Dummy = '.TIF') or (Dummy = '.TIFF')) then
       DataOK := BMPOpen(OpenDialog.Filename);
    if (not DataOK) and ((Dummy = '.JPG') or (Dummy = '.JPEG')) then
       DataOK := BMPOpen(OpenDialog.Filename);
@@ -1398,6 +1378,7 @@ var I,J,K,
 
 begin
 Result := false;
+NumSets := 0;
 AssignFile(Infile, sFileName);
 Reset(Infile);
 
@@ -1998,6 +1979,8 @@ var I,J,K,
 
 begin
 Result := false;
+NumSets := 0;
+RDet := 0;
 AssignFile(Infile, sFileName);
 Reset(Infile);
 cGy := 1;
@@ -2308,9 +2291,6 @@ end;
 
 
 procedure TBSForm.sbMaxNormClick(Sender: TObject);
-var I,J        :integer;
-    z          :double;
-
 begin
 if tbNormMax.Down then
    begin
@@ -2538,6 +2518,7 @@ begin
 if Safe then
    begin
    Safe := false;
+   ErrMsg := '';
    ClearStatus;
    Angle := seYAngle.Value;
    Offset := -seYOffset.Value;
@@ -2570,6 +2551,7 @@ begin
 if Safe then
    begin
    Safe := false;
+   ErrMsg := '';
    ClearStatus;
    Angle := seXAngle.Value;
    Offset := -seXOffset.Value;

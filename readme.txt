@@ -1,4 +1,4 @@
-BeamScheme Readme file (c) 2008-2020 AC Chamberlain
+BeamScheme Readme file (c) 2008-2021 AC Chamberlain
 
 1) Introduction
 Welcome to BeamScheme
@@ -53,6 +53,9 @@ There are two normalisation modes. CAX or maximum. Normalisation places the mini
 These detail new or changed functionality in BeamScheme. Please see the History for bug fixes.
 
 Latest release
+This is a bug fix release
+
+Version 0.53
 Normalisation is now modal, i.e. non destructive. The normalisation modes are none, norm_cax and norm_max. In mode none the dataset is unnormalised and not grounded with the reference value taken at CAX. For norm_cax the data is grounded and normalised to 100% at the CAX value. For norm_max the data is grounded and normalised to 100% at the profile maximum value. The normalisation modes are enabled by the appropriate toolbar button.
 
 Version 0.52

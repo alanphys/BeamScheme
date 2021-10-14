@@ -25,6 +25,11 @@ type
 
   TPArr = array of TProfilePoint;
 
+  TValuePos = record
+     Value     :double;
+     Pos       :integer;
+  end;
+
   TBeam = class
      Width,           {detector size in X direction}
      Height,          {detector size in Y direction}
