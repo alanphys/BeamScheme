@@ -105,7 +105,8 @@ unit bsunit;
  4/10/2021  fix ShowProfile and refactor
             fix initialise vars
             profile draw on trackbar change
- 14/10/2021 Remove sExePath in file Open.}
+ 14/10/2021 Remove sExePath in file Open
+ 22/10/2021 fix profile position on mouse click}
 
 
 
@@ -2165,6 +2166,7 @@ var MouseXY:   TPoint;
     R,
     Theta,
     Phi,
+    Scale,
     AR:        double;         {Aspect ratio}
 
 begin
@@ -2174,16 +2176,20 @@ if iBeam.Picture.Bitmap.Height > 0 then
    BMPH := iBeam.Picture.Bitmap.Height;
    BMPW := iBeam.Picture.Bitmap.Width;
    AR := BMPW/BMPH;
+   if iBeam.Height <= iBeam.Width then
+      Scale := iBeam.Height
+     else
+      Scale := iBeam.Width;
 
    if AR >= 1 then
       begin
-      PY := (Beam.Rows div 2) - MouseXY.Y*(Beam.Rows/iBeam.Height)*AR;
-      PX := MouseXY.X*((Beam.Cols - 2)/iBeam.Width) - ((Beam.Cols -2) div 2);
+      PY := (Beam.Rows div 2) - MouseXY.Y*(Beam.Rows/Scale)*AR;
+      PX := MouseXY.X*((Beam.Cols - 2)/Scale) - ((Beam.Cols -2) div 2);
       end
      else
       begin
-      PY := (Beam.Rows div 2) - MouseXY.Y*(Beam.Rows/iBeam.Height);
-      PX := MouseXY.X*((Beam.Cols - 2)/iBeam.Width)/AR - ((Beam.Cols -2) div 2);
+      PY := (Beam.Rows div 2) - MouseXY.Y*(Beam.Rows/Scale);
+      PX := MouseXY.X*((Beam.Cols - 2)/Scale)/AR - ((Beam.Cols -2) div 2);
       end;
 
    R := sqrt(PX*PX + PY*PY);
