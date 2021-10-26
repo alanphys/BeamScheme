@@ -53,7 +53,7 @@ There are two normalisation modes. CAX or maximum. Normalisation places the mini
 These detail new or changed functionality in BeamScheme. Please see the History for bug fixes.
 
 Latest release
-This is a bug fix release
+This is a bug fix release.
 
 Version 0.53
 Normalisation is now modal, i.e. non destructive. The normalisation modes are none, norm_cax and norm_max. In mode none the dataset is unnormalised and not grounded with the reference value taken at CAX. For norm_cax the data is grounded and normalised to 100% at the CAX value. For norm_max the data is grounded and normalised to 100% at the profile maximum value. The normalisation modes are enabled by the appropriate toolbar button.
@@ -191,3 +191,9 @@ Version 0.5 released 25/10/2019
            change toolbar panel to TToolBar
 14/12/2020 select default protocol on startup
 3/3/2021   fix FFF penumbra slope
+11/9/2021  fix recognise files with tiff extension
+4/10/2021  fix ShowProfile and refactor
+           fix initialise vars
+           profile draw on trackbar change
+14/10/2021 Remove sExePath in file Open
+22/10/2021 fix profile position on mouse click
