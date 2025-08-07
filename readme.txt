@@ -1,6 +1,8 @@
-BeamScheme Readme file (c) 2008-2021 AC Chamberlain
+BeamScheme Readme file (c) 2008-2021 AC Chamberlain 
 
 1) Introduction
+BeamScheme V0.5X is deprecated. Please see the BeamSchemeV1 repository.
+
 Welcome to BeamScheme
 
 This software will assist you in extracting 1D profiles from 2D datasets and calculating various parameters on the profiles. BeamScheme can open various image and 2D array file formats such as SNC MapCheck, PTW 720, IBA Matrix and StarTrack, XiO, DICOM, jpg, etc.
